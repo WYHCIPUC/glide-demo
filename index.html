@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GLIDE · 全球移民动态监测系统 — 项目演示</title>
+  <meta name="description" content="GLIDE（Global Immigration Dynamics Engine）是面向全球移民与边境安全的开源情报工作台，自动聚合 70+ 国际媒体、AI 双重筛选、事件化治理、多渠道推送。" />
+  <meta name="keywords" content="GLIDE, GmwRadar, 移民监测, OSINT, 情报系统, AI, 知识图谱, 边境安全, Factbook" />
+  <meta name="theme-color" content="#050507" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="GLIDE · 全球移民动态监测系统" />
+  <meta property="og:description" content="70+ 国际媒体聚合 · AI 双重筛选 · 事件化治理 · 9 渠道情报推送" />
+  <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg" />
+
+  <!-- 字体 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap">
+
+  <!-- 主样式 -->
+  <link rel="stylesheet" href="./css/demo.css?v=3">
+
+  <!-- ECharts（CDN）-->
+  <script defer src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+</head>
+<body>
+
+<!-- 浮动光晕球 -->
+<div class="glow-orb glow-orb-1" aria-hidden="true"></div>
+<div class="glow-orb glow-orb-2" aria-hidden="true"></div>
+<div class="glow-orb glow-orb-3" aria-hidden="true"></div>
+
+<!-- 全页世界地图背景（fixed · 缓慢漂移循环）-->
+<div class="world-bg" aria-hidden="true">
+  <div id="worldCanvas"></div>
+  <div class="world-bg-veil"></div>
+  <div class="world-bg-grid"></div>
+</div>
+
+<!-- ============ TELEMETRY STRIP ============ -->
+<div class="telemetry" role="status" aria-label="系统遥测">
+  <div class="telemetry-left">
+    <span class="telemetry-item"><span class="dot"></span><span>SYSTEM ONLINE</span></span>
+    <span class="telemetry-item"><span class="dot warn"></span><span>AI QUEUE 12</span></span>
+    <span class="telemetry-item"><span class="dot"></span><span>SRC 70+</span></span>
+  </div>
+  <div class="telemetry-right">
+    <span class="telemetry-item"><span>NODE</span><span class="v">SHANGHAI-01</span></span>
+    <span class="telemetry-item"><span>BUILD</span><span class="v">V3.0.1</span></span>
+    <span class="telemetry-item"><span class="v" id="teleClock">UTC+8  --:--:--</span></span>
+  </div>
+</div>
+
+<!-- ============ NAV ============ -->
+<nav class="nav" id="nav" aria-label="主导航">
+  <div class="container nav-inner">
+    <a href="#top" class="nav-brand" aria-label="GLIDE Home">
+      <span class="logo"><img src="./assets/logo.svg" alt="GLIDE"></span>
+      <span class="name">GLIDE</span>
+      <span class="ver">v3.0</span>
+    </a>
+    <div class="nav-links" role="navigation">
+      <a href="#command">指挥台</a>
+      <a href="#capabilities">四视图</a>
+      <a href="#viz">可视化</a>
+      <a href="#arch">架构</a>
+      <a href="#status">运行状态</a>
+      <a href="#start">快速开始</a>
+    </div>
+    <div class="nav-cta">
+      <a class="btn btn-ghost" href="https://github.com/WYHCIPUC/GmwRadar#readme" rel="noopener" target="_blank">文档</a>
+      <a class="btn btn-primary" href="https://github.com/WYHCIPUC/GmwRadar" rel="noopener" target="_blank">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2.1c-3.3.7-4-1.6-4-1.6-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-6 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.7-2.8 5.7-5.5 6 .4.4.8 1.1.8 2.3v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .3z"/></svg>
+        Star on GitHub
+      </a>
+      <button class="nav-burger" aria-label="菜单">≡</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero" id="top">
+  <canvas id="radarCanvas" class="hero-canvas" aria-hidden="true"></canvas>
+  <canvas id="particleCanvas" class="hero-canvas particles" aria-hidden="true"></canvas>
+
+  <div class="hero-hud" aria-hidden="true">
+    <span class="hud-corner tl"></span>
+    <span class="hud-corner tr"></span>
+    <span class="hud-corner bl"></span>
+    <span class="hud-corner br"></span>
+  </div>
+
+  <div class="hero-content">
+    <div class="hero-status">
+      <span class="dot"></span>
+      <span>SYSTEM ONLINE</span>
+      <span class="sep"></span>
+      <span>GLOBAL IMMIGRATION DYNAMICS ENGINE</span>
+      <span class="sep"></span>
+      <span>V3.0</span>
+    </div>
+    <h1>
+      <span class="accent">GLIDE</span><br/>
+      全球移民动态监测
+    </h1>
+    <p class="hero-tagline">
+      <strong>70+</strong> 国际媒体 · <strong>AI 双重筛选</strong> · 事件化治理 · <strong>9 渠道</strong> 推送<br/>
+      面向政策研究 / 边境安全 / 国际新闻的开源情报中台
+    </p>
+    <p class="hero-mono">
+      <span class="a">GLOBAL</span> · <span class="b">IMMIGRATION</span> · <span class="a">DYNAMICS</span> · <span class="b">ENGINE</span>
+    </p>
+    <div class="hero-cta">
+      <a class="btn btn-primary btn-lg" href="https://github.com/WYHCIPUC/GmwRadar" rel="noopener" target="_blank">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2.1c-3.3.7-4-1.6-4-1.6-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-6 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.7-2.8 5.7-5.5 6 .4.4.8 1.1.8 2.3v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .3z"/></svg>
+        查看 GitHub 仓库
+      </a>
+      <a class="btn btn-ghost btn-lg" href="#command">
+        进入指挥台
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+    <div class="hero-meta">
+      <span class="hero-meta-item">GPL-3.0 LICENSE</span>
+      <span class="hero-meta-item info">PYTHON 3.10+</span>
+      <span class="hero-meta-item">DOCKER READY</span>
+      <span class="hero-meta-item info">MCP COMPATIBLE</span>
+    </div>
+  </div>
+
+  <div class="scroll-hint">SCROLL · 探索</div>
+</header>
+
+<!-- ============ COMMAND BAR (4 决策卡) ============ -->
+<section id="command" style="padding-top:0;padding-bottom:48px;position:relative">
+  <div class="container">
+    <div class="command-bar">
+      <div class="glass-card command-card reveal">
+        <div class="label"><span class="mono-tag"><span class="dot"></span>高风险事件</span></div>
+        <div class="value"><span data-count="23">0</span><span class="unit">/ 24h</span></div>
+        <div class="delta up">▲ +12.4%</div>
+        <div class="hint">较昨日新增 2 起，集中在美墨边境</div>
+      </div>
+      <div class="glass-card command-card reveal">
+        <div class="label"><span class="mono-tag cyan"><span class="dot"></span>待处理告警</span></div>
+        <div class="value"><span data-count="7">0</span><span class="unit">条</span></div>
+        <div class="delta down">▼ 3 待确认</div>
+        <div class="hint">2 条已超 4h 未响应</div>
+      </div>
+      <div class="glass-card command-card reveal">
+        <div class="label"><span class="mono-tag"><span class="dot"></span>今日新增</span></div>
+        <div class="value"><span data-count="347">0</span><span class="unit">事件</span></div>
+        <div class="delta up">▲ +28.7%</div>
+        <div class="hint">报道热度 vs 真实规模比例 1:4.2</div>
+      </div>
+      <div class="glass-card command-card reveal">
+        <div class="label"><span class="mono-tag purple"><span class="dot"></span>AI 调用</span></div>
+        <div class="value"><span data-count="2847">0</span><span class="unit">次</span></div>
+        <div class="delta up">▲ +6.3%</div>
+        <div class="hint">平均耗时 1.4s · 成功率 99.2%</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TICKER ============ -->
+<section class="ticker" aria-label="核心指标" style="padding:0">
+  <div class="container">
+    <div class="ticker-inner">
+      <div class="ticker-item">
+        <div class="label">媒体源</div>
+        <div class="num" data-count="70" data-suffix="+">0</div>
+      </div>
+      <div class="ticker-item">
+        <div class="label">推送通道</div>
+        <div class="num cyan" data-count="9">0</div>
+      </div>
+      <div class="ticker-item">
+        <div class="label">MCP 工具</div>
+        <div class="num" data-count="27">0</div>
+      </div>
+      <div class="ticker-item">
+        <div class="label">API 端点</div>
+        <div class="num cyan" data-count="160" data-suffix="+">0</div>
+      </div>
+      <div class="ticker-item">
+        <div class="label">数据表</div>
+        <div class="num" data-count="19">0</div>
+      </div>
+      <div class="ticker-item">
+        <div class="label">国家情报卡</div>
+        <div class="num cyan" data-count="260">0</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LIVE FEED ============ -->
+<section id="feed">
+  <div class="container">
+    <div class="sec-head reveal">
+      <div class="sec-eyebrow"><span class="num">/ 01</span><span>LIVE INTEL FEED</span></div>
+      <h2 class="sec-title">实时<span class="accent">情报流</span></h2>
+      <p class="sec-sub">按时间倒序展示最近被纳入事件库的报道。每条记录已经过 AI 双重筛选 + 风险评级，支持点击进入详情查看 TL;DR 与跨源验证。</p>
+    </div>
+    <div class="live-feed glass-card with-corners reveal" id="liveFeed" style="padding:14px">
+      <!-- 由 demo.js 动态填充 + 初始示例 -->
+      <div class="glass-card live-feed-row">
+        <div class="meta"><span class="src">REUTERS</span><span class="time">2 分钟前</span></div>
+        <div class="body">美国南部边境单日拦截非法入境人数 <strong>创年内新高</strong>，CBP 启动额外安置预案。</div>
+        <span class="risk high">高风险</span>
+      </div>
+      <div class="glass-card live-feed-row">
+        <div class="meta"><span class="src">BBC</span><span class="time">8 分钟前</span></div>
+        <div class="body">德国联邦内政部宣布延长 <strong>波兰边境临时管控</strong> 30 天。</div>
+        <span class="risk mid">中风险</span>
+      </div>
+      <div class="glass-card live-feed-row">
+        <div class="meta"><span class="src">NHK</span><span class="time">14 分钟前</span></div>
+        <div class="body">日本法务省公布新财年 <strong>特定技能 2 号签证</strong> 扩容草案。</div>
+        <span class="risk low">低风险</span>
+      </div>
+      <div class="glass-card live-feed-row">
+        <div class="meta"><span class="src">半岛电视台</span><span class="time">21 分钟前</span></div>
+        <div class="body">土耳其与希腊边境 <strong>难民船倾覆事件</strong> 引发地区外交斡旋。</div>
+        <span class="risk high">高风险</span>
+      </div>
+      <div class="glass-card live-feed-row">
+        <div class="meta"><span class="src">LE MONDE</span><span class="time">34 分钟前</span></div>
+        <div class="body">法国议会通过法案，强化 <strong>庇护申请材料数字化</strong> 与审核时限。</div>
+        <span class="risk mid">中风险</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ VALUE ============ -->
+<section id="why">
+  <div class="container">
+    <div class="sec-head reveal">
+      <div class="sec-eyebrow"><span class="num">/ 02</span><span>WHY GLIDE</span></div>
+      <h2 class="sec-title">从碎片化资讯，到<span class="accent">可决策情报</span></h2>
+      <p class="sec-sub">移民与边境安全是高度敏感、跨语种、跨时区的垂直领域。泛资讯聚合器无法满足研究、决策与现场响应的深度需求。GLIDE 围绕"事件"重新设计了情报工作流。</p>
+    </div>
+    <div class="values-grid">
+      <div class="glass-card with-corners value-card reveal">
+        <div class="icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12a9 9 0 1 0 18 0 9 9 0 0 0-18 0z"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>
+        </div>
+        <h3>多源聚合 · 零噪声</h3>
+        <p>NewsNow API（40+ 平台）+ RSS（30+ 源）+ JS 渲染（Obscura CDP），全部优先抓取中文版与官方渠道，第一时间覆盖全球动态。</p>
+      </div>
+      <div class="glass-card with-corners value-card reveal">
+        <div class="icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+        </div>
+        <h3>双重 AI 筛选</h3>
+        <p>关键词硬筛 + LiteLLM 语义评分（0.7 分阈值），事件相关性二次校验，将噪声压到 5% 以下，保留高置信度信号。</p>
+      </div>
+      <div class="glass-card with-corners value-card reveal">
+        <div class="icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 3v18h18M7 14l3-3 4 4 5-6"/></svg>
+        </div>
+        <h3>事件化治理</h3>
+        <p>同一事件的多篇报道自动聚类、跨源验证、生命周期跟踪；实体抽取构建知识图谱，把新闻列表升级为可追溯的事件库。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CAPABILITIES (四视图) ============ -->
+<section id="capabilities">
+  <div class="container">
+    <div class="sec-head reveal">
+      <div class="sec-eyebrow"><span class="num">/ 03</span><span>CORE CAPABILITIES</span></div>
+      <h2 class="sec-title">四视图情报<span class="accent">工作台</span></h2>
+      <p class="sec-sub">将 6 阶段管道（Crawler → AI Filter → Storage → Analyzer → Renderer → Dispatcher）的输出，落地为可直接操作的四个分析视角。</p>
+    </div>
+    <div class="caps-grid">
+      <article class="glass-card with-corners cap-card reveal">
+        <div class="head">
+          <span class="num">01 / OVERVIEW</span>
+          <span class="badge">态势总览</span>
+        </div>
+        <h3>指挥中心 · 上帝视角</h3>
+        <p>一屏掌握全球移民态势：关键词态势矩阵、来源分布、风险事件计数、24h 趋势曲线。所有指标同步推送告警阈值。</p>
+        <div class="tags">
+          <span class="tag">关键词矩阵</span>
+          <span class="tag">来源画像</span>
+          <span class="tag">趋势预测</span>
+        </div>
+        <div class="visual"><div class="cap-visual-bars"></div></div>
+      </article>
+      <article class="glass-card with-corners cap-card reveal">
+        <div class="head">
+          <span class="num">02 / STREAM</span>
+          <span class="badge">情报流</span>
+        </div>
+        <h3>实时流 · AI 解读</h3>
+        <p>实时新闻流，支持 AI 分类 / 风险等级 / 国家 / 来源多维筛选。点开任意一条即可触发 AI 深度分析与 TL;DR。</p>
+        <div class="tags">
+          <span class="tag">AI 分类</span>
+          <span class="tag">风险评级</span>
+          <span class="tag">深度解读</span>
+        </div>
+        <div class="visual"><div class="cap-visual-line"></div></div>
+      </article>
+      <article class="glass-card with-corners cap-card reveal">
+        <div class="head">
+          <span class="num">03 / EVENTS</span>
+          <span class="badge">事件库</span>
+        </div>
+        <h3>事件库 · 证据链</h3>
+        <p>事件聚类、合并、拆分、生命周期跟踪、跨源验证、审计日志。把零散新闻汇聚为完整证据链，可追溯、可审计。</p>
+        <div class="tags">
+          <span class="tag">聚类去重</span>
+          <span class="tag">生命周期</span>
+          <span class="tag">跨源验证</span>
+        </div>
+        <div class="visual"><div class="cap-visual-dots"></div></div>
+      </article>
+      <article class="glass-card with-corners cap-card reveal">
+        <div class="head">
+          <span class="num">04 / MAP</span>
+          <span class="badge">地图</span>
+        </div>
+        <h3>地图 · 260 国情报卡</h3>
+        <p>ECharts 世界地图 + 点击国家弹出 CIA Factbook 260 国情报卡片（中文化），覆盖政体 / GDP / 人口 / 边境等核心字段。</p>
+        <div class="tags">
+          <span class="tag">全球地图</span>
+          <span class="tag">260 国情报卡</span>
+          <span class="tag">热点脉冲</span>
+        </div>
+        <div class="visual"><div class="cap-visual-map"></div></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ VISUALIZATION ============ -->
+<section id="viz">
+  <div class="container">
+    <div class="sec-head reveal">
+      <div class="sec-eyebrow"><span class="num">/ 04</span><span>DATA VISUALIZATION</span></div>
+      <h2 class="sec-title">可视化<span class="accent">预览</span></h2>
+      <p class="sec-sub">以下为产品内典型图表样式（数据为演示用 mock）。完整实时视图需本地启动 <code>python web_server.py</code>。</p>
+    </div>
+    <div class="charts-wrap">
+      <div class="glass-card with-corners chart-card reveal">
+        <h4>关键词态势矩阵 <span class="mono-tag"><span class="dot"></span>RADAR</span></h4>
+        <div class="sub">TOP-12 KEYWORDS · 30D</div>
+        <div class="chart" id="chartRadar"></div>
+      </div>
+      <div class="glass-card with-corners chart-card reveal">
+        <h4>事件趋势 · 30 天 <span class="mono-tag cyan"><span class="dot"></span>TREND</span></h4>
+        <div class="sub">NEW / FOLLOW-UP / CLOSED</div>
+        <div class="chart" id="chartTrend"></div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px">
+      <div class="glass-card with-corners chart-card reveal">
+        <h4>国家分布热力 <span class="mono-tag"><span class="dot"></span>BAR</span></h4>
+        <div class="sub">TOP-15 COUNTRIES</div>
+        <div class="chart" id="chartBar" style="height:300px"></div>
+      </div>
+      <div class="glass-card with-corners chart-card reveal">
+        <h4>推送渠道占比 <span class="mono-tag purple"><span class="dot"></span>RING</span></h4>
+        <div class="sub">9 CHANNELS · LAST 30D</div>
+        <div class="chart" id="chartRing" style="height:300px"></div>
+      </div>
+    </div>
+    <div class="glass-card with-corners chart-card reveal" style="margin-top:18px">
+      <h4>AI 模型调用分布 <span class="mono-tag cyan"><span class="dot"></span>LLM</span></h4>
+      <div class="sub">LITELLM · UNIFIED INTERFACE</div>
+      <div class="chart" id="chartAi" style="height:280px"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ARCHITECTURE ============ -->
+<section id="arch">
+  <div class="container">
+    <div class="sec-head reveal">
+      <div class="sec-eyebrow"><span class="num">/ 05</span><span>ARCHITECTURE</span></div>
+      <h2 class="sec-title">6 阶段<span class="accent">情报管道</span></h2>
+      <p class="sec-sub">从原始文本到结构化情报的完整链路，每一阶段都有可观测、可干预的中间产物。</p>
+    </div>
+    <div class="arch-flow reveal">
+      <div class="arch-step">
+        <div class="idx">STAGE 01</div>
+        <h5>Crawler</h5>
+        <p>NewsNow + RSS + Obscura CDP，覆盖 70+ 媒体源。</p>
+        <div class="glyph">httpx · feedparser</div>
+      </div>
+      <div class="arch-step">
+        <div class="idx">STAGE 02</div>
+        <h5>AI Filter</h5>
+        <p>关键词硬筛 + LiteLLM 语义评分，min_score=0.7。</p>
+        <div class="glyph">DeepSeek · GLM</div>
+      </div>
+      <div class="arch-step">
+        <div class="idx">STAGE 03</div>
+        <h5>Storage</h5>
+        <p>SQLite 按日切分 + system.db 集中库（19 表）。</p>
+        <div class="glyph">SQLite · S3</div>
+      </div>
+      <div class="arch-step">
+        <div class="idx">STAGE 04</div>
+        <h5>Analyzer</h5>
+        <p>事件聚类、生命周期、知识图谱、实体提取。</p>
+        <div class="glyph">NetworkX · SpaCy</div>
+      </div>
+      <div class="arch-step">
+        <div class="idx">STAGE 05</div>
+        <h5>Renderer</h5>
+        <p>HTML 月报、Markdown 简报、富文本卡片渲染。</p>
+        <div class="glyph">Jinja2 · MD</div>
+      </div>
+      <div class="arch-step">
+        <div class="idx">STAGE 06</div>
+        <h5>Dispatcher</h5>
+        <p>9 通道推送，自动拆分长消息，可视化分层。</p>
+        <div class="glyph">Webhook · SMTP</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SYSTEM STATUS ============ -->
+<section id="status">
+  <div class="container">
+    <div class="sec-head reveal">
+      <div class="sec-eyebrow"><span class="num">/ 06</span><span>SYSTEM STATUS</span></div>
+      <h2 class="sec-title">运行<span class="accent">状态</span>监控</h2>
+      <p class="sec-sub">在线控制台中"系统设置 → 健康检查"视图的快照。生产环境下数据从 SQLite 实时读取。</p>
+    </div>
+    <div class="status-panel">
+      <div class="glass-card with-corners status-card reveal">
+        <div class="head">
+          <span class="title">数据源状态</span>
+          <span class="status"><span class="dot"></span>ALL HEALTHY</span>
+        </div>
+        <div class="status-row"><span class="name"><code>newsnow</code>热榜抓取</span><span class="bar"><i style="width:94%"></i></span><span class="pct">94%</span></div>
+        <div class="status-row"><span class="name"><code>rss</code>RSS 订阅</span><span class="bar"><i style="width:88%"></i></span><span class="pct">88%</span></div>
+        <div class="status-row"><span class="name"><code>obscura</code>JS 渲染</span><span class="bar"><i style="width:76%"></i></span><span class="pct">76%</span></div>
+        <div class="status-row"><span class="name"><code>factbook</code>CIA 数据</span><span class="bar"><i style="width:100%"></i></span><span class="pct">100%</span></div>
+        <div class="status-row"><span class="name"><code>osint</code>开源情报</span><span class="bar warn"><i style="width:62%"></i></span><span class="pct">62%</span></div>
+      </div>
+      <div class="glass-card with-corners status-card reveal">
+        <div class="head">
+          <span class="title">通知与存储</span>
+          <span class="status"><span class="dot"></span>NOMINAL</span>
+        </div>
+        <div class="status-row"><span class="name"><code>webhook</code>企业微信</span><span class="bar"><i style="width:98%"></i></span><span class="pct">98%</span></div>
+        <div class="status-row"><span class="name"><code>feishu</code>飞书机器人</span><span class="bar"><i style="width:96%"></i></span><span class="pct">96%</span></div>
+        <div class="status-row"><span class="name"><code>dingtalk</code>钉钉</span><span class="bar"><i style="width:92%"></i></span><span class="pct">92%</span></div>
+        <div class="status-row"><span class="name"><code>telegram</code>Telegram Bot</span><span class="bar"><i style="width:99%"></i></span><span class="pct">99%</span></div>
+        <div class="status-row"><span class="name"><code>s3</code>远程备份</span><span class="bar"><i style="width:84%"></i></span><span class="pct">84%</span></div>
+      </div>
+      <div class="glass-card with-corners status-card reveal">
+        <div class="head">
+          <span class="title">AI 与过滤</span>
+          <span class="status"><span class="dot"></span>ACTIVE</span>
+        </div>
+        <div class="status-row"><span class="name"><code>keyword</code>关键词硬筛</span><span class="bar"><i style="width:100%"></i></span><span class="pct">100%</span></div>
+        <div class="status-row"><span class="name"><code>litellm</code>语义评分</span><span class="bar"><i style="width:97%"></i></span><span class="pct">97%</span></div>
+        <div class="status-row"><span class="name"><code>events</code>事件聚类</span><span class="bar"><i style="width:91%"></i></span><span class="pct">91%</span></div>
+        <div class="status-row"><span class="name"><code>entity</code>实体抽取</span><span class="bar"><i style="width:84%"></i></span><span class="pct">84%</span></div>
+        <div class="status-row"><span class="name"><code>graph</code>知识图谱</span><span class="bar"><i style="width:78%"></i></span><span class="pct">78%</span></div>
+      </div>
+      <div class="glass-card with-corners status-card reveal">
+        <div class="head">
+          <span class="title">服务端口</span>
+          <span class="status"><span class="dot"></span>LISTENING</span>
+        </div>
+        <div class="status-row"><span class="name"><code>8000</code>Web 控制台</span><span class="bar"><i style="width:100%"></i></span><span class="pct">UP</span></div>
+        <div class="status-row"><span class="name"><code>3333</code>MCP Server</span><span class="bar"><i style="width:100%"></i></span><span class="pct">UP</span></div>
+        <div class="status-row"><span class="name"><code>9000</code>日志采集</span><span class="bar"><i style="width:100%"></i></span><span class="pct">UP</span></div>
+        <div class="status-row"><span class="name"><code>health</code>健康检查</span><span class="bar"><i style="width:100%"></i></span><span class="pct">UP</span></div>
+        <div class="status-row"><span class="name"><code>metrics</code>Prometheus</span><span class="bar warn"><i style="width:55%"></i></span><span class="pct">OPT</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TECH STACK ============ -->
+<section id="stack">
+  <div class="container">
+    <div class="sec-head reveal">
+      <div class="sec-eyebrow"><span class="num">/ 07</span><span>STACK & SCALE</span></div>
+      <h2 class="sec-title">技术栈与<span class="accent">规模</span></h2>
+      <p class="sec-sub">Python 3.10+ / FastAPI / SQLite / Vue 3 / ECharts · Docker & MCP Ready。</p>
+    </div>
+    <div class="tech-wrap reveal">
+      <div>
+        <div class="badges">
+          <span class="badge">PYTHON 3.10+</span>
+          <span class="badge">FASTAPI</span>
+          <span class="badge">SQLITE</span>
+          <span class="badge">APSCHEDULER</span>
+          <span class="badge">LITELLM</span>
+          <span class="badge">DEEPSEEK</span>
+          <span class="badge">VUE 3</span>
+          <span class="badge">ECHARTS</span>
+          <span class="badge">FAST-MCP 2.0</span>
+          <span class="badge">DOCKER</span>
+          <span class="badge">PLAYWRIGHT</span>
+          <span class="badge">FEEDPARSER</span>
+          <span class="badge">NETWORKX</span>
+          <span class="badge">JINJA2</span>
+        </div>
+        <p class="tech-note">轻量级技术栈，单机 2C/2G 即可运行；模块化设计，每个组件可独立替换或扩展；面向生产稳定性设计（RLock、JWT、CSRF、TTL 自动清理）。</p>
+      </div>
+      <div class="stat-grid">
+        <div class="glass-card with-corners stat-card">
+          <div class="v" data-count="55" data-suffix="+">0</div>
+          <div class="l">维护脚本 / 自动化任务</div>
+        </div>
+        <div class="glass-card with-corners stat-card">
+          <div class="v" data-count="5">0</div>
+          <div class="l">调度预设（timeline.yaml）</div>
+        </div>
+        <div class="glass-card with-corners stat-card">
+          <div class="v" data-count="14">0</div>
+          <div class="l">核心 dataclass 模型</div>
+        </div>
+        <div class="glass-card with-corners stat-card">
+          <div class="v" data-count="8">0</div>
+          <div class="l">数据 / 治理 / 审计分组</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ QUICK START ============ -->
+<section id="start">
+  <div class="container">
+    <div class="sec-head reveal">
+      <div class="sec-eyebrow"><span class="num">/ 08</span><span>QUICK START</span></div>
+      <h2 class="sec-title">三步<span class="accent">启动</span></h2>
+      <p class="sec-sub">三种部署方式覆盖服务器 / 本地开发 / Windows 计划任务场景。</p>
+    </div>
+    <div class="tabs reveal" role="tablist">
+      <button class="tab active" data-tab="docker" role="tab">Docker</button>
+      <button class="tab" data-tab="local" role="tab">本地运行</button>
+      <button class="tab" data-tab="windows" role="tab">Windows 计划任务</button>
+    </div>
+    <div class="tab-panel active" data-panel="docker" role="tabpanel">
+      <div class="code-block glass-card with-corners">
+        <button class="copy-btn" data-copy>COPY</button>
+<pre><span class="c-cmt"># 1. 克隆</span>
+<span class="c-fn">git</span> clone https://github.com/WYHCIPUC/GmwRadar.git
+<span class="c-fn">cd</span> GmwRadar
+
+<span class="c-cmt"># 2. 配置 .env（必填 AI_API_KEY）</span>
+<span class="c-fn">cp</span> .env.example .env
+
+<span class="c-cmt"># 3. 启动</span>
+<span class="c-fn">cd</span> docker
+docker compose up -d
+docker logs GLIDE <span class="c-cmt">-f</span></pre>
+      </div>
+    </div>
+    <div class="tab-panel" data-panel="local" role="tabpanel">
+      <div class="code-block glass-card with-corners">
+        <button class="copy-btn" data-copy>COPY</button>
+<pre><span class="c-cmt"># 1. 安装依赖</span>
+python -m venv .venv
+.venv\Scripts\activate      <span class="c-cmt"># Windows</span>
+pip install -r requirements.txt
+
+<span class="c-cmt"># 2. 配置 + 体检</span>
+<span class="c-fn">cp</span> .env.example .env       <span class="c-cmt"># 必填 AI_API_KEY</span>
+python -m GmwRadar --doctor
+
+<span class="c-cmt"># 3. 启动主程序 + Web 控制台</span>
+python -m GmwRadar
+python web_server.py       <span class="c-cmt"># http://localhost:8000</span></pre>
+      </div>
+    </div>
+    <div class="tab-panel" data-panel="windows" role="tabpanel">
+      <div class="code-block glass-card with-corners">
+        <button class="copy-btn" data-copy>COPY</button>
+<pre><span class="c-cmt"># 打开「任务计划程序」→ 创建基本任务</span>
+<span class="c-cmt"># 触发器：每天 / 每 30 分钟</span>
+<span class="c-cmt"># 操作：启动程序</span>
+
+程序:   <span class="c-str">python.exe</span>
+参数:   <span class="c-str">-m GmwRadar</span>
+起始位置: <span class="c-str">Y:\GmwRadar - Trae版</span>
+
+<span class="c-cmt"># 可选：附加任务启动 Web 控制台</span>
+参数:   <span class="c-str">web_server.py</span>
+环境:   <span class="c-key">WEB_PORT</span>=<span class="c-str">8000</span></pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="container">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <h4>GLIDE / <span class="v">V3.0</span></h4>
+        <p>开源 · 全球移民与边境安全情报工作台。<br/>由独立开发者维护，欢迎 Star、Issue 与 PR。</p>
+      </div>
+      <div class="foot-col">
+        <h5>资源</h5>
+        <ul>
+          <li><a href="https://github.com/WYHCIPUC/GmwRadar#readme" target="_blank" rel="noopener">README</a></li>
+          <li><a href="https://github.com/WYHCIPUC/GmwRadar/blob/main/CLAUDE.md" target="_blank" rel="noopener">CLAUDE.md</a></li>
+          <li><a href="https://github.com/WYHCIPUC/GmwRadar/releases" target="_blank" rel="noopener">Release Notes</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h5>组件</h5>
+        <ul>
+          <li><a href="https://github.com/WYHCIPUC/GmwRadar/tree/main/mcp_server" target="_blank" rel="noopener">MCP Server</a></li>
+          <li><a href="https://github.com/WYHCIPUC/GmwRadar/tree/main/docker" target="_blank" rel="noopener">Docker</a></li>
+          <li><a href="https://github.com/WYHCIPUC/GmwRadar/tree/main/scripts" target="_blank" rel="noopener">维护脚本</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h5>社区</h5>
+        <ul>
+          <li><a href="https://github.com/WYHCIPUC/GmwRadar/issues" target="_blank" rel="noopener">Issues</a></li>
+          <li><a href="https://github.com/WYHCIPUC/GmwRadar/discussions" target="_blank" rel="noopener">Discussions</a></li>
+          <li><a href="https://github.com/WYHCIPUC/GmwRadar/blob/main/LICENSE" target="_blank" rel="noopener">License (GPL-3.0)</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2025–2026 GLIDE · GLOBAL IMMIGRATION DYNAMICS ENGINE</span>
+      <span>BUILT WITH ★ FOR OPEN-SOURCE INTELLIGENCE</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ SCRIPTS ============ -->
+<script defer src="./js/radar.js?v=3"></script>
+<script defer src="./js/charts.js?v=3"></script>
+<script defer src="./js/demo.js?v=3"></script>
+</body>
+</html>
