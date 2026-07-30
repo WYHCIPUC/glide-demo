@@ -4,7 +4,7 @@
    - 元素入场动效（IntersectionObserver + stagger）
    - 数字滚动计数
    - Tabs 切换 + 代码复制
-   - 实时情报流模拟循环
+   - 移动端导航
    ========================================================= */
 (function(){
   // —— 1. Nav 滚动毛玻璃 ——
@@ -161,57 +161,4 @@
     });
   });
 
-  // —— 8. 实时情报流循环（mock） ——
-  const feedEl = document.getElementById('liveFeed');
-  if(feedEl){
-    const samples = [
-      { src:'REUTERS',  time:'刚刚',    risk:'high', text:'美国南部边境单日拦截非法入境人数 <strong>创年内新高</strong>，CBP 启动额外安置预案。' },
-      { src:'BBC',      time:'2 分钟前', risk:'mid',  text:'德国联邦内政部宣布延长 <strong>波兰边境临时管控</strong> 30 天，理由：非法入境压力持续。' },
-      { src:'NHK',      time:'6 分钟前', risk:'low',  text:'日本法务省公布新财年 <strong>特定技能 2 号签证</strong> 扩容草案，覆盖 11 个行业。' },
-      { src:'半岛电视台', time:'11 分钟前', risk:'high', text:'土耳其与希腊边境 <strong>难民船倾覆事件</strong> 引发地区外交斡旋。' },
-      { src:'LE MONDE', time:'18 分钟前', risk:'mid',  text:'法国议会通过法案，强化 <strong>庇护申请材料数字化</strong> 与审核时限。' },
-      { src:'新华社',  time:'24 分钟前', risk:'low',  text:'外交部回应边境管理政策调整，强调 <strong>合法出入境渠道畅通</strong>。' },
-      { src:'ABC AU',   time:'32 分钟前', risk:'mid',  text:'澳大利亚宣布对部分太平洋岛国实施 <strong>特殊劳工签证试点</strong>。' },
-      { src:'CNN',      time:'41 分钟前', risk:'high', text:'美墨边境 <strong>人口走私网络</strong> 主嫌在德州落网，涉 14 州。' }
-    ];
-    let cursor = 0;
-    function prependNext(){
-      const item = samples[cursor % samples.length];
-      cursor++;
-      const row = document.createElement('div');
-      row.className = 'glass-card live-feed-row reveal';
-      row.innerHTML = `
-        <div class="meta">
-          <span class="src">${item.src}</span>
-          <span class="time">${item.time}</span>
-        </div>
-        <div class="body">${item.text}</div>
-        <span class="risk ${item.risk}">${item.risk === 'high' ? '高风险' : item.risk === 'mid' ? '中风险' : '低风险'}</span>
-      `;
-      row.style.opacity = '0';
-      row.style.transform = 'translateY(-8px)';
-      feedEl.insertBefore(row, feedEl.firstChild);
-      // 限制最多 5 行
-      while(feedEl.children.length > 5){
-        feedEl.removeChild(feedEl.lastChild);
-      }
-      requestAnimationFrame(() => {
-        row.style.transition = 'opacity .45s ease, transform .45s ease';
-        row.style.opacity = '1';
-        row.style.transform = 'none';
-      });
-    }
-    // 仅当可视时启动循环
-    let timer = null;
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if(e.isIntersecting && !timer){
-          timer = setInterval(prependNext, 4500);
-        } else if(!e.isIntersecting && timer){
-          clearInterval(timer); timer = null;
-        }
-      });
-    }, { threshold: 0.2 });
-    io.observe(feedEl);
-  }
 })();

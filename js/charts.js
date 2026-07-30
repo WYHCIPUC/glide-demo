@@ -5,8 +5,6 @@
   if(typeof echarts === 'undefined') return;
 
   const baseFont = "'Inter','Noto Sans SC',sans-serif";
-  const monoFont = "'JetBrains Mono',ui-monospace,Menlo,monospace";
-
   // 共用：暗色 tooltip
   function tooltip(){
     return {
@@ -18,7 +16,7 @@
     };
   }
 
-  // —— 1. 关键词态势矩阵 Radar ——
+  // —— 1. 事件证据丰富度 Radar（演示数据） ——
   const radarEl = document.getElementById('chartRadar');
   if(radarEl){
     const chart = echarts.init(radarEl, null, { renderer:'canvas' });
@@ -35,12 +33,9 @@
           }
         },
         indicator:[
-          {name:'边境执法', max:100}, {name:'难民潮', max:100},
-          {name:'签证政策', max:100}, {name:'人口走私', max:100},
-          {name:'遣返', max:100}, {name:'庇护申请', max:100},
-          {name:'边境墙', max:100}, {name:'偷渡', max:100},
-          {name:'收容', max:100}, {name:'驱逐', max:100},
-          {name:'安置', max:100}, {name:'合规', max:100}
+          {name:'跨源覆盖', max:100}, {name:'地点字段', max:100},
+          {name:'中文摘要', max:100}, {name:'实体关系', max:100},
+          {name:'人工复核', max:100}, {name:'生命周期', max:100}
         ]
       },
       series:[{
@@ -54,8 +49,8 @@
         },
         itemStyle:{ color:'#00d992' },
         data:[
-          { name:'本周',  value:[88, 82, 76, 70, 74, 68, 62, 65, 60, 72, 58, 64] },
-          { name:'上月',  value:[72, 68, 80, 60, 64, 70, 55, 58, 62, 60, 64, 58] }
+          { name:'丰富事件', value:[88, 92, 96, 76, 72, 90] },
+          { name:'待补充事件', value:[42, 64, 80, 28, 20, 54] }
         ]
       }]
     });
@@ -163,7 +158,7 @@
     window.addEventListener('resize', () => chart.resize());
   }
 
-  // —— 4. 推送渠道占比（环形图） ——
+  // —— 4. 信息来源构成（环形图，演示数据） ——
   const ringEl = document.getElementById('chartRing');
   if(ringEl){
     const chart = echarts.init(ringEl, null, { renderer:'canvas' });
@@ -180,48 +175,56 @@
         label:{ color:'#cbd6e0', fontSize:11, fontFamily: baseFont },
         labelLine:{ lineStyle:{ color:'rgba(0,217,146,0.3)' } },
         data:[
-          { value:32, name:'企业微信', itemStyle:{ color:'#00d992' } },
-          { value:24, name:'飞书',     itemStyle:{ color:'#00ffff' } },
-          { value:18, name:'钉钉',     itemStyle:{ color:'#2fd6a1' } },
-          { value:12, name:'Telegram', itemStyle:{ color:'#ffaa00' } },
-          { value: 8, name:'Email',    itemStyle:{ color:'#818cf8' } },
-          { value: 6, name:'其他',     itemStyle:{ color:'#4cb3d4' } }
+          { value:42, name:'热榜平台', itemStyle:{ color:'#00d992' } },
+          { value:38, name:'RSS',      itemStyle:{ color:'#00ffff' } },
+          { value:12, name:'OSINT',    itemStyle:{ color:'#ffaa00' } },
+          { value: 8, name:'人工导入', itemStyle:{ color:'#818cf8' } }
         ]
       }]
     });
     window.addEventListener('resize', () => chart.resize());
   }
 
-  // —— 5. AI 模型调用分布（横向 Bar） ——
+  // —— 5. 指标语义分层（等长仅表示四类独立口径） ——
   const aiEl = document.getElementById('chartAi');
   if(aiEl){
     const chart = echarts.init(aiEl, null, { renderer:'canvas' });
     chart.setOption({
-      tooltip: tooltip(),
-      grid:{ left:140, right:30, top:10, bottom:20 },
+      tooltip: Object.assign(tooltip(), {
+        formatter: function(params){
+          const descriptions = {
+            '报道热度':'媒体报道篇数、频次与来源覆盖',
+            '事件活跃度':'去重事件的新增、跟进与生命周期变化',
+            'AI 推断风险':'模型基于证据给出的风险分级，带不确定性',
+            '真实迁移规模':'需由官方统计、现场数据或可信实测支撑'
+          };
+          return `<strong>${params.name}</strong><br>${descriptions[params.name]}`;
+        }
+      }),
+      grid:{ left:126, right:30, top:10, bottom:20 },
       xAxis:{
-        type:'value',
-        axisLabel:{ color:'#6b7785', fontSize:10.5, fontFamily: baseFont },
-        splitLine:{ lineStyle:{ color:'rgba(0,217,146,0.07)', type:'dashed' } },
-        axisLine:{ show:false }, axisTick:{ show:false }
+        type:'value', max:100, show:false
       },
       yAxis:{
         type:'category',
-        data:['DeepSeek-V3','智谱 GLM-4','GPT-4o','Claude 3.5','Gemini Pro','通义千问','本地 Ollama'],
+        data:['真实迁移规模','AI 推断风险','事件活跃度','报道热度'],
         axisLabel:{ color:'#cbd6e0', fontSize:12, fontFamily: baseFont },
         axisLine:{ show:false }, axisTick:{ show:false }
       },
       series:[{
-        type:'bar', barWidth:16,
+        type:'bar', barWidth:22,
         itemStyle:{
-          borderRadius:[0,4,4,0],
-          color: new echarts.graphic.LinearGradient(0,0,1,0,[
-            {offset:0, color:'rgba(0, 217, 146, 0.18)'},
-            {offset:1, color:'#00d992'}
-          ])
+          borderRadius:[0,6,6,0],
+          color: function(params){
+            return ['#4cb3d4','#ffaa00','#00ffff','#00d992'][params.dataIndex];
+          },
+          opacity:0.78
         },
-        label:{ show:true, position:'right', color:'#a9b3bf', fontSize:10.5, fontFamily: baseFont },
-        data:[4280, 2340, 1280, 920, 540, 380, 220]
+        label:{
+          show:true, position:'insideRight', color:'#050507', fontWeight:700,
+          fontSize:11, fontFamily:baseFont, formatter:'独立口径'
+        },
+        data:[100,100,100,100]
       }]
     });
     window.addEventListener('resize', () => chart.resize());
