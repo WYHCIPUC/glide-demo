@@ -5,6 +5,9 @@
    - particle-canvas（hero 区 · 浮游微粒）
    ========================================================= */
 (function(){
+  const isCompact = window.matchMedia('(max-width: 560px)').matches;
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
   // —— Layer 1: 全页世界地图（ECharts geo · 缓慢漂移） ——
   function initWorldMap(){
     const el = document.getElementById('worldCanvas');
@@ -36,29 +39,34 @@
         }
       });
 
-      // 缓慢漂移循环：让 center 在小范围内周期性变化，形成"巡视地球"感
-      const PERIOD = 32; // 秒
+      // 低频漂移即可形成“巡视地球”感，避免每帧触发 ECharts 重绘。
+      const PERIOD = 32;
       const start = performance.now();
-      function driftFrame(now){
-        const t = (now - start) / 1000;
+      function updateDrift(){
+        const t = (performance.now() - start) / 1000;
         const phase = (t / PERIOD) * Math.PI * 2;
-        const cx = Math.sin(phase) * 6;          // 经度 ±6°
-        const cy = Math.cos(phase * 0.7) * 3.5;  // 纬度 ±3.5°
+        const cx = Math.sin(phase) * 6;
+        const cy = Math.cos(phase * 0.7) * 3.5;
         const zoom = 1.0 + Math.sin(phase * 0.5) * 0.04;
-        chart.setOption({
-          geo:{ center:[cx, cy], zoom:zoom }
-        }, false, false); // lazy update，不重新渲染整图
-        requestId = requestAnimationFrame(driftFrame);
+        chart.setOption({ geo:{ center:[cx, cy], zoom:zoom } }, false, true);
       }
-      let requestId = requestAnimationFrame(driftFrame);
+      let driftTimer = null;
+      const startDrift = () => {
+        if(driftTimer || isCompact || prefersReducedMotion) return;
+        updateDrift();
+        driftTimer = window.setInterval(updateDrift, 250);
+      };
+      const stopDrift = () => {
+        if(!driftTimer) return;
+        window.clearInterval(driftTimer);
+        driftTimer = null;
+      };
+      startDrift();
 
       // 页面不可见时暂停，可见时继续
       document.addEventListener('visibilitychange', () => {
-        if(document.hidden){
-          cancelAnimationFrame(requestId);
-        } else {
-          requestId = requestAnimationFrame(driftFrame);
-        }
+        if(document.hidden) stopDrift();
+        else startDrift();
       });
     }).catch(() => { /* 静默：失败时只显示雷达与粒子 */ });
 
@@ -197,7 +205,13 @@
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     }
 
+    let lastFrame = 0;
     function frame(now){
+      if(isCompact && now - lastFrame < 33){
+        raf = requestAnimationFrame(frame);
+        return;
+      }
+      lastFrame = now;
       t = now;
       ctx.clearRect(0, 0, w, h);
       const cx = w * 0.5, cy = h * 0.55;
@@ -225,7 +239,7 @@
     if(!canvas) return;
     const ctx = canvas.getContext('2d', { alpha:true });
     let w=0, h=0, dpr=1, raf=0;
-    const COUNT = 70;
+    const COUNT = isCompact ? 28 : 70;
     const particles = [];
 
     function rand(a, b){ return a + Math.random() * (b - a); }
@@ -285,8 +299,10 @@
 
   // —— 启动三层 ——
   initWorldMap();
-  initRadar();
-  initParticles();
+  if(!prefersReducedMotion){
+    initRadar();
+    initParticles();
+  }
 
   // —— Telemetry Clock ——
   function startClock(){

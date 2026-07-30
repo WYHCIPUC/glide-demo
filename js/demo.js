@@ -124,26 +124,20 @@
   const burger = document.querySelector('.nav-burger');
   const links  = document.querySelector('.nav-links');
   if(burger && links){
+    burger.setAttribute('aria-expanded', 'false');
     burger.addEventListener('click', () => {
       const open = links.classList.toggle('open');
       burger.setAttribute('aria-expanded', String(open));
-      if(open){
-        Object.assign(links.style, {
-          display:'flex', flexDirection:'column', position:'absolute',
-          top:'64px', left:'0', right:'0', padding:'14px 20px',
-          background:'rgba(5,5,7,0.95)', backdropFilter:'blur(20px) saturate(180%)',
-          borderBottom:'1px solid rgba(0, 217, 146, 0.18)', gap:'4px',
-          zIndex:'99'
-        });
-        links.querySelectorAll('a').forEach(a => Object.assign(a.style, { padding:'12px 14px', color:'#cbd6e0' }));
-      } else {
-        links.removeAttribute('style');
-        links.querySelectorAll('a').forEach(a => a.style.cssText = '');
-      }
     });
     links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
       if(links.classList.contains('open')) burger.click();
     }));
+    window.addEventListener('resize', () => {
+      if(window.innerWidth > 1100 && links.classList.contains('open')){
+        links.classList.remove('open');
+        burger.setAttribute('aria-expanded', 'false');
+      }
+    });
   }
 
   // —— 7. 平滑滚动到锚点 ——
