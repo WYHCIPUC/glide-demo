@@ -7,7 +7,7 @@
    - 移动端导航
    ========================================================= */
 (function(){
-  // —— 1. Nav 滚动毛玻璃 ——
+  // —— 1. Nav 滚动状态、阅读进度与当前章节 ——
   const nav = document.getElementById('nav');
   if(nav){
     let ticking = false;
@@ -15,6 +15,8 @@
       if(!ticking){
         requestAnimationFrame(() => {
           nav.classList.toggle('scrolled', window.scrollY > 24);
+          const maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+          nav.style.setProperty('--scroll-progress', Math.min(1, window.scrollY / maxScroll).toFixed(4));
           ticking = false;
         });
         ticking = true;
@@ -22,6 +24,24 @@
     };
     window.addEventListener('scroll', onScroll, { passive:true });
     onScroll();
+  }
+  const navAnchors = Array.from(document.querySelectorAll('.nav-links a[href^="#"]'));
+  if('IntersectionObserver' in window && navAnchors.length){
+    const navTargets = navAnchors
+      .map(link => ({ link, section:document.querySelector(link.getAttribute('href')) }))
+      .filter(item => item.section);
+    const sectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(!entry.isIntersecting) return;
+        navTargets.forEach(item => {
+          const active = item.section === entry.target;
+          item.link.classList.toggle('active', active);
+          if(active) item.link.setAttribute('aria-current', 'location');
+          else item.link.removeAttribute('aria-current');
+        });
+      });
+    }, { rootMargin:'-28% 0px -62% 0px', threshold:0 });
+    navTargets.forEach(item => sectionObserver.observe(item.section));
   }
 
   // —— 2. IntersectionObserver 入场动效 ——
@@ -88,13 +108,33 @@
   const tabs = document.querySelectorAll('.tab[data-tab]');
   const panels = document.querySelectorAll('.tab-panel[data-panel]');
   if(tabs.length){
-    tabs.forEach(t => {
+    const activateTab = (selected) => {
+      const key = selected.dataset.tab;
+      tabs.forEach(tab => {
+        const active = tab === selected;
+        tab.classList.toggle('active', active);
+        tab.setAttribute('aria-selected', String(active));
+      });
+      panels.forEach(panel => {
+        const active = panel.dataset.panel === key;
+        panel.classList.toggle('active', active);
+        panel.hidden = !active;
+      });
+    };
+    tabs.forEach((t) => {
+      const key = t.dataset.tab;
+      const panel = document.querySelector(`.tab-panel[data-panel="${key}"]`);
+      t.id = `tab-${key}`;
+      t.setAttribute('aria-controls', `panel-${key}`);
+      if(panel){
+        panel.id = `panel-${key}`;
+        panel.setAttribute('aria-labelledby', t.id);
+      }
       t.addEventListener('click', () => {
-        const key = t.dataset.tab;
-        tabs.forEach(x => x.classList.toggle('active', x === t));
-        panels.forEach(p => p.classList.toggle('active', p.dataset.panel === key));
+        activateTab(t);
       });
     });
+    activateTab(document.querySelector('.tab.active[data-tab]') || tabs[0]);
   }
 
   // —— 5. 代码复制 ——
@@ -106,12 +146,10 @@
         await navigator.clipboard.writeText(block.innerText);
         const old = btn.textContent;
         btn.textContent = 'COPIED';
-        btn.style.color = '#00d992';
-        btn.style.borderColor = '#00d992';
+        btn.classList.add('copied');
         setTimeout(() => {
           btn.textContent = old;
-          btn.style.color = '';
-          btn.style.borderColor = '';
+          btn.classList.remove('copied');
         }, 1600);
       } catch(e){
         btn.textContent = 'ERROR';

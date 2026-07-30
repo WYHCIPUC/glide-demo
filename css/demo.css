@@ -183,6 +183,11 @@ img,svg{display:block;max-width:100%}
    ========================================================= */
 .container{max-width:1240px; margin:0 auto; padding:0 32px; position:relative; z-index:var(--z-content)}
 section{padding:110px 0; position:relative; z-index:var(--z-content)}
+#why,#viz,#status,#start{
+  background:linear-gradient(180deg, var(--emerald-03), transparent);
+  border-top:1px solid var(--emerald-06);
+  border-bottom:1px solid var(--emerald-06);
+}
 
 /* =========================================================
    顶部 Telemetry Strip（极薄状态条）
@@ -216,6 +221,12 @@ section{padding:110px 0; position:relative; z-index:var(--z-content)}
   transition:background var(--transition-speed) ease, border-color var(--transition-speed) ease;
 }
 .nav.scrolled{background:rgba(5,5,7,0.85); border-bottom-color:var(--emerald-18)}
+.scroll-progress{position:absolute; left:0; right:0; bottom:-1px; height:2px; overflow:hidden; pointer-events:none}
+.scroll-progress span{
+  display:block; width:100%; height:100%; transform:scaleX(var(--scroll-progress, 0));
+  transform-origin:left center; background:linear-gradient(90deg,var(--accent-emerald),var(--accent-cyan));
+  box-shadow:0 0 10px var(--accent-emerald); transition:transform 80ms linear;
+}
 .nav-inner{display:flex; align-items:center; justify-content:space-between; height:100%}
 .nav-brand{display:flex; align-items:center; gap:12px; font-family:var(--font-mono); font-weight:700}
 .nav-brand .logo{width:32px;height:32px; border-radius:8px; overflow:hidden; border:1px solid var(--emerald-25)}
@@ -229,6 +240,13 @@ section{padding:110px 0; position:relative; z-index:var(--z-content)}
   position:relative; transition:color var(--transition-speed) ease, background var(--transition-speed) ease;
 }
 .nav-links a:hover{color:var(--accent-emerald); background:var(--emerald-06)}
+.nav-links a.active,.nav-links a[aria-current="location"]{
+  color:var(--accent-emerald); background:var(--emerald-06);
+}
+.nav-links a.active::after,.nav-links a[aria-current="location"]::after{
+  content:""; position:absolute; left:14px; right:14px; bottom:4px;
+  height:1px; background:var(--accent-emerald); box-shadow:0 0 6px var(--accent-emerald);
+}
 .nav-cta{display:flex; gap:10px; align-items:center}
 .nav-burger{
   display:none; width:38px; height:38px; align-items:center; justify-content:center;
@@ -257,12 +275,13 @@ section{padding:110px 0; position:relative; z-index:var(--z-content)}
 }
 .btn-primary{
   border-color:var(--accent-emerald);
-  color:var(--accent-emerald);
-  background:rgba(0, 217, 146, 0.06);
+  color:var(--bg-abyss);
+  background:var(--accent-emerald);
+  box-shadow:var(--glow-emerald);
 }
 .btn-primary:hover{
-  background:var(--accent-emerald);
-  color:#050507;
+  background:var(--accent-mint);
+  color:var(--bg-abyss);
   box-shadow:var(--glow-emerald);
 }
 .btn-ghost{
@@ -403,14 +422,16 @@ section{padding:110px 0; position:relative; z-index:var(--z-content)}
   box-shadow:inset 0 1px 0 rgba(255, 255, 255, 0.02);
   transition:border-color var(--transition-speed) ease, transform var(--transition-normal) ease, box-shadow var(--transition-normal) ease;
 }
-.glass-card:hover{
-  border-color:var(--emerald-25);
-  transform:translateY(-3px);
-  box-shadow:var(--shadow-hover), inset 0 1px 0 rgba(255, 255, 255, 0.02);
+@media (hover:hover){
+  .glass-card:hover{
+    border-color:var(--emerald-25);
+    transform:translateY(-3px);
+    box-shadow:var(--shadow-hover), inset 0 1px 0 rgba(255, 255, 255, 0.02);
+  }
+  .glass-card.is-cyan:hover{border-color:var(--cyan-16)}
+  .glass-card.is-warning:hover{border-color:var(--color-warning-bright); box-shadow:0 0 20px rgba(255, 170, 0, 0.15), inset 0 1px 0 rgba(255,255,255,0.02)}
+  .glass-card.is-danger:hover{border-color:var(--color-danger); box-shadow:0 0 20px rgba(255, 68, 68, 0.15), inset 0 1px 0 rgba(255,255,255,0.02)}
 }
-.glass-card.is-cyan:hover{border-color:var(--cyan-16)}
-.glass-card.is-warning:hover{border-color:var(--color-warning-bright); box-shadow:0 0 20px rgba(255, 170, 0, 0.15), inset 0 1px 0 rgba(255,255,255,0.02)}
-.glass-card.is-danger:hover{border-color:var(--color-danger); box-shadow:0 0 20px rgba(255, 68, 68, 0.15), inset 0 1px 0 rgba(255,255,255,0.02)}
 
 /* —— HUD 角标卡片 —— */
 .glass-card.with-corners::before,
@@ -652,6 +673,7 @@ section{padding:110px 0; position:relative; z-index:var(--z-content)}
   transition:all var(--transition-speed) ease; text-transform:uppercase;
 }
 .copy-btn:hover{border-color:var(--accent-emerald); color:var(--accent-emerald)}
+.copy-btn.copied{border-color:var(--accent-emerald); color:var(--accent-emerald)}
 
 /* =========================================================
    Footer
