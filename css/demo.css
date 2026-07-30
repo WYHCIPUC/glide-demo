@@ -298,15 +298,18 @@ section{padding:110px 0; position:relative; z-index:var(--z-content)}
 .hero h1{
   font-family:var(--font-disp,'JetBrains Mono','Noto Sans SC');
   font-weight:800; line-height:1; letter-spacing:0.04em;
-  font-size:clamp(46px, 7vw, 96px); margin-bottom:24px;
+  font-size:clamp(20px, 5.1vw, 68px); margin-bottom:24px;
   color:#fff;
   text-shadow:0 0 30px rgba(0, 217, 146, 0.18);
+  display:flex; align-items:baseline; justify-content:center; gap:0.3em;
+  white-space:nowrap;
 }
 .hero h1 .accent{
   background:linear-gradient(135deg, var(--accent-emerald) 0%, var(--accent-mint) 50%, var(--accent-cyan) 100%);
   -webkit-background-clip:text; background-clip:text; color:transparent;
   display:inline-block;
 }
+.hero-title-cn{letter-spacing:0.02em}
 .hero-tagline{
   font-size:clamp(15px, 1.4vw, 17px); color:var(--text-secondary);
   max-width:720px; margin:0 auto 14px; line-height:1.75;
