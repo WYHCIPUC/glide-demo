@@ -1,13 +1,11 @@
 /* =========================================================
    GLIDE Demo · 主交互
    - 顶部导航毛玻璃化（滚动时）
-   - 元素入场动效（IntersectionObserver + stagger）
-   - 数字滚动计数
+   - 阅读进度与章节定位（品牌动效由 brand-motion.js 管理）
    - Tabs 切换 + 代码复制
    - 移动端导航
    ========================================================= */
 (function(){
-  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   // —— 1. Nav 滚动状态、阅读进度与当前章节 ——
   const nav = document.getElementById('nav');
   if(nav){
@@ -31,79 +29,21 @@
     const navTargets = navAnchors
       .map(link => ({ link, section:document.querySelector(link.getAttribute('href')) }))
       .filter(item => item.section);
+    const visibleSections = new Set();
     const sectionObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
-        if(!entry.isIntersecting) return;
-        navTargets.forEach(item => {
-          const active = item.section === entry.target;
-          item.link.classList.toggle('active', active);
-          if(active) item.link.setAttribute('aria-current', 'location');
-          else item.link.removeAttribute('aria-current');
-        });
+        if(entry.isIntersecting) visibleSections.add(entry.target);
+        else visibleSections.delete(entry.target);
+      });
+      const current = navTargets.find(item => visibleSections.has(item.section));
+      navTargets.forEach(item => {
+        const active = item === current;
+        item.link.classList.toggle('active', active);
+        if(active) item.link.setAttribute('aria-current', 'location');
+        else item.link.removeAttribute('aria-current');
       });
     }, { rootMargin:'-28% 0px -62% 0px', threshold:0 });
     navTargets.forEach(item => sectionObserver.observe(item.section));
-  }
-
-  // —— 2. IntersectionObserver 入场动效 ——
-  const reveals = document.querySelectorAll('.reveal');
-  if('IntersectionObserver' in window && reveals.length && !reducedMotion){
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((e) => {
-        if(e.isIntersecting){
-          const parent = e.target.parentElement;
-          if(parent){
-            const siblings = Array.from(parent.children).filter(c => c.classList.contains('reveal'));
-            const idx = siblings.indexOf(e.target);
-            e.target.style.transitionDelay = Math.min(idx, 6) * 70 + 'ms';
-          }
-          e.target.classList.add('in');
-          io.unobserve(e.target);
-        }
-      });
-    }, { threshold: 0.12, rootMargin:'0px 0px -40px 0px' });
-    document.documentElement.classList.add('demo-motion-ready');
-    reveals.forEach(el => io.observe(el));
-  } else {
-    reveals.forEach(el => el.classList.add('in'));
-  }
-
-  // —— 3. 数字滚动计数 ——
-  function animateCount(el){
-    const target = parseFloat(el.dataset.count) || 0;
-    const decimals = parseInt(el.dataset.decimals || '0', 10);
-    const suffix = el.dataset.suffix || '';
-    const duration = reducedMotion ? 0 : 1400;
-    const start = performance.now();
-    const hasSmall = el.querySelector('small');
-    function step(now){
-      const p = duration === 0 ? 1 : Math.min(1, (now - start) / duration);
-      const e = 1 - Math.pow(1 - p, 3); // easeOutCubic
-      const v = target * e;
-      const txt = (decimals > 0 ? v.toFixed(decimals) : Math.round(v).toLocaleString()) + suffix;
-      if(hasSmall){
-        el.innerHTML = txt + hasSmall.outerHTML;
-      } else {
-        el.textContent = txt;
-      }
-      if(p < 1) requestAnimationFrame(step);
-    }
-    requestAnimationFrame(step);
-  }
-
-  const counters = document.querySelectorAll('[data-count]');
-  if('IntersectionObserver' in window && counters.length){
-    const cio = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if(e.isIntersecting){
-          animateCount(e.target);
-          cio.unobserve(e.target);
-        }
-      });
-    }, { threshold: 0.5 });
-    counters.forEach(el => cio.observe(el));
-  } else {
-    counters.forEach(el => animateCount(el));
   }
 
   // —— 4. Tabs 切换 ——
@@ -116,6 +56,7 @@
         const active = tab === selected;
         tab.classList.toggle('active', active);
         tab.setAttribute('aria-selected', String(active));
+        tab.tabIndex = active ? 0 : -1;
       });
       panels.forEach(panel => {
         const active = panel.dataset.panel === key;
@@ -135,6 +76,16 @@
       t.addEventListener('click', () => {
         activateTab(t);
       });
+      t.addEventListener('keydown', event => {
+        const keys = ['ArrowLeft', 'ArrowRight', 'Home', 'End'];
+        if(!keys.includes(event.key)) return;
+        event.preventDefault();
+        const index = Array.from(tabs).indexOf(t);
+        const target = event.key === 'Home' ? 0 : event.key === 'End' ? tabs.length - 1
+          : (index + (event.key === 'ArrowRight' ? 1 : -1) + tabs.length) % tabs.length;
+        activateTab(tabs[target]);
+        tabs[target].focus();
+      });
     });
     activateTab(document.querySelector('.tab.active[data-tab]') || tabs[0]);
   }
@@ -147,15 +98,15 @@
       try {
         await navigator.clipboard.writeText(block.innerText);
         const old = btn.textContent;
-        btn.textContent = 'COPIED';
+        btn.textContent = '已复制';
         btn.classList.add('copied');
         setTimeout(() => {
           btn.textContent = old;
           btn.classList.remove('copied');
         }, 1600);
       } catch(e){
-        btn.textContent = 'ERROR';
-        setTimeout(() => { btn.textContent = 'COPY'; }, 1200);
+        btn.textContent = '复制失败';
+        setTimeout(() => { btn.textContent = '复制'; }, 1200);
       }
     });
   });
@@ -173,9 +124,16 @@
       if(links.classList.contains('open')) burger.click();
     }));
     window.addEventListener('resize', () => {
-      if(window.innerWidth > 1100 && links.classList.contains('open')){
+      if(window.innerWidth > 960 && links.classList.contains('open')){
         links.classList.remove('open');
         burger.setAttribute('aria-expanded', 'false');
+      }
+    });
+    document.addEventListener('keydown', event => {
+      if(event.key === 'Escape' && links.classList.contains('open')){
+        links.classList.remove('open');
+        burger.setAttribute('aria-expanded', 'false');
+        burger.focus();
       }
     });
   }

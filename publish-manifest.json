@@ -1,10 +1,14 @@
 {
   "url": "https://wyhcipuc.github.io/glide-demo/",
-  "release": "2026-09-28.2",
+  "release": "2026-09-28.3",
   "files": [
-    ".nojekyll", "README.md", "LICENSE", "publish-manifest.json",
-    "index.html", "css/demo.css", "js/demo.js", "js/charts.js", "js/radar.js",
+    ".nojekyll", ".gitattributes", "README.md", "LICENSE", "publish-manifest.json", "ASSET-SOURCES.md",
+    "index.html", "css/demo.css", "js/demo.js", "js/charts.js", "js/radar.js", "js/brand-motion.js",
     "data/world.json", "assets/jingjian-symbol.png", "assets/logo.svg", "assets/favicon.svg", "assets/og.png",
-    "vendor/echarts.min.js", "vendor/LICENSE.txt", "vendor/NOTICE.txt"
+    "assets/jingjian-icon.png", "assets/jingjian-ui-satin-poster.webp", "assets/jingjian-ui-satin-loop.webm",
+    "assets/fonts/jingjian-sans.woff2", "assets/fonts/OFL.txt",
+    "vendor/echarts.min.js", "vendor/LICENSE.txt", "vendor/NOTICE.txt",
+    "vendor/gsap.min.js", "vendor/ScrollTrigger.min.js", "vendor/GSAP-README.md",
+    "vendor/lenis.min.js", "vendor/LENIS-LICENSE.txt"
   ]
 }
