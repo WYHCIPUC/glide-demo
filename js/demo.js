@@ -180,20 +180,8 @@
     });
   }
 
-  // —— 7. 平滑滚动到锚点 ——
-  document.querySelectorAll('a[href^="#"]').forEach(a => {
-    a.addEventListener('click', (e) => {
-      const id = a.getAttribute('href');
-      if(id.length > 1){
-        const target = document.querySelector(id);
-        if(target){
-          e.preventDefault();
-          const top = target.getBoundingClientRect().top + window.scrollY - 80;
-          window.scrollTo({ top, behavior:reducedMotion ? 'auto' : 'smooth' });
-        }
-      }
-    });
-  });
+  // 章节使用原生锚点，保留深链接、键盘跳转和浏览器前进后退。
+  // 滚动间距与减少动效由 CSS 统一处理。
 
   document.documentElement.classList.add('demo-ready');
 })();

@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>境鉴｜全球移民智能监测平台</title>
-  <meta name="description" content="境鉴 V4.1：面向全球移民与边境安全，集多源监测、事件研判、四个实战专题、国情资料和报告推送于一体。" />
-  <meta name="release" content="2026-09-28" />
+  <meta name="description" content="境鉴 V4.1：面向全球移民与边境安全，了解项目定位、功能全景、四专题业务应用、资料基础、研判成果和部署方式。" />
+  <meta name="release" content="2026-09-28.2" />
   <meta name="keywords" content="GLIDE, GmwRadar, 移民监测, OSINT, 情报系统, AI, 知识图谱, 边境安全, Factbook" />
   <meta name="theme-color" content="#050507" />
   <meta property="og:type" content="website" />
@@ -23,12 +23,13 @@
   <link rel="icon" type="image/png" href="./assets/jingjian-symbol.png" />
 
   <!-- 主样式 -->
-  <link rel="stylesheet" href="./css/demo.css?v=20260928">
+  <link rel="stylesheet" href="./css/demo.css?v=20260928.2">
 
   <!-- 显示资源随站发布，不依赖第三方 CDN。 -->
-  <script defer src="./vendor/echarts.min.js?v=20260928"></script>
+  <script defer src="./vendor/echarts.min.js?v=20260928.2"></script>
 </head>
 <body>
+<a class="skip-link" href="#main-content">跳到项目正文</a>
 
 <!-- 浮动光晕球 -->
 <div class="glow-orb glow-orb-1" aria-hidden="true"></div>
@@ -43,7 +44,7 @@
 </div>
 
 <!-- ============ TELEMETRY STRIP ============ -->
-<div class="telemetry" role="status" aria-label="系统遥测">
+<div class="telemetry" role="status" aria-label="项目信息">
   <div class="telemetry-left">
     <span class="telemetry-item"><span class="dot"></span><span>境鉴 · 产品介绍</span></span>
     <span class="telemetry-item"><span class="dot warn"></span><span>四个实战专题</span></span>
@@ -65,13 +66,12 @@
       <span class="ver">V4.1</span>
     </a>
     <div class="nav-links" id="primaryNav" role="navigation">
-      <a href="#command">指挥台</a>
-      <a href="#capabilities">工作台</a>
+      <a href="#project">项目概览</a>
+      <a href="#capabilities">功能全景</a>
       <a href="#topics">四个专题</a>
-      <a href="#viz">可视化</a>
-      <a href="#arch">架构</a>
-      <a href="#status">可靠性</a>
-      <a href="#start">快速开始</a>
+      <a href="#scenarios">应用场景</a>
+      <a href="#outputs">成果输出</a>
+      <a href="#start">部署使用</a>
     </div>
     <div class="nav-cta">
       <a class="btn btn-ghost" href="#start">部署方式</a>
@@ -108,8 +108,8 @@
     </div>
     <h1><span class="accent">境鉴</span><span class="hero-title-cn">全球移民智能监测平台</span></h1>
     <p class="hero-tagline">
-      从 <strong>70+ 信息源</strong> 到可追溯事件：采集、筛选、研判、推送一体化<br/>
-      立足广州，观察全球 · 涉外服务、偷渡态势、境外风险、全球暴恐
+      立足广州，观察全球。让分散的公开信息，成为<strong>可查证、可跟踪、可使用</strong>的研判材料。<br/>
+      连接日常监测、专题分析与报告提醒，服务移民管理和涉外业务工作。
     </p>
     <p class="hero-mono">
       <span class="a">GLOBAL MIGRATION INTELLIGENT MONITORING PLATFORM</span>
@@ -119,21 +119,64 @@
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
         了解四个实战专题
       </a>
-      <a class="btn btn-ghost btn-lg" href="#command">
-        浏览功能概览
+      <a class="btn btn-ghost btn-lg" href="#project">
+        了解项目全貌
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
       </a>
     </div>
     <div class="hero-meta">
-      <span class="hero-meta-item">GPL-3.0 LICENSE</span>
-      <span class="hero-meta-item info">PYTHON 3.10+</span>
-      <span class="hero-meta-item">DOCKER READY</span>
-      <span class="hero-meta-item info">MCP COMPATIBLE</span>
+      <span class="hero-meta-item">持续监测</span>
+      <span class="hero-meta-item info">专题研判</span>
+      <span class="hero-meta-item">中文成果</span>
+      <span class="hero-meta-item info">本地部署</span>
     </div>
   </div>
 
   <div class="scroll-hint">SCROLL · 探索</div>
 </header>
+
+
+<main id="main-content" tabindex="-1">
+<nav class="chapter-nav container" aria-label="项目导览">
+  <div class="chapter-label"><span class="mono-tag">项目导览</span><span>从项目定位，到业务应用与成果</span></div>
+  <div class="chapter-links">
+    <a href="#project">01 项目定位</a><a href="#why">02 建设价值</a><a href="#capabilities">03 功能全景</a>
+    <a href="#topics">04 四个专题</a><a href="#scenarios">05 应用场景</a><a href="#outputs">06 成果输出</a>
+    <a href="#foundation">07 资料与研判</a><a href="#viz">08 可视化</a><a href="#status">09 运行保障</a>
+    <a href="#start">10 部署使用</a><a href="#faq">11 常见问题</a>
+  </div>
+</nav>
+<section id="project" tabindex="-1">
+  <div class="container">
+    <div class="sec-head reveal">
+      <div class="sec-eyebrow"><span class="num">01</span><span>PROJECT OVERVIEW</span></div>
+      <h2 class="sec-title">一个持续积累的<span class="accent">移民与边境安全研判平台</span></h2>
+      <p class="sec-sub">境鉴面向全球移民政策、边境执法和涉外风险的日常观察，把信息监测、国家背景、事件证据和专题分析放在同一工作环境中。既能了解全球变化，也能围绕广州业务需要进入具体问题。</p>
+    </div>
+    <div class="project-split">
+      <div class="project-narrative">
+        <h3>每天面对的，不只是“有哪些新闻”</h3>
+        <p>一项入境政策调整、一场境外突发事件，或某条迁移路线的持续变化，往往分散在不同语言、不同网站和不同时间的材料中。业务工作需要知道发生了什么、前后有什么变化、依据在哪里，以及哪些内容值得持续关注。</p>
+        <p>境鉴先把信息整理为可阅读、可检索的资料与事件，再结合国家背景和专题视角形成分析材料。阅览者可以从最新判断进入图表、明细和原文，研判人员也可以从一条线索继续追踪其后续变化。</p>
+        <dl class="audience-list">
+          <div><dt>领导阅览</dt><dd>先看专题判断、重点变化与广州关联，快速定位需要进一步了解的问题。</dd></div>
+          <div><dt>业务研判</dt><dd>按国家、日期、主题和来源查资料，比较变化，核对依据，组织专题材料。</dd></div>
+          <div><dt>信息保障</dt><dd>维护监测来源、采集任务和通知配置，让资料积累与报告分发持续运行。</dd></div>
+        </dl>
+      </div>
+      <aside class="platform-map glass-card" aria-label="平台结构">
+        <div class="map-label">平台结构</div>
+        <div class="platform-layer"><strong>公开信息与背景资料</strong><span>新闻 · 政策 · 国情 · 时间节点 · 专题资料</span></div>
+        <span class="platform-arrow" aria-hidden="true">↓</span>
+        <div class="platform-layer"><strong>统一资料与事件底座</strong><span>中文阅读 · 关联来源 · 历史跟踪 · 检索复用</span></div>
+        <span class="platform-arrow" aria-hidden="true">↓</span>
+        <div class="platform-topics"><span>涉外服务管理</span><span>偷渡态势研判</span><span>境外风险传导</span><span>全球暴恐监测</span></div>
+        <span class="platform-arrow" aria-hidden="true">↓</span>
+        <div class="platform-layer"><strong>面向工作的研判成果</strong><span>简报 · 专题报告 · 变化提醒 · 可复用知识包</span></div>
+      </aside>
+    </div>
+  </div>
+</section>
 
 <!-- ============ COMMAND BAR (4 核心能力卡) ============ -->
 <section id="command" style="padding-top:0;padding-bottom:48px;position:relative">
@@ -152,10 +195,10 @@
         <div class="hint">简报、专题报告与重要变化提醒</div>
       </div>
       <div class="glass-card command-card reveal">
-        <div class="label"><span class="mono-tag"><span class="dot"></span>MCP 能力</span></div>
-        <div class="value"><span data-count="28">28</span><span class="unit">工具</span></div>
-        <div class="delta up">4 类资源</div>
-        <div class="hint">支持 stdio 与 HTTP，供 AI 客户端直接查询</div>
+        <div class="label"><span class="mono-tag"><span class="dot"></span>实战专题</span></div>
+        <div class="value"><span data-count="4">4</span><span class="unit">专题</span></div>
+        <div class="delta up">同一平台，四个业务视角</div>
+        <div class="hint">从专题判断进入分析、地图和资料依据</div>
       </div>
       <div class="glass-card command-card reveal">
         <div class="label"><span class="mono-tag purple"><span class="dot"></span>国家情报卡</span></div>
@@ -168,73 +211,22 @@
 </section>
 
 <!-- ============ TICKER ============ -->
-<section class="ticker" aria-label="核心指标" style="padding:0">
-  <div class="container">
-    <div class="ticker-inner">
-      <div class="ticker-item">
-        <div class="label">实战专题</div>
-        <div class="num" data-count="4">4</div>
-      </div>
-      <div class="ticker-item">
-        <div class="label">推送通道</div>
-        <div class="num cyan" data-count="9">9</div>
-      </div>
-      <div class="ticker-item">
-        <div class="label">MCP 工具</div>
-        <div class="num" data-count="28">28</div>
-      </div>
-      <div class="ticker-item">
-        <div class="label">显示模式</div>
-        <div class="num cyan" data-count="4">4</div>
-      </div>
-      <div class="ticker-item">
-        <div class="label">研判层次</div>
-        <div class="num" data-count="3">3</div>
-      </div>
-      <div class="ticker-item">
-        <div class="label">国家情报卡</div>
-        <div class="num cyan" data-count="260">260</div>
-      </div>
-    </div>
-  </div>
-</section>
 
 <!-- ============ WORKFLOW SAMPLE ============ -->
-<section id="feed">
+<section id="feed" class="workflow-section">
   <div class="container">
     <div class="sec-head reveal">
-      <div class="sec-eyebrow"><span class="num">/ 01</span><span>WORKFLOW SAMPLE · DEMO DATA</span></div>
-      <h2 class="sec-title">从报道进入<span class="accent">事件证据链</span></h2>
-      <p class="sec-sub">工作流示例 · 从原始报道、中文摘要到事件关联，逐步形成可追溯的研判依据。</p>
+      <div class="sec-eyebrow"><span>DAILY WORKFLOW</span></div>
+      <h2 class="sec-title">一条线索，怎样变成<span class="accent">可用的工作材料</span></h2>
+      <p class="sec-sub">围绕同一问题持续组织资料，既保留最初的信息，也能看到后续补充与变化。</p>
     </div>
-    <div class="live-feed glass-card with-corners reveal" id="liveFeed" style="padding:14px">
-      <!-- 静态演示数据：不暗示在线实时状态 -->
-      <div class="glass-card live-feed-row">
-        <div class="meta"><span class="src">来源 A</span><span class="time">原始报道</span></div>
-        <div class="body">边境管理政策出现调整信号，系统保留原文并生成<strong>中文展示摘要</strong>。</div>
-        <span class="risk high">高风险</span>
-      </div>
-      <div class="glass-card live-feed-row">
-        <div class="meta"><span class="src">来源 B</span><span class="time">跨源印证</span></div>
-        <div class="body">第二来源描述同一政策动作，自动聚类并补充<strong>时间、地点与机构实体</strong>。</div>
-        <span class="risk mid">中风险</span>
-      </div>
-      <div class="glass-card live-feed-row">
-        <div class="meta"><span class="src">AI 研判</span><span class="time">结构化</span></div>
-        <div class="body">提取重点变化、风险线索与弱信号，形成<strong>判断、依据与广州关联</strong>。</div>
-        <span class="risk low">低风险</span>
-      </div>
-      <div class="glass-card live-feed-row">
-        <div class="meta"><span class="src">事件治理</span><span class="time">持续跟踪</span></div>
-        <div class="body">同一事件支持合并、拆分、生命周期流转、专题收录与<strong>审计追溯</strong>。</div>
-        <span class="risk high">高风险</span>
-      </div>
-      <div class="glass-card live-feed-row">
-        <div class="meta"><span class="src">分发</span><span class="time">按需触达</span></div>
-        <div class="body">清洗后的情报进入日简报、月度研判与 9 类通知通道，支持<strong>跨日去重</strong>。</div>
-        <span class="risk mid">中风险</span>
-      </div>
-    </div>
+    <ol class="work-steps">
+      <li><span>01</span><h3>发现变化</h3><p>从已配置的信息源、重点国家和网页监测中获取新内容。</p></li>
+      <li><span>02</span><h3>读懂内容</h3><p>形成中文标题、摘要与重点信息，保留原文和来源入口。</p></li>
+      <li><span>03</span><h3>关联事件</h3><p>把相关报道放到同一事件下，串联时间、地点、主体与后续进展。</p></li>
+      <li><span>04</span><h3>进入专题</h3><p>结合历史背景和业务视角，查看变化、依据以及广州关联。</p></li>
+      <li><span>05</span><h3>形成成果</h3><p>整理为简报、报告、提醒或知识包，供阅览、会商与后续查询。</p></li>
+    </ol>
   </div>
 </section>
 
@@ -242,32 +234,14 @@
 <section id="why">
   <div class="container">
     <div class="sec-head reveal">
-      <div class="sec-eyebrow"><span class="num">/ 02</span><span>WHY THIS SYSTEM</span></div>
-      <h2 class="sec-title">从碎片化资讯，到<span class="accent">可决策情报</span></h2>
-      <p class="sec-sub">移民与边境安全是高度敏感、跨语种、跨时区的垂直领域。泛资讯聚合器无法满足研究、决策与现场响应的深度需求。境鉴围绕“事件”重新设计了情报工作流。</p>
+      <div class="sec-eyebrow"><span class="num">02</span><span>BUSINESS VALUE</span></div>
+      <h2 class="sec-title">把分散的阅读，变成<span class="accent">连续的业务观察</span></h2>
+      <p class="sec-sub">项目建设围绕三个日常需要展开：把信息找齐，把变化看清，把材料用起来。</p>
     </div>
     <div class="values-grid">
-      <div class="glass-card with-corners value-card reveal">
-        <div class="icon" aria-hidden="true">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12a9 9 0 1 0 18 0 9 9 0 0 0-18 0z"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>
-        </div>
-        <h3>多源聚合 · 持续监测</h3>
-        <p>连接热榜、RSS、公开网页与专题资料，集中跟踪跨语种、跨地区的政策与事件变化。</p>
-      </div>
-      <div class="glass-card with-corners value-card reveal">
-        <div class="icon" aria-hidden="true">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
-        </div>
-        <h3>双重 AI 筛选</h3>
-        <p>结合关键词与语义分析筛选相关内容，生成中文摘要，整理风险线索和重点变化。</p>
-      </div>
-      <div class="glass-card with-corners value-card reveal">
-        <div class="icon" aria-hidden="true">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 3v18h18M7 14l3-3 4 4 5-6"/></svg>
-        </div>
-        <h3>事件化治理</h3>
-        <p>同一事件的多篇报道自动聚类、跨源验证、生命周期跟踪；实体抽取构建知识图谱，把新闻列表升级为可追溯的事件库。</p>
-      </div>
+      <article class="glass-card value-card reveal"><div class="value-index">01 / 看得全</div><h3>集中获取与阅读</h3><p>跨语言、跨站点的信息集中到统一入口；国家资料、重要日期与专题材料可随时查阅，减少在多个来源之间反复切换。</p><p class="value-result">对应能力：公开信息采集、中文摘要、国家资料、网页变化监测。</p></article>
+      <article class="glass-card value-card reveal"><div class="value-index">02 / 看得深</div><h3>围绕问题持续研判</h3><p>不止呈现某一时点的报道，也把时间变化、地区分布、来源依据和相关背景放在一起，支持追问变化发生在哪里、有哪些关联。</p><p class="value-result">对应能力：事件跟踪、专题工作台、地图与趋势、依据阅读。</p></article>
+      <article class="glass-card value-card reveal"><div class="value-index">03 / 用得上</div><h3>沉淀为可复用成果</h3><p>已有资料可以继续用于简报、专题分析和知识整理；重要变化通过已配置渠道提醒，后续阅读仍能回到来源与历史记录。</p><p class="value-result">对应能力：每日简报、月度研判、专题报告、通知与知识导出。</p></article>
     </div>
   </div>
 </section>
@@ -276,96 +250,46 @@
 <section id="capabilities">
   <div class="container">
     <div class="sec-head reveal">
-      <div class="sec-eyebrow"><span class="num">/ 03</span><span>CORE CAPABILITIES</span></div>
-      <h2 class="sec-title">一体化情报<span class="accent">工作台</span></h2>
-      <p class="sec-sub">将采集、筛选、治理与分发落地为可操作的工作空间：既看全局趋势，也能进入单个事件的证据链，并把结果沉淀为专题和月度研判。</p>
+      <div class="sec-eyebrow"><span class="num">03</span><span>CAPABILITY DIRECTORY</span></div>
+      <h2 class="sec-title">从日常监测到资料积累，<span class="accent">功能全景一览</span></h2>
+      <p class="sec-sub">四个实战专题建立在共同的监测、事件和资料能力上。下面按实际工作入口说明各部分可以做什么。</p>
     </div>
-    <div class="caps-grid">
-      <article class="glass-card with-corners cap-card reveal">
-        <div class="head">
-          <span class="num">01 / OVERVIEW</span>
-          <span class="badge">态势总览</span>
+    <div class="capability-catalog">
+      <div class="catalog-group">
+        <div class="catalog-heading"><span>01</span><h3>核心中台</h3><p>了解运行情况，找到信息和事件。</p></div>
+        <div class="catalog-items">
+          <article data-module="dashboard"><h4>状态总览</h4><p>查看任务运行、采集产出和系统状态，发现需要关注的运行异常。</p></article>
+          <article data-module="overview"><h4>监测概况</h4><p>按日期查看信息分布、来源构成、关键词和变化趋势，建立对当前监测内容的整体认识。</p></article>
+          <article data-module="source_status"><h4>监控源状态</h4><p>查看来源分布、采集状态与更新时间，判断哪些渠道持续提供信息、哪些需要维护。</p></article>
+          <article data-module="feed"><h4>事件数据</h4><p>筛选和检索文章、事件；阅读中文摘要、正文与关联来源，追踪事件发展和历史变化。</p></article>
         </div>
-        <h3>态势总览 · 统一入口</h3>
-        <p>一屏查看监测概况、来源分布、关键词和事件趋势，按日期、地区与专题进入细节。</p>
-        <div class="tags">
-          <span class="tag">关键词矩阵</span>
-          <span class="tag">来源画像</span>
-          <span class="tag">趋势预测</span>
+      </div>
+      <div class="catalog-group">
+        <div class="catalog-heading"><span>02</span><h3>专项研判</h3><p>从国家、时间和网站变化进入问题。</p></div>
+        <div class="catalog-items">
+          <article data-module="monitoring_overview"><h4>专项运行总览</h4><p>集中查看各监测域的任务、最近运行与推送情况，掌握专项工作的运行进度。</p></article>
+          <article data-module="global_migration"><h4>全球移民动态</h4><p>围绕移民政策、边境执法与相关挑战持续观察，进入态势预警、每日简报和月度研判。</p></article>
+          <article data-module="country_monitoring"><h4>重点国家动态</h4><p>把国别背景资料与重点国家动态结合起来，查看人口、经济、政治、地理等信息及相关来源。</p></article>
+          <article data-module="timeline_monitoring"><h4>重要时间节点</h4><p>按日期检索全球重要节点、节庆与活动资料，辅助提前了解特定时间窗口的关注事项。</p></article>
+          <article data-module="webpage_monitoring"><h4>网页动态监测</h4><p>跟踪指定网页的内容变化，查看更新前后版本、变化阅读和历史推送记录。</p></article>
         </div>
-        <div class="visual"><div class="cap-visual-bars"></div></div>
-      </article>
-      <article class="glass-card with-corners cap-card reveal">
-        <div class="head">
-          <span class="num">02 / STREAM</span>
-          <span class="badge">情报流</span>
+      </div>
+      <div class="catalog-group">
+        <div class="catalog-heading"><span>03</span><h3>数据中台</h3><p>把已有内容组织为可检索的资料资产。</p></div>
+        <div class="catalog-items">
+          <article data-module="data_hub"><h4>综合治理与研判</h4><p>统一检索事件、文章与资料，组织专题分析；结合公开来源线索和实体关系，继续查找相关背景。</p></article>
+          <article data-module="knowledge_export"><h4>知识导出与复用</h4><p>按需要导出事件、报告和参考资料，生成可阅读文档与结构化知识文件，供离线查阅或知识库整理。</p></article>
         </div>
-        <h3>情报流 · AI 解读</h3>
-        <p>按分类、风险、国家与来源筛选报道，查看中文标题、TL;DR 与正文；抓取增强失败时保留可用的基础信息。</p>
-        <div class="tags">
-          <span class="tag">AI 分类</span>
-          <span class="tag">风险评级</span>
-          <span class="tag">深度解读</span>
+      </div>
+      <div class="catalog-group">
+        <div class="catalog-heading"><span>04</span><h3>系统设置</h3><p>按本地业务需要配置运行方式。</p></div>
+        <div class="catalog-items">
+          <article data-module="settings"><h4>来源、筛选与账号配置</h4><p>配置监测来源、关键词、AI 筛选、通知渠道和已启用账号；通过统一登录进入业务系统。</p></article>
+          <article data-module="themes"><h4>四套显示模式</h4><p>深色或浅色、经典或工作站，可按使用环境选择；核心内容与四个实战专题保持对应。</p></article>
         </div>
-        <div class="visual"><div class="cap-visual-line"></div></div>
-      </article>
-      <article class="glass-card with-corners cap-card reveal">
-        <div class="head">
-          <span class="num">03 / EVENTS</span>
-          <span class="badge">事件库</span>
-        </div>
-        <h3>事件库 · 证据链</h3>
-        <p>按事件汇集关联报道、时间、地点和机构线索；支持检索筛选、证据阅读、专题引用和历史追溯。</p>
-        <div class="tags">
-          <span class="tag">聚类去重</span>
-          <span class="tag">生命周期</span>
-          <span class="tag">跨源验证</span>
-        </div>
-        <div class="visual"><div class="cap-visual-dots"></div></div>
-      </article>
-      <article class="glass-card with-corners cap-card reveal">
-        <div class="head">
-          <span class="num">04 / MAP</span>
-          <span class="badge">地图</span>
-        </div>
-        <h3>地图 · 260 国情报卡</h3>
-        <p>全球热点与国家资料联动，覆盖政体、经济、人口和地理等字段，支持中文阅读与来源查阅。</p>
-        <div class="tags">
-          <span class="tag">全球地图</span>
-          <span class="tag">260 国情报卡</span>
-          <span class="tag">热点脉冲</span>
-        </div>
-        <div class="visual"><div class="cap-visual-map"></div></div>
-      </article>
-      <article class="glass-card with-corners cap-card reveal">
-        <div class="head">
-          <span class="num">05 / BRIEFING</span>
-          <span class="badge">研判</span>
-        </div>
-        <h3>简报 · 月度研判</h3>
-        <p>汇集每日动态与月度变化，围绕重点主题组织综合摘要、群体管理与影响、弱信号捕捉和专题报告。</p>
-        <div class="tags">
-          <span class="tag">每日简报</span>
-          <span class="tag">事件池</span>
-          <span class="tag">月度报告</span>
-        </div>
-        <div class="visual"><div class="cap-visual-line"></div></div>
-      </article>
-      <article class="glass-card with-corners cap-card reveal">
-        <div class="head">
-          <span class="num">06 / RESEARCH</span>
-          <span class="badge">研究工具</span>
-        </div>
-        <h3>OSINT · 图谱 · MCP</h3>
-        <p>辅助导入和解析 OSINT 线索，抽取实体关系构建知识图谱；28 个 MCP 工具让 AI 客户端直接查询本地情报资产。</p>
-        <div class="tags">
-          <span class="tag">OSINT</span>
-          <span class="tag">实体图谱</span>
-          <span class="tag">MCP 4.0</span>
-        </div>
-        <div class="visual"><div class="cap-visual-dots"></div></div>
-      </article>
+      </div>
     </div>
+    <p class="section-link">需要按具体业务了解？<a href="#topics">继续查看四个实战专题 →</a></p>
   </div>
 </section>
 
@@ -373,39 +297,102 @@
 <section id="topics">
   <div class="container">
     <div class="sec-head reveal">
-      <div class="sec-eyebrow"><span>FOUR PRACTICAL WORKSTATIONS</span></div>
-      <h2 class="sec-title">四个专题，<span class="accent">同一套研判工作台</span></h2>
-      <p class="sec-sub">长期基线 → 实时变化 → 组合研判。围绕最新判断、数据依据、分析视角与广州关联展开。</p>
+      <div class="sec-eyebrow"><span class="num">04</span><span>PRACTICAL WORKSTATIONS</span></div>
+      <h2 class="sec-title">四个实战专题，<span class="accent">四种业务观察视角</span></h2>
+      <p class="sec-sub">每个专题都从当前判断开始，再进入变化、地图、关联与资料明细。共同使用公开事实、系统研判和广州关联，也保留报告、提醒与版本更正能力。</p>
     </div>
     <div class="topics-grid">
-      <article class="glass-card cap-card reveal">
-        <div class="head"><span class="num">01 / FOREIGN SERVICE</span></div>
-        <h3>涉外服务管理</h3>
-        <p>联看广交会境外采购商、在穗领馆、国际学校与商协会资料，研判涉外服务需求和保障重点。</p>
-        <div class="tags"><span class="tag">在穗资源</span><span class="tag">会展变化</span><span class="tag">服务保障</span></div>
+      <article class="glass-card topic-card reveal" data-topic="foreign-service">
+        <div class="topic-kicker">01 / 涉外服务</div><h3>涉外服务管理</h3>
+        <p class="topic-question">会展活动与涉外资源有什么变化，服务工作应重点了解哪些情况？</p>
+        <dl class="topic-facts">
+          <div><dt>关注什么</dt><dd>广交会境外采购商、来源国家、在穗领馆，以及国际学校、商协会等公开机构资料；结合签证类别与相关政策查看服务背景。</dd></div>
+          <div><dt>如何查看</dt><dd>先看服务判断，再对照历届会展变化、采购来源与服务覆盖；需要核对时进入名录、依据和类别明细。</dd></div>
+          <div><dt>服务什么工作</dt><dd>会展前资料准备、涉外服务资源梳理、咨询背景查阅，以及会展期间与会后的变化观察。</dd></div>
+        </dl>
+        <h4>工作台阅读顺序</h4><ol class="topic-flow"><li>服务判断</li><li>会展变化</li><li>服务覆盖</li><li>需求关联</li><li>名录与依据</li><li>类别明细</li></ol>
       </article>
-      <article class="glass-card cap-card reveal">
-        <div class="head"><span class="num">02 / SMUGGLING</span></div>
-        <h3>偷渡态势研判</h3>
-        <p>跟踪主要迁移走廊、边境侦测、死亡失踪与香港相关动态，通过地图、时间和国别视角梳理变化。</p>
-        <div class="tags"><span class="tag">迁移走廊</span><span class="tag">边境态势</span><span class="tag">粤港关联</span></div>
+      <article class="glass-card topic-card reveal" data-topic="smuggling">
+        <div class="topic-kicker">02 / 边境与迁移路线</div><h3>偷渡态势研判</h3>
+        <p class="topic-question">主要迁移路线发生了哪些变化，哪些地区和变化值得继续跟踪？</p>
+        <dl class="topic-facts">
+          <div><dt>关注什么</dt><dd>主要迁移走廊、边境侦测、迁移流向、死亡失踪和粤港相关公开资料，结合时间与地区进行观察。</dd></div>
+          <div><dt>如何查看</dt><dd>由结论总览进入路线变化和全球路线地图，再查看结构与后果；可下钻到来源与数据明细，并导出当前筛选结果。</dd></div>
+          <div><dt>服务什么工作</dt><dd>日常边境态势观察、路线变化专题分析、相关背景材料准备，以及粤港动态的持续跟踪。</dd></div>
+        </dl>
+        <h4>工作台阅读顺序</h4><ol class="topic-flow"><li>结论总览</li><li>路线变化</li><li>全球路线</li><li>结构与后果</li><li>来源与口径</li><li>数据明细</li></ol>
       </article>
-      <article class="glass-card cap-card reveal">
-        <div class="head"><span class="num">03 / OVERSEAS RISK</span></div>
-        <h3>境外风险传导</h3>
-        <p>结合国别背景、境外事件与往来联系，观察人员流动、企业活动和涉外服务可能受到的影响。</p>
-        <div class="tags"><span class="tag">国别观察</span><span class="tag">风险变化</span><span class="tag">广州关联</span></div>
+      <article class="glass-card topic-card reveal" data-topic="overseas-risk">
+        <div class="topic-kicker">03 / 国别与本地关联</div><h3>境外风险传导</h3>
+        <p class="topic-question">境外事件有哪些进展，与广州的人员往来和涉外服务存在什么联系？</p>
+        <dl class="topic-facts">
+          <div><dt>关注什么</dt><dd>境外政治、社会与公共安全事件，国别背景、对华提醒和广州相关公开接口，综合观察事件发展与关联条件。</dd></div>
+          <div><dt>如何查看</dt><dd>从综合研判进入风险变化和国家地图，按国家查看事件构成，再沿广州传导、证据和明细继续查阅。</dd></div>
+          <div><dt>服务什么工作</dt><dd>重点国家跟踪、境外突发事件会商准备、涉外服务背景了解，以及相关提醒材料的研判支持。</dd></div>
+        </dl>
+        <h4>工作台阅读顺序</h4><ol class="topic-flow"><li>综合研判</li><li>风险变化</li><li>国家态势</li><li>广州传导</li><li>证据与缺口</li><li>国家明细</li></ol>
       </article>
-      <article class="glass-card cap-card reveal">
-        <div class="head"><span class="num">04 / GLOBAL TERRORISM</span></div>
-        <h3>全球暴恐监测</h3>
-        <p>按袭击、图谋、反恐执法与组织活动跟踪公开事件，结合地区、时间和来源证据识别重点变化。</p>
-        <div class="tags"><span class="tag">事件跟踪</span><span class="tag">区域变化</span><span class="tag">证据阅读</span></div>
+      <article class="glass-card topic-card reveal" data-topic="terrorism">
+        <div class="topic-kicker">04 / 暴恐与安全观察</div><h3>全球暴恐监测</h3>
+        <p class="topic-question">公开事件集中在哪里，事件类型、组织与相关证据出现了哪些变化？</p>
+        <dl class="topic-facts">
+          <div><dt>关注什么</dt><dd>袭击、图谋、反恐执法和组织活动等公开事件，结合事件地点、发生时间、类型与归因信息开展观察。</dd></div>
+          <div><dt>如何查看</dt><dd>先看综合判断和事件变化，再观察地点分布与组织关系；通过来源对账和事件明细核对具体依据。</dd></div>
+          <div><dt>服务什么工作</dt><dd>国际安全态势观察、重点地区背景研究、事件资料汇集和专题分析材料准备。</dd></div>
+        </dl>
+        <h4>工作台阅读顺序</h4><ol class="topic-flow"><li>综合判断</li><li>事件变化</li><li>地点分布</li><li>组织与归因</li><li>来源对账</li><li>事件明细</li></ol>
       </article>
     </div>
     <div class="theme-strip glass-card reveal">
-      <h3>四套显示模式，统一导航与业务内容</h3>
+      <h3>四套显示模式，同一套业务内容</h3>
+      <p>暗光环境可选深色，日常办公可选浅色；经典版与工作站版提供不同的界面组织方式，四个专题与主站保持对应。</p>
       <div class="tags"><span class="tag">深色 · 经典</span><span class="tag">浅色 · 经典</span><span class="tag">深色 · 工作站</span><span class="tag">浅色 · 工作站</span></div>
+    </div>
+  </div>
+</section>
+
+
+<section id="scenarios">
+  <div class="container">
+    <div class="sec-head reveal"><div class="sec-eyebrow"><span class="num">05</span><span>WORK SCENARIOS</span></div><h2 class="sec-title">带着业务问题，<span class="accent">看一次完整使用过程</span></h2><p class="sec-sub">从工作准备、事件跟踪到政策研究，看看各项能力怎样配合使用。</p></div>
+    <div class="scenario-list">
+      <article class="scenario-card glass-card reveal"><div class="scenario-title"><span>场景 01</span><h3>会展服务保障</h3><p>重大国际活动前，准备涉外服务背景材料。</p></div><div class="scenario-body"><ol class="scenario-path"><li>查重要时间节点，明确活动与准备窗口。</li><li>进入涉外服务管理，查看会展变化、来源覆盖与机构资料。</li><li>结合相关政策和来源原文，整理需要关注的问题。</li></ol><p class="scenario-result"><strong>形成材料</strong> 会展服务背景、机构与资料索引、重点关注事项，供工作准备和后续核对。</p></div></article>
+      <article class="scenario-card glass-card reveal"><div class="scenario-title"><span>场景 02</span><h3>境外事件跟踪</h3><p>一条境外突发消息出现后，继续核对与跟进。</p></div><div class="scenario-body"><ol class="scenario-path"><li>在事件数据中检索报道，阅读摘要与原文，查看相关来源。</li><li>查重点国家资料，并在境外风险传导中查看国家态势与广州关联。</li><li>跟进新的报道与更正，结合专题分析整理阶段材料。</li></ol><p class="scenario-result"><strong>形成材料</strong> 事件进展、国别背景、关联分析与引用依据，可用于情况通报或会商准备。</p></div></article>
+      <article class="scenario-card glass-card reveal"><div class="scenario-title"><span>场景 03</span><h3>政策变化研判</h3><p>持续关注某国移民政策或指定官网内容变化。</p></div><div class="scenario-body"><ol class="scenario-path"><li>维护重点国家或指定网页监测，获取后续更新。</li><li>比较网页版本，结合历史报道与国别背景理解调整内容。</li><li>在全球移民动态中组织简报或月度材料，按配置发送变化提醒。</li></ol><p class="scenario-result"><strong>形成材料</strong> 政策变化摘要、前后版本与来源、阶段性趋势材料，便于持续观察。</p></div></article>
+    </div>
+  </div>
+</section>
+<section id="outputs">
+  <div class="container">
+    <div class="sec-head reveal"><div class="sec-eyebrow"><span class="num">06</span><span>DELIVERABLES</span></div><h2 class="sec-title">最终交付的，不只有页面，<span class="accent">还有持续积累的成果</span></h2><p class="sec-sub">根据阅读和研究需要，使用不同层次的材料；已形成的事件、报告和资料可以继续查询与复用。</p></div>
+    <div class="output-grid">
+      <article class="output-card glass-card reveal"><span class="output-type">日常阅览</span><h3>每日简报</h3><p>集中阅读当天重点动态，围绕综合摘要、群体管理与影响、弱信号捕捉组织信息，保留来源入口。</p><div>适合：日常阅览、情况掌握</div></article>
+      <article class="output-card glass-card reveal"><span class="output-type">阶段研究</span><h3>月度研判</h3><p>从持续积累的事件与材料中组织主题、区域和阶段变化，形成可回看的月度分析。</p><div>适合：阶段总结、趋势研究</div></article>
+      <article class="output-card glass-card reveal"><span class="output-type">问题导向</span><h3>专题报告</h3><p>围绕四专题或具体研判问题组织判断、公开事实、资料依据与相关分析，便于进入细节继续核对。</p><div>适合：专题会商、材料准备</div></article>
+      <article class="output-card glass-card reveal"><span class="output-type">按需触达</span><h3>变化提醒</h3><p>通过已配置渠道接收重点变化与报告。支持企业微信、飞书、钉钉、邮件等 9 类通知渠道。</p><div>适合：重要更新、跟踪提示</div></article>
+      <article class="output-card glass-card reveal"><span class="output-type">依据查阅</span><h3>事件与资料明细</h3><p>保留文章、来源、时间和事件关联，从报告回到材料，从一条事件继续追踪后续信息。</p><div>适合：依据核对、历史复盘</div></article>
+      <article class="output-card glass-card reveal"><span class="output-type">资产复用</span><h3>离线知识包</h3><p>以 DOCX、Markdown、JSONL 等形式导出知识材料，支持全量整理与增量更新，附带文件校验信息。</p><div>适合：离线阅读、人工摆渡、知识库整理</div></article>
+    </div>
+    <p class="section-note">跨网络环境使用知识包时，按所在机构制度完成审查、脱敏和人工导入。</p>
+  </div>
+</section>
+<section id="foundation">
+  <div class="container">
+    <div class="sec-head reveal"><div class="sec-eyebrow"><span class="num">07</span><span>INFORMATION FOUNDATION</span></div><h2 class="sec-title">既看新变化，<span class="accent">也有背景和依据可查</span></h2><p class="sec-sub">即时信息与长期资料共同支撑研判。关注同一问题时，可以把今天的变化放回既有背景中理解。</p></div>
+    <div class="foundation-grid">
+      <article class="glass-card foundation-card reveal"><h3>公开来源</h3><p>接入公开新闻、榜单、RSS 和指定网页，获取移民政策、边境执法及相关国际动态。按已配置任务持续更新。</p></article>
+      <article class="glass-card foundation-card reveal"><h3>国家资料</h3><p>汇集国家和地区的人口、经济、政治、地理等背景信息，支持中文阅读，帮助理解一条事件发生的环境。</p></article>
+      <article class="glass-card foundation-card reveal"><h3>全球日期</h3><p>整理重要时间节点、活动和节庆资料，支持按日期与主题查询，为提前准备和阶段观察提供参照。</p></article>
+      <article class="glass-card foundation-card reveal"><h3>专题资料</h3><p>积累会展、涉外机构、迁移路线、境外事件与暴恐监测等材料，供四个实战专题共同查询和引用。</p></article>
+    </div>
+    <div class="knowledge-layers reveal" aria-label="三层研判组织">
+      <div><span>01</span><h3>长期基线</h3><p>国家背景、历年变化与机构资料，回答“原来是什么情况”。</p></div>
+      <div><span>02</span><h3>实时变化</h3><p>新出现的事件、政策和网页更新，回答“最近发生了什么”。</p></div>
+      <div><span>03</span><h3>组合研判</h3><p>把背景与变化结合起来，回答“当前有哪些值得关注的问题”。</p></div>
+    </div>
+    <div class="foundation-notes">
+      <article><h3>一条信息，多处复用</h3><p>同一材料可以支持多个专题。通过关联和引用复用已有资料，新的进展或更正与原记录保持联系，便于追踪前后变化。</p></article>
+      <article><h3>AI 负责整理，依据始终可查</h3><p>AI 辅助筛选、翻译、摘要、要素提取与分析；阅览者可以继续查看原始来源和事实材料，结合业务需要形成判断。</p></article>
     </div>
   </div>
 </section>
@@ -414,7 +401,7 @@
 <section id="viz">
   <div class="container">
     <div class="sec-head reveal">
-      <div class="sec-eyebrow"><span class="num">/ 04</span><span>DATA VISUALIZATION</span></div>
+      <div class="sec-eyebrow"><span class="num">08</span><span>DATA VISUALIZATION</span></div>
       <h2 class="sec-title">可视化<span class="accent">预览</span></h2>
       <p class="sec-sub">演示数据 · 预览事件趋势、证据完整度、地区分布与来源构成。</p>
     </div>
@@ -449,44 +436,44 @@
 <section id="arch">
   <div class="container">
     <div class="sec-head reveal">
-      <div class="sec-eyebrow"><span class="num">/ 05</span><span>ARCHITECTURE</span></div>
-      <h2 class="sec-title">6 阶段<span class="accent">情报管道</span></h2>
-      <p class="sec-sub">从原始文本到结构化情报的完整链路，每一阶段都有可观测、可干预的中间产物。</p>
+      <div class="sec-eyebrow"><span>PROCESSING & ARCHITECTURE</span></div>
+      <h2 class="sec-title">支撑业务运行的<span class="accent">六个处理环节</span></h2>
+      <p class="sec-sub">从原始文本到结构化情报的完整链路，采集、分析与成果输出在同一平台内衔接。</p>
     </div>
     <div class="arch-flow reveal">
       <div class="arch-step">
         <div class="idx">STAGE 01</div>
-        <h5>Crawler</h5>
+        <h5>信息采集</h5>
         <p>NewsNow + RSS + Obscura CDP，覆盖 70+ 媒体源。</p>
         <div class="glyph">httpx · feedparser</div>
       </div>
       <div class="arch-step">
         <div class="idx">STAGE 02</div>
-        <h5>AI Filter</h5>
+        <h5>筛选解读</h5>
         <p>关键词初筛 + LiteLLM 语义分析，模型与阈值均由配置驱动。</p>
         <div class="glyph">LiteLLM · Prompt</div>
       </div>
       <div class="arch-step">
         <div class="idx">STAGE 03</div>
-        <h5>Storage</h5>
+        <h5>资料保存</h5>
         <p>SQLite 保存原始记录、事件、配置与研判结果。</p>
         <div class="glyph">SQLite · S3</div>
       </div>
       <div class="arch-step">
         <div class="idx">STAGE 04</div>
-        <h5>Analyzer</h5>
+        <h5>关联分析</h5>
         <p>事件聚类、生命周期、知识图谱、实体提取。</p>
         <div class="glyph">NetworkX · SpaCy</div>
       </div>
       <div class="arch-step">
         <div class="idx">STAGE 05</div>
-        <h5>Renderer</h5>
+        <h5>报告生成</h5>
         <p>每日简报、月度研判、HTML 报告与多渠道卡片。</p>
         <div class="glyph">Jinja2 · MD</div>
       </div>
       <div class="arch-step">
         <div class="idx">STAGE 06</div>
-        <h5>Dispatcher</h5>
+        <h5>通知分发</h5>
         <p>9 通道推送，自动拆分长消息，可视化分层。</p>
         <div class="glyph">Webhook · SMTP</div>
       </div>
@@ -497,48 +484,12 @@
 <!-- ============ RELIABILITY ============ -->
 <section id="status">
   <div class="container">
-    <div class="sec-head reveal">
-      <div class="sec-eyebrow"><span class="num">/ 06</span><span>24×7 RELIABILITY</span></div>
-      <h2 class="sec-title">为长期运行设计的<span class="accent">可靠性护栏</span></h2>
-      <p class="sec-sub">任务互斥、失败重试、备份校验与异常降级，支持持续采集和报告分发。</p>
-    </div>
-    <div class="status-panel">
-      <div class="glass-card with-corners status-card reveal">
-        <div class="head">
-          <span class="title">任务并发治理</span>
-          <span class="status"><span class="dot"></span>IMPLEMENTED</span>
-        </div>
-        <div class="status-row"><span class="name"><code>lock</code>SQLite 跨进程租约锁</span><span class="cap-state">防重复运行</span></div>
-        <div class="status-row"><span class="name"><code>cron</code>max_instances + coalesce</span><span class="cap-state">防任务堆积</span></div>
-        <div class="status-row"><span class="name"><code>runner</code>手动与定时共用入口</span><span class="cap-state">口径一致</span></div>
-      </div>
-      <div class="glass-card with-corners status-card reveal">
-        <div class="head">
-          <span class="title">通知可靠性</span>
-          <span class="status"><span class="dot"></span>IMPLEMENTED</span>
-        </div>
-        <div class="status-row"><span class="name"><code>fingerprint</code>URL + 标题双指纹</span><span class="cap-state">跨源去重</span></div>
-        <div class="status-row"><span class="name"><code>reserve</code>SQLite 原子预占</span><span class="cap-state">并发安全</span></div>
-        <div class="status-row"><span class="name"><code>ttl</code>失败释放与未知状态 TTL</span><span class="cap-state">可恢复</span></div>
-      </div>
-      <div class="glass-card with-corners status-card reveal">
-        <div class="head">
-          <span class="title">SQLite 数据安全</span>
-          <span class="status"><span class="dot"></span>IMPLEMENTED</span>
-        </div>
-        <div class="status-row"><span class="name"><code>txn</code>线程池事务自动提交/回滚</span><span class="cap-state">边界明确</span></div>
-        <div class="status-row"><span class="name"><code>backup</code>SQLite Online Backup</span><span class="cap-state">WAL 一致快照</span></div>
-        <div class="status-row"><span class="name"><code>check</code>备份后 integrity_check</span><span class="cap-state">完整性校验</span></div>
-      </div>
-      <div class="glass-card with-corners status-card reveal">
-        <div class="head">
-          <span class="title">外部依赖降级</span>
-          <span class="status"><span class="dot"></span>IMPLEMENTED</span>
-        </div>
-        <div class="status-row"><span class="name"><code>fetch</code>正文抓取超时降级</span><span class="cap-state">主流程不中断</span></div>
-        <div class="status-row"><span class="name"><code>translate</code>无效翻译结果拒绝</span><span class="cap-state">保留原文</span></div>
-        <div class="status-row"><span class="name"><code>docker</code>web / cli / once / cron</span><span class="cap-state">模式明确</span></div>
-      </div>
+    <div class="sec-head reveal"><div class="sec-eyebrow"><span class="num">09</span><span>OPERATIONS & CONTROL</span></div><h2 class="sec-title">持续运行，也要<span class="accent">能管理、能追溯</span></h2><p class="sec-sub">平台配有任务记录、来源状态、通知记录与备份能力，便于日常维护和问题定位。</p></div>
+    <div class="foundation-grid">
+      <article class="glass-card foundation-card reveal"><h3>任务运行有记录</h3><p>查看采集与专项任务的最近运行、完成情况和错误提示，避免只看到页面结果却不知道更新是否正常。</p></article>
+      <article class="glass-card foundation-card reveal"><h3>来源与版本可追溯</h3><p>保留来源入口、事件历史和资料版本，发现更新或更正后可沿记录继续核查。</p></article>
+      <article class="glass-card foundation-card reveal"><h3>异常处理与备份</h3><p>针对外部抓取、翻译和推送设置重试或降级；数据库支持一致性备份与校验，便于恢复和迁移。</p></article>
+      <article class="glass-card foundation-card reveal"><h3>登录与本地管理</h3><p>业务系统采用统一登录，数据和配置由部署方管理。AI 服务、通知渠道与网络访问按实际使用要求配置。</p></article>
     </div>
   </div>
 </section>
@@ -547,8 +498,8 @@
 <section id="stack">
   <div class="container">
     <div class="sec-head reveal">
-      <div class="sec-eyebrow"><span class="num">/ 07</span><span>STACK & SCALE</span></div>
-      <h2 class="sec-title">技术栈与<span class="accent">规模</span></h2>
+      <div class="sec-eyebrow"><span>TECHNICAL FOUNDATION</span></div>
+      <h2 class="sec-title">技术基础与<span class="accent">扩展接入</span></h2>
       <p class="sec-sub">Python 3.10+ / FastAPI / SQLite / Vue 3 / ECharts · Docker & MCP Ready。</p>
     </div>
     <div class="tech-wrap reveal">
@@ -597,11 +548,27 @@
 <section id="start">
   <div class="container">
     <div class="sec-head reveal">
-      <div class="sec-eyebrow"><span class="num">/ 08</span><span>QUICK START</span></div>
+      <div class="sec-eyebrow"><span class="num">10</span><span>DEPLOYMENT</span></div>
       <h2 class="sec-title">灵活选择<span class="accent">部署方式</span></h2>
-      <p class="sec-sub">获得项目源码后，可用 Docker、本地 Python 或 MCP 接入。公开介绍页无需安装或登录。</p>
+      <p class="sec-sub">可以在本地电脑或服务器运行，通过浏览器使用；部署和配置完成后，业务人员主要在中文工作界面中操作。</p>
     </div>
-    <div class="tabs reveal" role="tablist">
+
+    <div class="deployment-grid">
+      <article class="glass-card foundation-card"><h3>本地电脑</h3><p>适合单机使用、试运行与资料整理。需要 Python 3.10+ 环境；运行数据保存在部署环境中。</p></article>
+      <article class="glass-card foundation-card"><h3>服务器或 Docker</h3><p>适合持续采集与固定运行。由部署方配置账号、存储、任务计划、网络访问和备份。</p></article>
+      <article class="glass-card foundation-card"><h3>AI 助手接入</h3><p>通过 MCP 连接兼容客户端，使用 28 个工具与 4 类资源查询、分析已有资料，扩展阅读和研究方式。</p></article>
+    </div>
+    <ol class="adoption-steps" aria-label="启用准备">
+      <li><strong>明确关注范围</strong><span>确定重点国家、主题、来源及专题使用需要。</span></li>
+      <li><strong>完成环境配置</strong><span>准备运行环境、登录账号和需要启用的 AI、通知服务。</span></li>
+      <li><strong>检查首轮运行</strong><span>核对来源状态、中文阅读、专题材料与通知效果。</span></li>
+      <li><strong>进入日常使用</strong><span>持续维护来源，跟踪事件，积累报告和知识资料。</span></li>
+    </ol>
+    <details id="technical-guide" class="technical-guide">
+      <summary>技术人员：查看部署与接入命令</summary>
+      <p>以下命令供已取得主项目源码的维护人员参考。公开介绍页只提供项目说明。</p>
+
+    <div class="tabs" role="tablist" aria-label="部署方式">
       <button class="tab active" data-tab="docker" role="tab">Docker</button>
       <button class="tab" data-tab="local" role="tab">本地运行</button>
       <button class="tab" data-tab="mcp" role="tab">MCP 接入</button>
@@ -651,8 +618,28 @@ python -m mcp_server.server --transport http --port 3333
 <span class="c-cmt"># 查询 / 分析 / 搜索 / 通知 / 配置 / 同步</span></pre>
       </div>
     </div>
+    </details>
   </div>
 </section>
+
+
+<section id="faq">
+  <div class="container">
+    <div class="sec-head"><div class="sec-eyebrow"><span class="num">11</span><span>QUESTIONS & ANSWERS</span></div><h2 class="sec-title">进一步了解<span class="accent">项目使用</span></h2><p class="sec-sub">从项目展示走向实际使用前，几个常见问题。</p></div>
+    <div class="faq-list">
+      <details><summary>这个网址可以直接使用业务系统吗？</summary><p>这是公开项目介绍页，用于了解功能、业务场景和使用方式。实际业务系统需要在相应电脑或服务器部署，并使用已启用账号登录；公开页面不连接业务数据库。</p></details>
+      <details><summary>平台主要关注哪些内容？</summary><p>围绕主流移民国家政策、全球边境执法安全和其他国家移民挑战开展持续监测，并通过涉外服务管理、偷渡态势研判、境外风险传导、全球暴恐监测四个专题组织分析。</p></details>
+      <details><summary>不熟悉技术的业务人员怎样使用？</summary><p>维护人员完成部署后，业务人员通过浏览器进入中文界面。日常可从监测概况、事件数据或某个实战专题开始，再按国家、日期、主题查阅图表、明细和来源。</p></details>
+      <details><summary>领导阅览和业务人员深入研究有什么区别？</summary><p>阅览时可以先看专题判断、重点变化和成果材料；需要深入研究时，继续进入时间趋势、地图、事件明细与依据。同一份资料可以从概览逐步追溯到原始来源。</p></details>
+      <details><summary>数据来源、关注主题和通知渠道能调整吗？</summary><p>可以根据实际需要维护来源、关键词、AI 筛选配置和通知渠道。调整后可通过来源状态与任务记录检查运行情况，并持续维护关注范围。</p></details>
+      <details><summary>本地部署是否意味着完全不需要网络？</summary><p>数据保存在部署环境中，但公开信息采集和外部 AI、通知服务需要相应网络连接。离线知识包可用于断网阅读；选择外部模型及发送内容时，应符合所在机构的数据使用要求。</p></details>
+      <details><summary>已有报告和资料能继续用于其他工作吗？</summary><p>可以查询历史事件、报告和参考资料，也可导出文档及结构化知识包。隔离环境之间使用人工摆渡，按要求完成审查、脱敏和导入，不进行自动跨网传输。</p></details>
+      <details><summary>平台会自动替代业务判断和处置吗？</summary><p>平台提供公开信息整理、事件跟踪、分析材料和变化提醒。实际业务判断、工作安排与处置仍由业务人员依据职责和制度完成。</p></details>
+    </div>
+    <div class="closing-note"><strong>境鉴 · 全球移民智能监测平台</strong><p>以持续监测积累资料，以专题研判理解变化，让每一次阅览都能继续查到背景、依据与后续进展。</p><a href="#project">返回项目概览 ↑</a></div>
+  </div>
+</section>
+</main>
 
 <!-- ============ FOOTER ============ -->
 <footer>
@@ -665,17 +652,17 @@ python -m mcp_server.server --transport http --port 3333
       <div class="foot-col">
         <h5>资源</h5>
         <ul>
-          <li><a href="#capabilities">功能概览</a></li>
+          <li><a href="#capabilities">完整功能目录</a></li>
           <li><a href="#topics">四个实战专题</a></li>
           <li><a href="#viz">可视化预览</a></li>
         </ul>
       </div>
       <div class="foot-col">
-        <h5>组件</h5>
+        <h5>业务阅读</h5>
         <ul>
-          <li><a href="#arch">平台架构</a></li>
+          <li><a href="#scenarios">典型应用场景</a></li>
           <li><a href="#start">部署与接入</a></li>
-          <li><a href="#status">可靠性设计</a></li>
+          <li><a href="#outputs">研判成果</a></li>
         </ul>
       </div>
       <div class="foot-col">
@@ -695,8 +682,8 @@ python -m mcp_server.server --transport http --port 3333
 </footer>
 
 <!-- ============ SCRIPTS ============ -->
-<script defer src="./js/radar.js?v=20260928"></script>
-<script defer src="./js/charts.js?v=20260928"></script>
-<script defer src="./js/demo.js?v=20260928"></script>
+<script defer src="./js/radar.js?v=20260928.2"></script>
+<script defer src="./js/charts.js?v=20260928.2"></script>
+<script defer src="./js/demo.js?v=20260928.2"></script>
 </body>
 </html>

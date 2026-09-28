@@ -1,6 +1,6 @@
 {
   "url": "https://wyhcipuc.github.io/glide-demo/",
-  "release": "2026-09-28",
+  "release": "2026-09-28.2",
   "files": [
     ".nojekyll", "README.md", "LICENSE", "publish-manifest.json",
     "index.html", "css/demo.css", "js/demo.js", "js/charts.js", "js/radar.js",
