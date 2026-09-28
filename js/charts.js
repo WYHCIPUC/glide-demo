@@ -4,7 +4,18 @@
 (function(){
   if(typeof echarts === 'undefined') return;
 
-  const baseFont = "'Inter','Noto Sans SC',sans-serif";
+  const baseFont = getComputedStyle(document.body).fontFamily;
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const chartInstances = [];
+  function initChart(element){
+    element.querySelector('[data-chart-fallback]')?.remove();
+    const chart = echarts.init(element, null, { renderer:'canvas' });
+    chart.setOption({ animation:!reducedMotion });
+    chartInstances.push(chart);
+    return chart;
+  }
+  window.addEventListener('resize', () => chartInstances.forEach(chart => chart.resize()));
+  window.addEventListener('pageshow', () => chartInstances.forEach(chart => chart.resize()));
   // 共用：暗色 tooltip
   function tooltip(){
     return {
@@ -19,7 +30,7 @@
   // —— 1. 事件证据丰富度 Radar（演示数据） ——
   const radarEl = document.getElementById('chartRadar');
   if(radarEl){
-    const chart = echarts.init(radarEl, null, { renderer:'canvas' });
+    const chart = initChart(radarEl);
     chart.setOption({
       tooltip: tooltip(),
       radar: {
@@ -35,7 +46,7 @@
         indicator:[
           {name:'跨源覆盖', max:100}, {name:'地点字段', max:100},
           {name:'中文摘要', max:100}, {name:'实体关系', max:100},
-          {name:'人工复核', max:100}, {name:'生命周期', max:100}
+          {name:'时间字段', max:100}, {name:'生命周期', max:100}
         ]
       },
       series:[{
@@ -54,13 +65,12 @@
         ]
       }]
     });
-    window.addEventListener('resize', () => chart.resize());
   }
 
   // —— 2. 事件趋势 Stacked Line ——
   const trendEl = document.getElementById('chartTrend');
   if(trendEl){
-    const chart = echarts.init(trendEl, null, { renderer:'canvas' });
+    const chart = initChart(trendEl);
     const days = 30;
     const xData = Array.from({length:days}, (_,i) => {
       const d = new Date(); d.setDate(d.getDate() - (days-1-i));
@@ -112,13 +122,12 @@
         }
       ]
     });
-    window.addEventListener('resize', () => chart.resize());
   }
 
   // —— 3. 国家分布热力（横向 Bar）——
   const barEl = document.getElementById('chartBar');
   if(barEl){
-    const chart = echarts.init(barEl, null, { renderer:'canvas' });
+    const chart = initChart(barEl);
     const countries = ['美国','墨西哥','德国','法国','英国','土耳其','希腊','意大利','西班牙','波兰','加拿大','澳大利亚','日本','巴西','南非'];
     const values   = [328, 286, 251, 224, 198, 186, 174, 168, 152, 138, 132, 118,  98,  92,  84];
     const max = Math.max(...values);
@@ -152,16 +161,15 @@
           show:true, position:'right',
           color:'#a9b3bf', fontSize:10.5, fontFamily: baseFont
         },
-        data: values
+        data: values.slice().reverse()
       }]
     });
-    window.addEventListener('resize', () => chart.resize());
   }
 
   // —— 4. 信息来源构成（环形图，演示数据） ——
   const ringEl = document.getElementById('chartRing');
   if(ringEl){
-    const chart = echarts.init(ringEl, null, { renderer:'canvas' });
+    const chart = initChart(ringEl);
     chart.setOption({
       tooltip: tooltip(),
       legend:{
@@ -182,51 +190,5 @@
         ]
       }]
     });
-    window.addEventListener('resize', () => chart.resize());
-  }
-
-  // —— 5. 指标语义分层（等长仅表示四类独立口径） ——
-  const aiEl = document.getElementById('chartAi');
-  if(aiEl){
-    const chart = echarts.init(aiEl, null, { renderer:'canvas' });
-    chart.setOption({
-      tooltip: Object.assign(tooltip(), {
-        formatter: function(params){
-          const descriptions = {
-            '报道热度':'媒体报道篇数、频次与来源覆盖',
-            '事件活跃度':'去重事件的新增、跟进与生命周期变化',
-            'AI 推断风险':'模型基于证据给出的风险分级，带不确定性',
-            '真实迁移规模':'需由官方统计、现场数据或可信实测支撑'
-          };
-          return `<strong>${params.name}</strong><br>${descriptions[params.name]}`;
-        }
-      }),
-      grid:{ left:126, right:30, top:10, bottom:20 },
-      xAxis:{
-        type:'value', max:100, show:false
-      },
-      yAxis:{
-        type:'category',
-        data:['真实迁移规模','AI 推断风险','事件活跃度','报道热度'],
-        axisLabel:{ color:'#cbd6e0', fontSize:12, fontFamily: baseFont },
-        axisLine:{ show:false }, axisTick:{ show:false }
-      },
-      series:[{
-        type:'bar', barWidth:22,
-        itemStyle:{
-          borderRadius:[0,6,6,0],
-          color: function(params){
-            return ['#4cb3d4','#ffaa00','#00ffff','#00d992'][params.dataIndex];
-          },
-          opacity:0.78
-        },
-        label:{
-          show:true, position:'insideRight', color:'#050507', fontWeight:700,
-          fontSize:11, fontFamily:baseFont, formatter:'独立口径'
-        },
-        data:[100,100,100,100]
-      }]
-    });
-    window.addEventListener('resize', () => chart.resize());
   }
 })();

@@ -1,0 +1,10 @@
+{
+  "url": "https://wyhcipuc.github.io/glide-demo/",
+  "release": "2026-09-28",
+  "files": [
+    ".nojekyll", "README.md", "LICENSE", "publish-manifest.json",
+    "index.html", "css/demo.css", "js/demo.js", "js/charts.js", "js/radar.js",
+    "data/world.json", "assets/jingjian-symbol.png", "assets/logo.svg", "assets/favicon.svg", "assets/og.png",
+    "vendor/echarts.min.js", "vendor/LICENSE.txt", "vendor/NOTICE.txt"
+  ]
+}

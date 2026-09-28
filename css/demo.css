@@ -51,9 +51,9 @@
   --white-12: rgba(255, 255, 255, 0.12);
 
   /* —— 字体 —— */
-  --font-ui: 'Inter', system-ui, -apple-system, 'Noto Sans SC', sans-serif;
+  --font-ui: system-ui, -apple-system, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
   --font-mono: 'JetBrains Mono', 'Consolas', 'Courier New', monospace;
-  --font-cn: 'Noto Sans SC', system-ui, sans-serif;
+  --font-cn: var(--font-ui);
 
   /* —— 圆角 —— */
   --radius-sm: 4px;
@@ -697,8 +697,22 @@ footer{padding:80px 0 36px; border-top:1px solid var(--emerald-08); background:r
 /* =========================================================
    Reveal animation
    ========================================================= */
-.reveal{opacity:0; transform:translateY(24px); transition:opacity 0.7s var(--ease-decelerate), transform 0.7s var(--ease-decelerate)}
-.reveal.in{opacity:1; transform:none}
+.reveal{opacity:1; transform:none; transition:opacity 0.7s var(--ease-decelerate), transform 0.7s var(--ease-decelerate)}
+.demo-motion-ready .reveal{opacity:0; transform:translateY(24px)}
+.demo-motion-ready .reveal.in{opacity:1; transform:none}
+
+.topics-grid{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:24px}
+.topics-grid .cap-card{min-width:0}
+.theme-strip{padding:24px; margin-top:24px}
+.theme-strip h3{margin:0 0 16px; color:var(--text-primary); font-size:18px}
+.theme-strip .tags{display:flex; flex-wrap:wrap; gap:10px}
+[data-chart-fallback]{padding:24px; color:var(--text-secondary); line-height:1.8}
+html:not(.demo-ready) .tab-panel{display:block; margin-bottom:20px}
+html:not(.demo-ready) .tabs, html:not(.demo-ready) .copy-btn{display:none}
+html:not(.demo-ready) .nav-links{display:flex; flex-wrap:wrap}
+html:not(.demo-ready) .nav{height:auto; position:relative}
+html:not(.demo-ready) .nav-inner{flex-wrap:wrap; padding-top:12px; padding-bottom:12px}
+html:not(.demo-ready) .nav-burger{display:none}
 
 /* =========================================================
    Responsive
@@ -717,7 +731,7 @@ footer{padding:80px 0 36px; border-top:1px solid var(--emerald-08); background:r
 @media (max-width:960px){
   section{padding:80px 0}
   .container{padding:0 20px}
-  .values-grid, .caps-grid, .charts-wrap, .charts-secondary, .tech-wrap, .status-panel, .foot-grid{grid-template-columns:1fr; gap:24px}
+  .values-grid, .caps-grid, .topics-grid, .charts-wrap, .charts-secondary, .tech-wrap, .status-panel, .foot-grid{grid-template-columns:1fr; gap:24px}
   .ticker-inner{grid-template-columns:repeat(3, 1fr)}
   .ticker-item:nth-child(3n){border-right:none}
   .ticker-item:nth-child(-n+3){border-bottom:1px solid var(--emerald-08)}

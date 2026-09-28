@@ -309,9 +309,10 @@
     const el = document.getElementById('teleClock');
     if(!el) return;
     const tick = () => {
-      const d = new Date();
-      const pad = n => String(n).padStart(2, '0');
-      el.textContent = `UTC+8  ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
+      const time = new Intl.DateTimeFormat('en-GB', {
+        timeZone:'Asia/Shanghai', hour:'2-digit', minute:'2-digit', second:'2-digit', hour12:false
+      }).format(new Date());
+      el.textContent = `UTC+8  ${time}`;
     };
     tick();
     setInterval(tick, 1000);

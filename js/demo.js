@@ -7,6 +7,7 @@
    - 移动端导航
    ========================================================= */
 (function(){
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   // —— 1. Nav 滚动状态、阅读进度与当前章节 ——
   const nav = document.getElementById('nav');
   if(nav){
@@ -46,7 +47,7 @@
 
   // —— 2. IntersectionObserver 入场动效 ——
   const reveals = document.querySelectorAll('.reveal');
-  if('IntersectionObserver' in window && reveals.length){
+  if('IntersectionObserver' in window && reveals.length && !reducedMotion){
     const io = new IntersectionObserver((entries) => {
       entries.forEach((e) => {
         if(e.isIntersecting){
@@ -61,6 +62,7 @@
         }
       });
     }, { threshold: 0.12, rootMargin:'0px 0px -40px 0px' });
+    document.documentElement.classList.add('demo-motion-ready');
     reveals.forEach(el => io.observe(el));
   } else {
     reveals.forEach(el => el.classList.add('in'));
@@ -71,11 +73,11 @@
     const target = parseFloat(el.dataset.count) || 0;
     const decimals = parseInt(el.dataset.decimals || '0', 10);
     const suffix = el.dataset.suffix || '';
-    const duration = 1400;
+    const duration = reducedMotion ? 0 : 1400;
     const start = performance.now();
     const hasSmall = el.querySelector('small');
     function step(now){
-      const p = Math.min(1, (now - start) / duration);
+      const p = duration === 0 ? 1 : Math.min(1, (now - start) / duration);
       const e = 1 - Math.pow(1 - p, 3); // easeOutCubic
       const v = target * e;
       const txt = (decimals > 0 ? v.toFixed(decimals) : Math.round(v).toLocaleString()) + suffix;
@@ -187,10 +189,11 @@
         if(target){
           e.preventDefault();
           const top = target.getBoundingClientRect().top + window.scrollY - 80;
-          window.scrollTo({ top, behavior:'smooth' });
+          window.scrollTo({ top, behavior:reducedMotion ? 'auto' : 'smooth' });
         }
       }
     });
   });
 
+  document.documentElement.classList.add('demo-ready');
 })();

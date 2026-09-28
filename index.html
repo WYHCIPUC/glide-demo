@@ -3,34 +3,30 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>GLIDE · 全球移民动态监测系统</title>
-  <meta name="description" content="GLIDE 是面向全球移民与边境安全的本地优先开源情报工作台，覆盖多源采集、AI 筛选、事件治理、月度研判、地图与多渠道推送。" />
+  <title>境鉴｜全球移民智能监测平台</title>
+  <meta name="description" content="境鉴 V4.1：面向全球移民与边境安全，集多源监测、事件研判、四个实战专题、国情资料和报告推送于一体。" />
+  <meta name="release" content="2026-09-28" />
   <meta name="keywords" content="GLIDE, GmwRadar, 移民监测, OSINT, 情报系统, AI, 知识图谱, 边境安全, Factbook" />
   <meta name="theme-color" content="#050507" />
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="GLIDE · 全球移民动态监测系统" />
-  <meta property="og:description" content="从 70+ 信息源到可追溯事件：AI 筛选、事件治理、月度研判、地图与 9 渠道推送。" />
+  <meta property="og:title" content="境鉴｜全球移民智能监测平台" />
+  <meta property="og:description" content="多源监测、事件证据、四个实战专题与持续研判。了解境鉴 V4.1。" />
   <meta property="og:url" content="https://wyhcipuc.github.io/glide-demo/" />
-  <meta property="og:image" content="https://wyhcipuc.github.io/glide-demo/assets/og.png" />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content="GLIDE 全球移民动态监测系统：70+ 信息源、AI 筛选、事件治理与 9 渠道推送" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="GLIDE · 全球移民动态监测系统" />
-  <meta name="twitter:description" content="从多源采集到可追溯事件与结构化研判的本地优先开源情报工作台。" />
-  <meta name="twitter:image" content="https://wyhcipuc.github.io/glide-demo/assets/og.png" />
-  <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg" />
-
-  <!-- 字体 -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap">
+  <meta property="og:image" content="https://wyhcipuc.github.io/glide-demo/assets/jingjian-symbol.png" />
+  <meta property="og:image:width" content="512" />
+  <meta property="og:image:height" content="512" />
+  <meta property="og:image:alt" content="境鉴正式品牌标志" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="境鉴｜全球移民智能监测平台" />
+  <meta name="twitter:description" content="多源监测、事件证据、四个实战专题与持续研判。" />
+  <meta name="twitter:image" content="https://wyhcipuc.github.io/glide-demo/assets/jingjian-symbol.png" />
+  <link rel="icon" type="image/png" href="./assets/jingjian-symbol.png" />
 
   <!-- 主样式 -->
-  <link rel="stylesheet" href="./css/demo.css?v=8">
+  <link rel="stylesheet" href="./css/demo.css?v=20260928">
 
-  <!-- ECharts（CDN）-->
-  <script defer src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+  <!-- 显示资源随站发布，不依赖第三方 CDN。 -->
+  <script defer src="./vendor/echarts.min.js?v=20260928"></script>
 </head>
 <body>
 
@@ -49,13 +45,13 @@
 <!-- ============ TELEMETRY STRIP ============ -->
 <div class="telemetry" role="status" aria-label="系统遥测">
   <div class="telemetry-left">
-    <span class="telemetry-item"><span class="dot"></span><span>STATIC PRODUCT DEMO</span></span>
-    <span class="telemetry-item"><span class="dot warn"></span><span>LOCAL-FIRST DATA</span></span>
-    <span class="telemetry-item"><span class="dot"></span><span>SRC 70+</span></span>
+    <span class="telemetry-item"><span class="dot"></span><span>境鉴 · 产品介绍</span></span>
+    <span class="telemetry-item"><span class="dot warn"></span><span>四个实战专题</span></span>
+    <span class="telemetry-item"><span>更新 2026.09.28</span></span>
   </div>
   <div class="telemetry-right">
     <span class="telemetry-item"><span>MODE</span><span class="v">SELF-HOSTED</span></span>
-    <span class="telemetry-item"><span>BUILD</span><span class="v">V3.0</span></span>
+    <span class="telemetry-item"><span>BUILD</span><span class="v">V4.1</span></span>
     <span class="telemetry-item"><span class="v" id="teleClock">UTC+8  --:--:--</span></span>
   </div>
 </div>
@@ -63,24 +59,25 @@
 <!-- ============ NAV ============ -->
 <nav class="nav" id="nav" aria-label="主导航">
   <div class="container nav-inner">
-    <a href="#top" class="nav-brand" aria-label="GLIDE Home">
-      <span class="logo"><img src="./assets/logo.svg" alt="GLIDE"></span>
-      <span class="name">GLIDE</span>
-      <span class="ver">v3.0</span>
+    <a href="#top" class="nav-brand" aria-label="境鉴首页">
+      <span class="logo"><img src="./assets/jingjian-symbol.png" width="44" height="44" alt="境鉴"></span>
+      <span class="name">境鉴</span>
+      <span class="ver">V4.1</span>
     </a>
     <div class="nav-links" id="primaryNav" role="navigation">
       <a href="#command">指挥台</a>
       <a href="#capabilities">工作台</a>
+      <a href="#topics">四个专题</a>
       <a href="#viz">可视化</a>
       <a href="#arch">架构</a>
       <a href="#status">可靠性</a>
       <a href="#start">快速开始</a>
     </div>
     <div class="nav-cta">
-      <a class="btn btn-ghost" href="https://github.com/WYHCIPUC/GLIDE#readme" rel="noopener" target="_blank">文档</a>
-      <a class="btn btn-primary" href="https://github.com/WYHCIPUC/GLIDE" rel="noopener" target="_blank">
+      <a class="btn btn-ghost" href="#start">部署方式</a>
+      <a class="btn btn-primary" href="https://github.com/WYHCIPUC/glide-demo" rel="noopener" target="_blank">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2.1c-3.3.7-4-1.6-4-1.6-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-6 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.7-2.8 5.7-5.5 6 .4.4.8 1.1.8 2.3v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .3z"/></svg>
-        Star on GitHub
+        介绍页源码
       </a>
       <button class="nav-burger" aria-label="菜单" aria-controls="primaryNav">≡</button>
     </div>
@@ -107,23 +104,23 @@
       <span class="sep"></span>
       <span>LOCAL-FIRST · SELF-HOSTED</span>
       <span class="sep"></span>
-      <span>V3.0</span>
+      <span>V4.1</span>
     </div>
-    <h1><span class="accent">GLIDE</span><span class="hero-title-cn">全球移民动态监测系统</span></h1>
+    <h1><span class="accent">境鉴</span><span class="hero-title-cn">全球移民智能监测平台</span></h1>
     <p class="hero-tagline">
       从 <strong>70+ 信息源</strong> 到可追溯事件：采集、筛选、研判、推送一体化<br/>
-      面向政策研究 / 边境安全 / 国际新闻的本地优先开源情报中台
+      立足广州，观察全球 · 涉外服务、偷渡态势、境外风险、全球暴恐
     </p>
     <p class="hero-mono">
-      <span class="a">GLOBAL MIGRATION WATCH</span> · <span class="b">OPEN SOURCE INTELLIGENCE</span>
+      <span class="a">GLOBAL MIGRATION INTELLIGENT MONITORING PLATFORM</span>
     </p>
     <div class="hero-cta">
-      <a class="btn btn-primary btn-lg" href="https://github.com/WYHCIPUC/GLIDE" rel="noopener" target="_blank">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2.1c-3.3.7-4-1.6-4-1.6-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-6 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.7-2.8 5.7-5.5 6 .4.4.8 1.1.8 2.3v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .3z"/></svg>
-        查看 GitHub 仓库
+      <a class="btn btn-primary btn-lg" href="#topics">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        了解四个实战专题
       </a>
       <a class="btn btn-ghost btn-lg" href="#command">
-        进入指挥台
+        浏览功能概览
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
       </a>
     </div>
@@ -144,27 +141,27 @@
     <div class="command-bar">
       <div class="glass-card command-card reveal">
         <div class="label"><span class="mono-tag"><span class="dot"></span>信息源覆盖</span></div>
-        <div class="value"><span data-count="70" data-suffix="+">0</span><span class="unit">来源</span></div>
+        <div class="value"><span data-count="70" data-suffix="+">70+</span><span class="unit">来源</span></div>
         <div class="delta up">热榜 + RSS + JS</div>
         <div class="hint">跨语种采集，支持正文富化与失败降级</div>
       </div>
       <div class="glass-card command-card reveal">
         <div class="label"><span class="mono-tag cyan"><span class="dot"></span>通知通道</span></div>
-        <div class="value"><span data-count="9">0</span><span class="unit">渠道</span></div>
-        <div class="delta up">7 日跨日去重</div>
-        <div class="hint">原子预占避免重复推送与并发竞态</div>
+        <div class="value"><span data-count="9">9</span><span class="unit">渠道</span></div>
+        <div class="delta up">按需推送</div>
+        <div class="hint">简报、专题报告与重要变化提醒</div>
       </div>
       <div class="glass-card command-card reveal">
         <div class="label"><span class="mono-tag"><span class="dot"></span>MCP 能力</span></div>
-        <div class="value"><span data-count="27">0</span><span class="unit">工具</span></div>
+        <div class="value"><span data-count="28">28</span><span class="unit">工具</span></div>
         <div class="delta up">4 类资源</div>
         <div class="hint">支持 stdio 与 HTTP，供 AI 客户端直接查询</div>
       </div>
       <div class="glass-card command-card reveal">
         <div class="label"><span class="mono-tag purple"><span class="dot"></span>国家情报卡</span></div>
-        <div class="value"><span data-count="260">0</span><span class="unit">国家/地区</span></div>
+        <div class="value"><span data-count="260">260</span><span class="unit">国家/地区</span></div>
         <div class="delta up">中英双语</div>
-        <div class="hint">中文优先、英文兜底、字段可追溯</div>
+        <div class="hint">人口、经济、政体与地理资料</div>
       </div>
     </div>
   </div>
@@ -175,28 +172,28 @@
   <div class="container">
     <div class="ticker-inner">
       <div class="ticker-item">
-        <div class="label">媒体源</div>
-        <div class="num" data-count="70" data-suffix="+">0</div>
+        <div class="label">实战专题</div>
+        <div class="num" data-count="4">4</div>
       </div>
       <div class="ticker-item">
         <div class="label">推送通道</div>
-        <div class="num cyan" data-count="9">0</div>
+        <div class="num cyan" data-count="9">9</div>
       </div>
       <div class="ticker-item">
         <div class="label">MCP 工具</div>
-        <div class="num" data-count="27">0</div>
+        <div class="num" data-count="28">28</div>
       </div>
       <div class="ticker-item">
-        <div class="label">API 端点</div>
-        <div class="num cyan" data-count="160" data-suffix="+">0</div>
+        <div class="label">显示模式</div>
+        <div class="num cyan" data-count="4">4</div>
       </div>
       <div class="ticker-item">
-        <div class="label">默认测试</div>
-        <div class="num" data-count="268">0</div>
+        <div class="label">研判层次</div>
+        <div class="num" data-count="3">3</div>
       </div>
       <div class="ticker-item">
         <div class="label">国家情报卡</div>
-        <div class="num cyan" data-count="260">0</div>
+        <div class="num cyan" data-count="260">260</div>
       </div>
     </div>
   </div>
@@ -208,7 +205,7 @@
     <div class="sec-head reveal">
       <div class="sec-eyebrow"><span class="num">/ 01</span><span>WORKFLOW SAMPLE · DEMO DATA</span></div>
       <h2 class="sec-title">从报道进入<span class="accent">事件证据链</span></h2>
-      <p class="sec-sub">以下内容仅用于展示产品信息层级，并非实时新闻。真实控制台会保存原始来源、中文展示字段、TL;DR、风险研判与跨源关联，便于回溯每个判断。</p>
+      <p class="sec-sub">工作流示例 · 从原始报道、中文摘要到事件关联，逐步形成可追溯的研判依据。</p>
     </div>
     <div class="live-feed glass-card with-corners reveal" id="liveFeed" style="padding:14px">
       <!-- 静态演示数据：不暗示在线实时状态 -->
@@ -224,7 +221,7 @@
       </div>
       <div class="glass-card live-feed-row">
         <div class="meta"><span class="src">AI 研判</span><span class="time">结构化</span></div>
-        <div class="body">相关性、风险与弱信号分别记录，<strong>AI 推断风险不等同于真实迁移规模</strong>。</div>
+        <div class="body">提取重点变化、风险线索与弱信号，形成<strong>判断、依据与广州关联</strong>。</div>
         <span class="risk low">低风险</span>
       </div>
       <div class="glass-card live-feed-row">
@@ -245,24 +242,24 @@
 <section id="why">
   <div class="container">
     <div class="sec-head reveal">
-      <div class="sec-eyebrow"><span class="num">/ 02</span><span>WHY GLIDE</span></div>
+      <div class="sec-eyebrow"><span class="num">/ 02</span><span>WHY THIS SYSTEM</span></div>
       <h2 class="sec-title">从碎片化资讯，到<span class="accent">可决策情报</span></h2>
-      <p class="sec-sub">移民与边境安全是高度敏感、跨语种、跨时区的垂直领域。泛资讯聚合器无法满足研究、决策与现场响应的深度需求。GLIDE 围绕"事件"重新设计了情报工作流。</p>
+      <p class="sec-sub">移民与边境安全是高度敏感、跨语种、跨时区的垂直领域。泛资讯聚合器无法满足研究、决策与现场响应的深度需求。境鉴围绕“事件”重新设计了情报工作流。</p>
     </div>
     <div class="values-grid">
       <div class="glass-card with-corners value-card reveal">
         <div class="icon" aria-hidden="true">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12a9 9 0 1 0 18 0 9 9 0 0 0-18 0z"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>
         </div>
-        <h3>多源聚合 · 零噪声</h3>
-        <p>NewsNow API（40+ 平台）+ RSS（30+ 源）+ JS 渲染（Obscura CDP），全部优先抓取中文版与官方渠道，第一时间覆盖全球动态。</p>
+        <h3>多源聚合 · 持续监测</h3>
+        <p>连接热榜、RSS、公开网页与专题资料，集中跟踪跨语种、跨地区的政策与事件变化。</p>
       </div>
       <div class="glass-card with-corners value-card reveal">
         <div class="icon" aria-hidden="true">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
         </div>
         <h3>双重 AI 筛选</h3>
-        <p>关键词硬筛 + LiteLLM 语义评分（0.7 分阈值），事件相关性二次校验，将噪声压到 5% 以下，保留高置信度信号。</p>
+        <p>结合关键词与语义分析筛选相关内容，生成中文摘要，整理风险线索和重点变化。</p>
       </div>
       <div class="glass-card with-corners value-card reveal">
         <div class="icon" aria-hidden="true">
@@ -290,7 +287,7 @@
           <span class="badge">态势总览</span>
         </div>
         <h3>态势总览 · 统一入口</h3>
-        <p>一屏查看报道热度、来源分布、关键词云与事件趋势；不同统计口径分开展示，不用单一数字代替现实判断。</p>
+        <p>一屏查看监测概况、来源分布、关键词和事件趋势，按日期、地区与专题进入细节。</p>
         <div class="tags">
           <span class="tag">关键词矩阵</span>
           <span class="tag">来源画像</span>
@@ -318,7 +315,7 @@
           <span class="badge">事件库</span>
         </div>
         <h3>事件库 · 证据链</h3>
-        <p>真实服务端分页与聚合统计，支持事件聚类、合并、拆分、生命周期、跨源验证、批量治理和审计回溯。</p>
+        <p>按事件汇集关联报道、时间、地点和机构线索；支持检索筛选、证据阅读、专题引用和历史追溯。</p>
         <div class="tags">
           <span class="tag">聚类去重</span>
           <span class="tag">生命周期</span>
@@ -332,7 +329,7 @@
           <span class="badge">地图</span>
         </div>
         <h3>地图 · 260 国情报卡</h3>
-        <p>全球热点与 CIA Factbook 国家卡片联动，覆盖政体、经济、人口和边境等字段；中文优先，缺失时明确兜底。</p>
+        <p>全球热点与国家资料联动，覆盖政体、经济、人口和地理等字段，支持中文阅读与来源查阅。</p>
         <div class="tags">
           <span class="tag">全球地图</span>
           <span class="tag">260 国情报卡</span>
@@ -346,7 +343,7 @@
           <span class="badge">研判</span>
         </div>
         <h3>简报 · 月度研判</h3>
-        <p>从候选事件池组织月度事件库，生成主题分块、区域分布与结构化研判；保留综合摘要、群体影响与弱信号板块。</p>
+        <p>汇集每日动态与月度变化，围绕重点主题组织综合摘要、群体管理与影响、弱信号捕捉和专题报告。</p>
         <div class="tags">
           <span class="tag">每日简报</span>
           <span class="tag">事件池</span>
@@ -360,7 +357,7 @@
           <span class="badge">研究工具</span>
         </div>
         <h3>OSINT · 图谱 · MCP</h3>
-        <p>辅助导入和解析 OSINT 线索，抽取实体关系构建知识图谱；27 个 MCP 工具让 AI 客户端直接查询本地情报资产。</p>
+        <p>辅助导入和解析 OSINT 线索，抽取实体关系构建知识图谱；28 个 MCP 工具让 AI 客户端直接查询本地情报资产。</p>
         <div class="tags">
           <span class="tag">OSINT</span>
           <span class="tag">实体图谱</span>
@@ -372,42 +369,78 @@
   </div>
 </section>
 
+<!-- ============ PRACTICAL TOPICS ============ -->
+<section id="topics">
+  <div class="container">
+    <div class="sec-head reveal">
+      <div class="sec-eyebrow"><span>FOUR PRACTICAL WORKSTATIONS</span></div>
+      <h2 class="sec-title">四个专题，<span class="accent">同一套研判工作台</span></h2>
+      <p class="sec-sub">长期基线 → 实时变化 → 组合研判。围绕最新判断、数据依据、分析视角与广州关联展开。</p>
+    </div>
+    <div class="topics-grid">
+      <article class="glass-card cap-card reveal">
+        <div class="head"><span class="num">01 / FOREIGN SERVICE</span></div>
+        <h3>涉外服务管理</h3>
+        <p>联看广交会境外采购商、在穗领馆、国际学校与商协会资料，研判涉外服务需求和保障重点。</p>
+        <div class="tags"><span class="tag">在穗资源</span><span class="tag">会展变化</span><span class="tag">服务保障</span></div>
+      </article>
+      <article class="glass-card cap-card reveal">
+        <div class="head"><span class="num">02 / SMUGGLING</span></div>
+        <h3>偷渡态势研判</h3>
+        <p>跟踪主要迁移走廊、边境侦测、死亡失踪与香港相关动态，通过地图、时间和国别视角梳理变化。</p>
+        <div class="tags"><span class="tag">迁移走廊</span><span class="tag">边境态势</span><span class="tag">粤港关联</span></div>
+      </article>
+      <article class="glass-card cap-card reveal">
+        <div class="head"><span class="num">03 / OVERSEAS RISK</span></div>
+        <h3>境外风险传导</h3>
+        <p>结合国别背景、境外事件与往来联系，观察人员流动、企业活动和涉外服务可能受到的影响。</p>
+        <div class="tags"><span class="tag">国别观察</span><span class="tag">风险变化</span><span class="tag">广州关联</span></div>
+      </article>
+      <article class="glass-card cap-card reveal">
+        <div class="head"><span class="num">04 / GLOBAL TERRORISM</span></div>
+        <h3>全球暴恐监测</h3>
+        <p>按袭击、图谋、反恐执法与组织活动跟踪公开事件，结合地区、时间和来源证据识别重点变化。</p>
+        <div class="tags"><span class="tag">事件跟踪</span><span class="tag">区域变化</span><span class="tag">证据阅读</span></div>
+      </article>
+    </div>
+    <div class="theme-strip glass-card reveal">
+      <h3>四套显示模式，统一导航与业务内容</h3>
+      <div class="tags"><span class="tag">深色 · 经典</span><span class="tag">浅色 · 经典</span><span class="tag">深色 · 工作站</span><span class="tag">浅色 · 工作站</span></div>
+    </div>
+  </div>
+</section>
+
 <!-- ============ VISUALIZATION ============ -->
 <section id="viz">
   <div class="container">
     <div class="sec-head reveal">
       <div class="sec-eyebrow"><span class="num">/ 04</span><span>DATA VISUALIZATION</span></div>
       <h2 class="sec-title">可视化<span class="accent">预览</span></h2>
-      <p class="sec-sub">以下为产品内典型图表样式，全部使用明确标注的演示数据。完整实时视图需本地启动 <code>python web_server.py</code>。</p>
+      <p class="sec-sub">演示数据 · 预览事件趋势、证据完整度、地区分布与来源构成。</p>
     </div>
     <div class="charts-wrap">
       <div class="glass-card with-corners chart-card reveal">
         <h4>事件证据丰富度 <span class="mono-tag"><span class="dot"></span>QUALITY</span></h4>
-        <div class="sub">演示数据 · 来源 / 地点 / 摘要 / 实体 / 复核</div>
-        <div class="chart" id="chartRadar" role="img" aria-label="演示事件在跨源覆盖、地点字段、中文摘要、实体关系、人工复核和生命周期六个维度的证据丰富度对比"></div>
+        <div class="sub">演示数据 · 来源 / 地点 / 摘要 / 实体 / 时间 / 跟踪</div>
+        <div class="chart" id="chartRadar" role="img" aria-label="事件证据丰富度示例，六个维度百分制对比"><p data-chart-fallback>丰富事件：88 / 92 / 96 / 76 / 72 / 90；待补充事件：42 / 64 / 80 / 28 / 20 / 54。</p></div>
       </div>
       <div class="glass-card with-corners chart-card reveal">
         <h4>事件活跃度 · 30 天 <span class="mono-tag cyan"><span class="dot"></span>TREND</span></h4>
         <div class="sub">演示数据 · 新建 / 活跃 / 关闭</div>
-        <div class="chart" id="chartTrend" role="img" aria-label="演示数据中的三十天新建、活跃和关闭事件趋势"></div>
+        <div class="chart" id="chartTrend" role="img" aria-label="演示数据中的三十天新建、活跃和关闭事件趋势"><p data-chart-fallback>按日期比较新建事件、跟进中和已关闭事件的变化。</p></div>
       </div>
     </div>
     <div class="charts-secondary">
       <div class="glass-card with-corners chart-card reveal">
         <h4>报道地区分布 <span class="mono-tag"><span class="dot"></span>HEAT</span></h4>
-        <div class="sub">演示数据 · 报道量不代表真实迁移人数</div>
-        <div class="chart" id="chartBar" style="height:300px" role="img" aria-label="演示报道按国家和地区分布的横向柱状图，报道量不代表真实迁移人数"></div>
+        <div class="sub">演示数据 · 报道篇数</div>
+        <div class="chart" id="chartBar" style="height:300px" role="img" aria-label="演示报道按国家和地区分布的横向柱状图"><p data-chart-fallback>美国 328 篇；墨西哥 286 篇；德国 251 篇；法国 224 篇；英国 198 篇。</p></div>
       </div>
       <div class="glass-card with-corners chart-card reveal">
         <h4>信息来源构成 <span class="mono-tag purple"><span class="dot"></span>SOURCE</span></h4>
         <div class="sub">演示数据 · 热榜 / RSS / OSINT / 人工</div>
-        <div class="chart" id="chartRing" style="height:300px" role="img" aria-label="演示信息来源中热榜平台、RSS、OSINT 和人工导入的构成比例"></div>
+        <div class="chart" id="chartRing" style="height:300px" role="img" aria-label="演示信息来源中热榜平台42%、RSS38%、OSINT12%和人工导入8%的构成比例"><p data-chart-fallback>热榜平台 42%；RSS 38%；OSINT 12%；人工导入 8%。</p></div>
       </div>
-    </div>
-    <div class="glass-card with-corners chart-card reveal" style="margin-top:18px">
-      <h4>四类指标语义必须分开 <span class="mono-tag cyan"><span class="dot"></span>METRIC CONTRACT</span></h4>
-      <div class="sub">报道热度 ≠ 事件活跃度 ≠ AI 推断风险 ≠ 真实迁移规模</div>
-      <div class="chart" id="chartAi" style="height:280px" role="img" aria-label="报道热度、事件活跃度、AI 推断风险和真实迁移规模四类独立指标口径"></div>
     </div>
   </div>
 </section>
@@ -436,7 +469,7 @@
       <div class="arch-step">
         <div class="idx">STAGE 03</div>
         <h5>Storage</h5>
-        <p>SQLite 按日切分 + system.db 集中库（约 35 张业务表）。</p>
+        <p>SQLite 保存原始记录、事件、配置与研判结果。</p>
         <div class="glyph">SQLite · S3</div>
       </div>
       <div class="arch-step">
@@ -467,7 +500,7 @@
     <div class="sec-head reveal">
       <div class="sec-eyebrow"><span class="num">/ 06</span><span>24×7 RELIABILITY</span></div>
       <h2 class="sec-title">为长期运行设计的<span class="accent">可靠性护栏</span></h2>
-      <p class="sec-sub">这里展示的是已经落地的工程机制，而不是伪造的在线健康百分比。真实运行状态与异常详情只在本地控制台和日志中读取。</p>
+      <p class="sec-sub">任务互斥、失败重试、备份校验与异常降级，支持持续采集和报告分发。</p>
     </div>
     <div class="status-panel">
       <div class="glass-card with-corners status-card reveal">
@@ -540,20 +573,20 @@
       </div>
       <div class="stat-grid">
         <div class="glass-card with-corners stat-card">
-          <div class="v" data-count="59" data-suffix="+">0</div>
-          <div class="l">维护脚本 / 自动化任务</div>
+          <div class="v">CLI</div>
+          <div class="l">采集、筛选与定时运行</div>
         </div>
         <div class="glass-card with-corners stat-card">
-          <div class="v" data-count="11">0</div>
-          <div class="l">Windows 计划任务包装脚本</div>
+          <div class="v">Web</div>
+          <div class="l">监测、检索与专题工作台</div>
         </div>
         <div class="glass-card with-corners stat-card">
-          <div class="v" data-count="14">0</div>
-          <div class="l">核心 dataclass 模型</div>
+          <div class="v">MCP</div>
+          <div class="l">智能体查询与工具接入</div>
         </div>
         <div class="glass-card with-corners stat-card">
-          <div class="v" data-count="11">0</div>
-          <div class="l">Web 业务路由模块</div>
+          <div class="v">Docker</div>
+          <div class="l">本地与服务器部署</div>
         </div>
       </div>
     </div>
@@ -565,8 +598,8 @@
   <div class="container">
     <div class="sec-head reveal">
       <div class="sec-eyebrow"><span class="num">/ 08</span><span>QUICK START</span></div>
-      <h2 class="sec-title">三步<span class="accent">启动</span></h2>
-      <p class="sec-sub">服务器可用 Docker 常驻运行，本地可先体检再启动；AI 客户端还可以通过 stdio 或 HTTP 接入 MCP。</p>
+      <h2 class="sec-title">灵活选择<span class="accent">部署方式</span></h2>
+      <p class="sec-sub">获得项目源码后，可用 Docker、本地 Python 或 MCP 接入。公开介绍页无需安装或登录。</p>
     </div>
     <div class="tabs reveal" role="tablist">
       <button class="tab active" data-tab="docker" role="tab">Docker</button>
@@ -576,8 +609,7 @@
     <div class="tab-panel active" data-panel="docker" role="tabpanel">
       <div class="code-block glass-card with-corners">
         <button class="copy-btn" data-copy>COPY</button>
-<pre><span class="c-cmt"># 1. 克隆</span>
-<span class="c-fn">git</span> clone https://github.com/WYHCIPUC/GLIDE.git
+<pre><span class="c-cmt"># 1. 进入已取得的项目源码目录</span>
 <span class="c-fn">cd</span> GLIDE
 
 <span class="c-cmt"># 2. 配置 .env（必填 AI_API_KEY）</span>
@@ -615,7 +647,7 @@ python -m mcp_server.server
 <span class="c-cmt"># HTTP：适合局域网服务或自动化编排</span>
 python -m mcp_server.server --transport http --port 3333
 
-<span class="c-cmt"># 当前暴露 27 个工具 + 4 类资源</span>
+<span class="c-cmt"># 当前暴露 28 个工具 + 4 类资源</span>
 <span class="c-cmt"># 查询 / 分析 / 搜索 / 通知 / 配置 / 同步</span></pre>
       </div>
     </div>
@@ -627,44 +659,44 @@ python -m mcp_server.server --transport http --port 3333
   <div class="container">
     <div class="foot-grid">
       <div class="foot-brand">
-        <h4>GLIDE / <span class="v">V3.0</span></h4>
-        <p>开源 · 全球移民动态监测系统。<br/>由独立开发者维护，欢迎 Star、Issue 与 PR。</p>
+        <h4>境鉴 / <span class="v">V4.1</span></h4>
+        <p>全球移民智能监测平台。<br/>立足广州，观察全球。</p>
       </div>
       <div class="foot-col">
         <h5>资源</h5>
         <ul>
-          <li><a href="https://github.com/WYHCIPUC/GLIDE#readme" target="_blank" rel="noopener">README</a></li>
-          <li><a href="https://github.com/WYHCIPUC/GLIDE/blob/main/CLAUDE.md" target="_blank" rel="noopener">CLAUDE.md</a></li>
-          <li><a href="https://github.com/WYHCIPUC/GLIDE/releases" target="_blank" rel="noopener">Release Notes</a></li>
+          <li><a href="#capabilities">功能概览</a></li>
+          <li><a href="#topics">四个实战专题</a></li>
+          <li><a href="#viz">可视化预览</a></li>
         </ul>
       </div>
       <div class="foot-col">
         <h5>组件</h5>
         <ul>
-          <li><a href="https://github.com/WYHCIPUC/GLIDE/tree/main/mcp_server" target="_blank" rel="noopener">MCP Server</a></li>
-          <li><a href="https://github.com/WYHCIPUC/GLIDE/tree/main/docker" target="_blank" rel="noopener">Docker</a></li>
-          <li><a href="https://github.com/WYHCIPUC/GLIDE/tree/main/scripts" target="_blank" rel="noopener">维护脚本</a></li>
+          <li><a href="#arch">平台架构</a></li>
+          <li><a href="#start">部署与接入</a></li>
+          <li><a href="#status">可靠性设计</a></li>
         </ul>
       </div>
       <div class="foot-col">
         <h5>社区</h5>
         <ul>
-          <li><a href="https://github.com/WYHCIPUC/GLIDE/issues" target="_blank" rel="noopener">Issues</a></li>
-          <li><a href="https://github.com/WYHCIPUC/GLIDE/discussions" target="_blank" rel="noopener">Discussions</a></li>
-          <li><a href="https://github.com/WYHCIPUC/GLIDE/blob/main/LICENSE" target="_blank" rel="noopener">License (GPL-3.0)</a></li>
+          <li><a href="https://github.com/WYHCIPUC/glide-demo" target="_blank" rel="noopener">介绍页源码</a></li>
+          <li><a href="https://github.com/WYHCIPUC/glide-demo/issues" target="_blank" rel="noopener">反馈页面问题</a></li>
+          <li><a href="./LICENSE">许可协议</a></li>
         </ul>
       </div>
     </div>
     <div class="foot-bottom">
-      <span>© 2025–2026 GLIDE · GLOBAL MIGRATION WATCH</span>
+      <span>© 2025–2026 境鉴 · GLOBAL MIGRATION INTELLIGENT MONITORING PLATFORM</span>
       <span>BUILT WITH ★ FOR OPEN-SOURCE INTELLIGENCE</span>
     </div>
   </div>
 </footer>
 
 <!-- ============ SCRIPTS ============ -->
-<script defer src="./js/radar.js?v=8"></script>
-<script defer src="./js/charts.js?v=8"></script>
-<script defer src="./js/demo.js?v=8"></script>
+<script defer src="./js/radar.js?v=20260928"></script>
+<script defer src="./js/charts.js?v=20260928"></script>
+<script defer src="./js/demo.js?v=20260928"></script>
 </body>
 </html>

@@ -1,52 +1,28 @@
-# GLIDE · Project Demo Page
+# 境鉴 · 全球移民智能监测平台
 
-> 全球移民动态监测系统（GLIDE）官方项目演示页面。
+[打开公开项目介绍](https://wyhcipuc.github.io/glide-demo/)
 
-## 关于本仓库
+V4.1 · 更新日期：2026-09-28。介绍页涵盖平台功能、四个实战专题、四套显示模式、图表示例、架构与部署方式。
 
-本仓库**仅包含演示页面静态资源**，由 [GLIDE 主仓库](https://github.com/WYHCIPUC/GLIDE) 中的 `docs/demo/` 同步而来，部署在 GitHub Pages 上，用于展示 GLIDE 项目的核心能力与视觉风格。
+## 独立访问
 
-主项目仓库保持私有，本仓库为公开演示入口。
+本仓库只发布静态介绍页。无需登录、无需在访问电脑安装 Python 或启动业务后台；不包含数据库、账号、凭据和业务运行数据。所有显示资源、ECharts 与地图数据均随站提供，不依赖 Google Fonts 或 jsDelivr。图表示例使用演示数据。
 
-## 在线演示
+主项目源码不在本公开仓库内；部署示例供已取得源码的使用者参考。介绍页不能代替实际业务系统。
 
-🌐 https://wyhcipuc.github.io/glide-demo/
+## 内容来源与同步
 
-## 内容结构
+维护来源为主项目的 `docs/demo/`。`publish-manifest.json` 列出允许同步的文件，发布时只复制清单文件，不同步整个主仓库，也不使用递归删除同步。
 
-```text
-├── index.html        # 主页面（工作流 / 工作台 / 可视化 / 架构 / 可靠性 / 快速开始）
-├── css/demo.css      # 深空黑科技风样式（与主仓库 web/css/base.css 设计令牌一致）
-├── js/
-│   ├── radar.js      # ECharts 世界地图 + 雷达扫描 + 粒子动效 + 漂移循环
-│   ├── charts.js     # 证据质量 / 趋势 / 地区 / 来源 / 指标语义 5 类图表
-│   └── demo.js       # 导航 / 滚动揭示 / 计数动画 / 标签页
-├── assets/
-│   ├── logo.svg      # GLIDE 雷达图标
-│   └── favicon.svg
-└── data/world.json   # ECharts 世界地图 GeoJSON（1MB）
-```
+1. 在主项目运行 `node --test tests/frontend/public-demo-portability.test.mjs`。
+2. 将发布清单中的文件复制到本仓库同名相对路径，保留 `.git` 和其他仓库配置。
+3. 检查 `git diff`，确认没有运行数据和秘密，再提交到 `main`，由 GitHub Pages 发布。
+4. 检查公网 HTML、所有资源、桌面与窄屏显示。资源修改时更新页面查询版本。
 
-## 设计理念
+## 本地预览
 
-- **深空黑科技风**：青发 `#00ffff` / 翠绿 `#00d992` / 暗夜紫 `#a855f7`
-- **HUD 航空仪表盘**：四角支架、毛玻璃、药丸形标签、JetBrains Mono 等宽字体
-- **三层 Hero 动效**：ECharts 漂移世界地图 + Canvas 雷达扫描 + Canvas 粒子
-- **口径清晰**：演示数据与已落地能力明确区分，不把静态页面伪装成在线运行状态
+在本目录执行 `python -m http.server 8080 --bind 127.0.0.1`，访问浏览器的本机 8080 端口。此命令仅用于开发预览；分享请使用上面的公开 HTTPS 地址。
 
-## 同步策略
+## 许可
 
-由主仓库 `docs/demo/` 单向同步到此仓库的 `main` 分支。同步方式：
-
-```bash
-# 在主仓库根目录
-rsync -av --delete docs/demo/ .tmp/glide-demo/
-cd .tmp/glide-demo
-git add -A
-git commit -m "sync: 同步 docs/demo 最新内容"
-git push origin main
-```
-
-## License
-
-演示页面基于主仓库 [GPL-3.0](https://github.com/WYHCIPUC/GLIDE/blob/main/LICENSE) 同步发布。
+介绍页代码遵循随仓库提供的 `LICENSE`；ECharts 许可及声明见 `vendor/`。品牌图形使用境鉴现有正式资产，未重新绘制或修改。
