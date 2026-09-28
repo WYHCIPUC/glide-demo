@@ -90,6 +90,12 @@
 
     if(gsap && ScrollTrigger){
       gsap.registerPlugin(ScrollTrigger);
+      const nav=document.getElementById('nav');
+      const progress=ScrollTrigger.create({start:0,end:'max',onUpdate:self=>{
+        nav?.style.setProperty('--scroll-progress',self.progress.toFixed(4));
+      }});
+      nav?.setAttribute('data-progress-ready','true');
+      cleanups.push(()=>{progress.kill();nav?.removeAttribute('data-progress-ready');});
       const mm = gsap.matchMedia();
       mm.add({motion:'(prefers-reduced-motion: no-preference)', desktop:'(min-width: 961px) and (pointer: fine)'}, context => {
         if(!context.conditions.motion) return;
@@ -98,12 +104,12 @@
           gsap.timeline({defaults:{ease:'power2.out'}})
             .from('.hero-eyebrow', {opacity:0, y:10, duration:0.55})
             .from('.hero-line', {opacity:0, y:24, duration:0.8, stagger:0.12}, 0.12)
-            .from('.hero-brand', {opacity:0, y:16, duration:1}, 0.2)
-            .from('.hero-tagline, .hero-cta, .hero-english', {opacity:0, y:12, duration:0.6, stagger:0.08}, 0.45);
+            .from('.hero-scene', {scale:1.035, duration:1.6, ease:'power1.out'}, 0)
+            .from('.hero-tagline, .hero-cta', {opacity:0, y:12, duration:0.6, stagger:0.08}, 0.45);
         }
         // 进入视野后才创建动画，不预先隐藏正文；每个章节仅出现一次。
         context.add('reveal', element => gsap.fromTo(element, {y:18}, {y:0, duration:0.65, ease:'power2.out', clearProps:'transform'}));
-        document.querySelectorAll('.sec-head, .catalog-group, .topic-card, .scenario-card, .output-card, .brand-signature').forEach(element => {
+        document.querySelectorAll('.sec-head, .hero-brand, .work-steps li, .scenario-card, .output-card, .brand-signature').forEach(element => {
           ScrollTrigger.create({trigger:element, start:'top 94%', once:true, onEnter:() => {
             context.reveal(element);
           }});

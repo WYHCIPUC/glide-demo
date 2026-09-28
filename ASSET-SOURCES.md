@@ -1,10 +1,10 @@
 # 境鉴展厅资源来源
 
-内容版本：2026-09-28.3。运行资源全部随站发布，无远程字体、脚本或业务接口依赖。
+内容版本：2026-09-28.4。运行资源全部随站发布，无远程字体、脚本或业务接口依赖。
 
 ## 正式品牌资产
 
-- 首屏与结尾使用境鉴 G21 正式低金属深色标志。原始海报与循环视频分别为 `jingjian-ui-satin-g21-loop-poster.png`、`jingjian-ui-satin-g21-loop-24s-4k.webm`，来自现行正式品牌资产。
+- 项目品牌展陈与结尾使用境鉴 G21 正式低金属深色标志。原始海报与循环视频分别为 `jingjian-ui-satin-g21-loop-poster.png`、`jingjian-ui-satin-g21-loop-24s-4k.webm`，来自现行正式品牌资产。
 - 网页海报缩放为 1024 × 1024 无损透明 WebP；循环视频缩放为 1024 × 1024、VP9 Alpha、30 帧/秒、24 秒，保留原有地图自转、轮廓、材质与内部深色填充。网页文件是轻量派生件，不替代 4K 品牌母版。
 - 导航图标由同一正式透明海报缩放为 128 像素；既有分享图、标志与地图文件保留兼容，不重新绘制品牌。
 - 原始资产不向网站添加附加地球、标题或背景。播放失败、减少动态、禁用脚本时显示同形静态标志。
@@ -36,8 +36,20 @@ lenis-1.3.26.tgz sha512-s/xTCZCxTFvHbAN1OzuhNaN5YPJH2ail0XAkctKW1b+RUAG4nUL5UHLX
 ```text
 748bbff7f2f8ca93ff8c785d2bc06d8929d757d6a9e41e71fd17024943a18684  assets/jingjian-ui-satin-loop.webm
 fba60e917c9fab980383c9fd296745db705c0b4268fd23154100831c12a6389a  assets/jingjian-ui-satin-poster.webp
-26f5f117b0b04aaa2977ddca013c472139884d31efdf0ef07b175ad0d7dcd780  assets/fonts/jingjian-sans.woff2
+1757ecb94b180c00253679e14ed93e4ace4d17e09d2e1e6224ed01bb8abb8e9d  assets/fonts/jingjian-sans.woff2
+420d04c629ba6a1c320768b43e868cb16e88f1883b09b73d8ad5a49f931f8c11  assets/guangzhou-night.webp
 92bb9a96476f983d212a2bc4f54c889039c1696dd4461d40a736860938570fbb  vendor/gsap.min.js
 b0b14d67b55b0c43c756ac0b106cfcb09d0879945f6ead64451065b0672916a2  vendor/ScrollTrigger.min.js
 53195c9797e7ce7bf9d7fa9242b08209e57f46de4c9dac126a6494fa780e3346  vendor/lenis.min.js
+```
+
+## 广州城市主视觉
+
+- `assets/guangzhou-night.webp` 为 2026-09-28 使用内置 imagegen 生成的城市品牌概念图，1916 × 821；不是项目采集的照片、具体地理视点或业务证据。图中不承载地图边界、事件和监测数值。
+- 原始生成件保留在生成工具默认目录；网站保存选定的完整画面，使用 FFmpeg `libwebp`、quality 84、compression_level 6 转为 87,414 字节 WebP，无重绘、无裁切。浏览器依屏幕尺寸使用 object-fit 展示。
+- 正式 G21 标志与城市概念图分别作为独立资源展示，未把城市背景烘焙进品牌透明文件。
+- 最终生成提示词（内置工具模式）：
+
+```text
+Use case: stylized-concept. Asset type: immersive full-bleed 21:9 brand website hero artwork for Jingjian, a Guangzhou-based global migration intelligence platform. Create an original cinematic architectural art photograph of Guangzhou's Pearl River after dusk, with a faithfully recognizable slender twisted lattice Canton Tower on the right third, viewed from across the wide dark river. Modern skyline recedes into deep midnight haze; calm dark reflective water foreground. Art-directed, spacious, arresting composition: left half mostly near-black negative space with only a very subdued low horizon so large white Chinese typography can be overlaid in code. Tower occupies right 30 percent of image, cyan illumination refined and sparse, not rainbow; silver-blue city reflections. Crisp architectural silhouette but subtle film-like atmosphere, blue-black, restrained ice cyan and a few warm window lights. Feels like a cultural architecture exhibition cover, not a cyberpunk game, sci-fi control room or real surveillance scene. Wide landscape at highest available resolution, ideally 2560x1440 or wider. No text, no logo, no lettering, no HUD, no dots, no globe, no map, no grid lines, no arrows, no people, no watermark. This is a conceptual city illustration not documentation of an exact real viewpoint.
 ```

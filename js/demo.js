@@ -6,24 +6,7 @@
    - 移动端导航
    ========================================================= */
 (function(){
-  // —— 1. Nav 滚动状态、阅读进度与当前章节 ——
-  const nav = document.getElementById('nav');
-  if(nav){
-    let ticking = false;
-    const onScroll = () => {
-      if(!ticking){
-        requestAnimationFrame(() => {
-          nav.classList.toggle('scrolled', window.scrollY > 24);
-          const maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
-          nav.style.setProperty('--scroll-progress', Math.min(1, window.scrollY / maxScroll).toFixed(4));
-          ticking = false;
-        });
-        ticking = true;
-      }
-    };
-    window.addEventListener('scroll', onScroll, { passive:true });
-    onScroll();
-  }
+  // 当前章节使用可见性观察；阅读进度由统一动效时钟管理。
   const navAnchors = Array.from(document.querySelectorAll('.nav-links a[href^="#"]'));
   if('IntersectionObserver' in window && navAnchors.length){
     const navTargets = navAnchors

@@ -5,28 +5,28 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>境鉴｜全球移民智能监测平台</title>
   <meta name="description" content="境鉴 V4.1：面向全球移民与边境安全，了解项目定位、功能全景、四专题业务应用、资料基础、研判成果和部署方式。" />
-  <meta name="release" content="2026-09-28.3" />
+  <meta name="release" content="2026-09-28.4" />
   <meta name="keywords" content="GLIDE, GmwRadar, 移民监测, OSINT, 情报系统, AI, 知识图谱, 边境安全, Factbook" />
   <meta name="theme-color" content="#050507" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="境鉴｜全球移民智能监测平台" />
   <meta property="og:description" content="多源监测、事件证据、四个实战专题与持续研判。了解境鉴 V4.1。" />
   <meta property="og:url" content="https://wyhcipuc.github.io/glide-demo/" />
-  <meta property="og:image" content="https://wyhcipuc.github.io/glide-demo/assets/jingjian-symbol.png" />
-  <meta property="og:image:width" content="512" />
-  <meta property="og:image:height" content="512" />
-  <meta property="og:image:alt" content="境鉴正式品牌标志" />
-  <meta name="twitter:card" content="summary" />
+  <meta property="og:image" content="https://wyhcipuc.github.io/glide-demo/assets/guangzhou-night.webp" />
+  <meta property="og:image:width" content="1916" />
+  <meta property="og:image:height" content="821" />
+  <meta property="og:image:alt" content="境鉴：广州塔与珠江夜色的品牌概念画面" />
+  <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="境鉴｜全球移民智能监测平台" />
   <meta name="twitter:description" content="多源监测、事件证据、四个实战专题与持续研判。" />
-  <meta name="twitter:image" content="https://wyhcipuc.github.io/glide-demo/assets/jingjian-symbol.png" />
-  <link rel="icon" type="image/png" href="./assets/jingjian-symbol.png" />
+  <meta name="twitter:image" content="https://wyhcipuc.github.io/glide-demo/assets/guangzhou-night.webp" />
+  <link rel="icon" type="image/png" href="./assets/jingjian-icon.png" />
 
   <!-- 主样式 -->
-  <link rel="stylesheet" href="./css/demo.css?v=20260928.3">
+  <link rel="stylesheet" href="./css/demo.css?v=20260928.4">
 
   <!-- 显示资源随站发布，不依赖第三方 CDN。 -->
-  <script defer src="./vendor/echarts.min.js?v=20260928.3"></script>
+  <script defer src="./vendor/echarts.min.js?v=20260928.4"></script>
 </head>
 <body>
 <a class="skip-link" href="#main-content">跳到项目正文</a>
@@ -35,7 +35,7 @@
 <nav class="nav" id="nav" aria-label="主导航">
   <div class="container nav-inner">
     <a href="#top" class="nav-brand" aria-label="境鉴首页">
-      <span class="logo"><img src="./assets/jingjian-icon.png?v=20260928.3" width="40" height="40" alt=""></span>
+      <span class="logo"><img src="./assets/jingjian-icon.png?v=20260928.4" width="40" height="40" alt=""></span>
       <span class="name">境鉴</span>
       <span class="ver">GLOBAL INTELLIGENCE</span>
     </a>
@@ -61,32 +61,23 @@
 
 <!-- ============ HERO ============ -->
 <header class="hero" id="top">
-  <div class="container hero-grid">
+  <picture class="hero-scene"><img src="./assets/guangzhou-night.webp" width="1916" height="821" alt="广州塔与珠江夜色的品牌概念画面" fetchpriority="high"></picture>
+  <div class="container hero-stage">
     <div class="hero-content">
-      <p class="hero-eyebrow"><span class="eyebrow-rule" aria-hidden="true"></span> 境鉴 · 全球移民智能监测平台</p>
-      <h1 aria-label="立足广州，观察全球。"><span class="hero-line" aria-hidden="true">立足广州。</span><span class="hero-line accent" aria-hidden="true">观察全球。</span></h1>
-      <p class="hero-tagline">从全球变化中，找到本地工作的关注点。<br>连接公开信息、事件证据与专题研判，让每一份观察都有据可循。</p>
+      <p class="hero-eyebrow">全球移民智能监测平台</p>
+      <h1><span class="hero-line">境鉴</span></h1>
+      <p class="hero-tagline">立足广州，观察全球。<span>让与广州有关的变化，进入视野。</span></p>
       <div class="hero-cta">
-        <a class="btn btn-primary btn-lg" href="#project">探索境鉴 <span aria-hidden="true">↗</span></a>
-        <a class="hero-text-link" href="#topics">走进四个实战专题 <span aria-hidden="true">→</span></a>
+        <a class="btn btn-primary btn-lg" href="#project">开启境鉴全景 <span aria-hidden="true">↗</span></a>
       </div>
-      <p class="hero-english">GLOBAL MIGRATION<br>INTELLIGENT MONITORING PLATFORM</p>
     </div>
-    <figure class="hero-brand" aria-label="境鉴正式品牌标志">
-      <div class="hero-emblem">
-        <img src="./assets/jingjian-ui-satin-poster.webp" width="1024" height="1024" alt="境鉴 G21 正式标志：广州塔、木棉与全球监测翼面" fetchpriority="high">
-        <video id="brand-video" muted playsinline loop preload="none" aria-hidden="true" data-src="./assets/jingjian-ui-satin-loop.webm"></video>
-      </div>
-      <figcaption class="brand-caption"><span>广州的坐标 · 全球的视野</span><button type="button" id="brand-motion-toggle" aria-controls="brand-video" hidden>暂停标志动效</button></figcaption>
-    </figure>
   </div>
-  <div class="container hero-baseline"><span>全球感知 / 事件治理 / 综合研判 / 知识摆渡</span><a href="#project" aria-label="向下阅读项目介绍">向下探索 <span aria-hidden="true">↓</span></a><span>V4.1 · 项目全景</span></div>
 </header>
 
 
 <main id="main-content" tabindex="-1">
 <nav class="chapter-nav container" aria-label="项目导览">
-  <div class="chapter-label"><span class="mono-tag">项目导览</span><span>了解项目的每一个侧面</span></div>
+  <div class="chapter-label"><span class="mono-tag">项目导览</span></div>
   <div class="chapter-links">
     <a href="#project">01 项目定位</a><a href="#why">02 建设价值</a><a href="#capabilities">03 功能全景</a>
     <a href="#topics">04 四个专题</a><a href="#scenarios">05 应用场景</a><a href="#outputs">06 成果输出</a>
@@ -97,8 +88,7 @@
 <section id="project" tabindex="-1">
   <div class="container">
     <div class="sec-head reveal">
-      <div class="sec-eyebrow"><span class="num">01</span><span>PROJECT OVERVIEW</span></div>
-      <h2 class="sec-title">一个持续积累的<span class="accent">移民与边境安全研判平台</span></h2>
+      <h2 class="sec-title">从全球的信息，<br><span class="accent">到广州的关注。</span></h2>
       <p class="sec-sub">境鉴面向全球移民政策、边境执法和涉外风险的日常观察，把信息监测、国家背景、事件证据和专题分析放在同一工作环境中。既能了解全球变化，也能围绕广州业务需要进入具体问题。</p>
     </div>
     <div class="project-split">
@@ -112,7 +102,15 @@
           <div><dt>信息保障</dt><dd>维护监测来源、采集任务和通知配置，让资料积累与报告分发持续运行。</dd></div>
         </dl>
       </div>
-      <aside class="platform-map glass-card" aria-label="平台结构">
+      <figure class="hero-brand" aria-label="境鉴正式品牌标志">
+        <div class="hero-emblem">
+          <img src="./assets/jingjian-ui-satin-poster.webp" width="1024" height="1024" alt="境鉴 G21 正式标志：广州塔、木棉与全球监测翼面" loading="lazy">
+          <video id="brand-video" muted playsinline loop preload="none" aria-hidden="true" data-src="./assets/jingjian-ui-satin-loop.webm"></video>
+        </div>
+        <figcaption class="brand-caption"><span>广州塔 · 木棉 · 全球视野</span><button type="button" id="brand-motion-toggle" aria-controls="brand-video" hidden>暂停标志动效</button></figcaption>
+      </figure>
+    </div>
+      <aside class="platform-map" aria-label="平台结构">
         <div class="map-label">平台结构</div>
         <div class="platform-layer"><strong>公开信息与背景资料</strong><span>新闻 · 政策 · 国情 · 时间节点 · 专题资料</span></div>
         <span class="platform-arrow" aria-hidden="true">↓</span>
@@ -122,7 +120,6 @@
         <span class="platform-arrow" aria-hidden="true">↓</span>
         <div class="platform-layer"><strong>面向工作的研判成果</strong><span>简报 · 专题报告 · 变化提醒 · 可复用知识包</span></div>
       </aside>
-    </div>
   </div>
 </section>
 
@@ -164,8 +161,7 @@
 <section id="feed" class="workflow-section">
   <div class="container">
     <div class="sec-head reveal">
-      <div class="sec-eyebrow"><span>DAILY WORKFLOW</span></div>
-      <h2 class="sec-title">一条线索，怎样变成<span class="accent">可用的工作材料</span></h2>
+      <h2 class="sec-title">从一条线索开始。<br><span class="accent">让观察，逐步成为判断。</span></h2>
       <p class="sec-sub">围绕同一问题持续组织资料，既保留最初的信息，也能看到后续补充与变化。</p>
     </div>
     <ol class="work-steps">
@@ -182,8 +178,7 @@
 <section id="why">
   <div class="container">
     <div class="sec-head reveal">
-      <div class="sec-eyebrow"><span class="num">02</span><span>BUSINESS VALUE</span></div>
-      <h2 class="sec-title">把分散的阅读，变成<span class="accent">连续的业务观察</span></h2>
+      <h2 class="sec-title">看得全。看得深。<br><span class="accent">更要用得上。</span></h2>
       <p class="sec-sub">项目建设围绕三个日常需要展开：把信息找齐，把变化看清，把材料用起来。</p>
     </div>
     <div class="values-grid">
@@ -198,22 +193,21 @@
 <section id="capabilities">
   <div class="container">
     <div class="sec-head reveal">
-      <div class="sec-eyebrow"><span class="num">03</span><span>CAPABILITY DIRECTORY</span></div>
-      <h2 class="sec-title">从日常监测到资料积累，<span class="accent">功能全景一览</span></h2>
+      <h2 class="sec-title">一个平台。<br><span class="accent">一套完整的观察能力。</span></h2>
       <p class="sec-sub">四个实战专题建立在共同的监测、事件和资料能力上。下面按实际工作入口说明各部分可以做什么。</p>
     </div>
     <div class="capability-catalog">
-      <div class="catalog-group">
-        <div class="catalog-heading"><span>01</span><h3>核心中台</h3><p>了解运行情况，找到信息和事件。</p></div>
+      <details class="catalog-group" open>
+        <summary class="catalog-heading"><span>01</span><h3>核心中台</h3><p>了解运行情况，找到信息和事件。</p></summary>
         <div class="catalog-items">
           <article data-module="dashboard"><h4>状态总览</h4><p>查看任务运行、采集产出和系统状态，发现需要关注的运行异常。</p></article>
           <article data-module="overview"><h4>监测概况</h4><p>按日期查看信息分布、来源构成、关键词和变化趋势，建立对当前监测内容的整体认识。</p></article>
           <article data-module="source_status"><h4>监控源状态</h4><p>查看来源分布、采集状态与更新时间，判断哪些渠道持续提供信息、哪些需要维护。</p></article>
           <article data-module="feed"><h4>事件数据</h4><p>筛选和检索文章、事件；阅读中文摘要、正文与关联来源，追踪事件发展和历史变化。</p></article>
         </div>
-      </div>
-      <div class="catalog-group">
-        <div class="catalog-heading"><span>02</span><h3>专项研判</h3><p>从国家、时间和网站变化进入问题。</p></div>
+      </details>
+      <details class="catalog-group">
+        <summary class="catalog-heading"><span>02</span><h3>专项研判</h3><p>从国家、时间和网站变化进入问题。</p></summary>
         <div class="catalog-items">
           <article data-module="monitoring_overview"><h4>专项运行总览</h4><p>集中查看各监测域的任务、最近运行与推送情况，掌握专项工作的运行进度。</p></article>
           <article data-module="global_migration"><h4>全球移民动态</h4><p>围绕移民政策、边境执法与相关挑战持续观察，进入态势预警、每日简报和月度研判。</p></article>
@@ -221,21 +215,21 @@
           <article data-module="timeline_monitoring"><h4>重要时间节点</h4><p>按日期检索全球重要节点、节庆与活动资料，辅助提前了解特定时间窗口的关注事项。</p></article>
           <article data-module="webpage_monitoring"><h4>网页动态监测</h4><p>跟踪指定网页的内容变化，查看更新前后版本、变化阅读和历史推送记录。</p></article>
         </div>
-      </div>
-      <div class="catalog-group">
-        <div class="catalog-heading"><span>03</span><h3>数据中台</h3><p>把已有内容组织为可检索的资料资产。</p></div>
+      </details>
+      <details class="catalog-group">
+        <summary class="catalog-heading"><span>03</span><h3>数据中台</h3><p>把已有内容组织为可检索的资料资产。</p></summary>
         <div class="catalog-items">
           <article data-module="data_hub"><h4>综合治理与研判</h4><p>统一检索事件、文章与资料，组织专题分析；结合公开来源线索和实体关系，继续查找相关背景。</p></article>
           <article data-module="knowledge_export"><h4>知识导出与复用</h4><p>按需要导出事件、报告和参考资料，生成可阅读文档与结构化知识文件，供离线查阅或知识库整理。</p></article>
         </div>
-      </div>
-      <div class="catalog-group">
-        <div class="catalog-heading"><span>04</span><h3>系统设置</h3><p>按本地业务需要配置运行方式。</p></div>
+      </details>
+      <details class="catalog-group">
+        <summary class="catalog-heading"><span>04</span><h3>系统设置</h3><p>按本地业务需要配置运行方式。</p></summary>
         <div class="catalog-items">
           <article data-module="settings"><h4>来源、筛选与账号配置</h4><p>配置监测来源、关键词、AI 筛选、通知渠道和已启用账号；通过统一登录进入业务系统。</p></article>
           <article data-module="themes"><h4>四套显示模式</h4><p>深色或浅色、经典或工作站，可按使用环境选择；核心内容与四个实战专题保持对应。</p></article>
         </div>
-      </div>
+      </details>
     </div>
     <p class="section-link">需要按具体业务了解？<a href="#topics">继续查看四个实战专题 →</a></p>
   </div>
@@ -245,12 +239,18 @@
 <section id="topics">
   <div class="container">
     <div class="sec-head reveal">
-      <div class="sec-eyebrow"><span class="num">04</span><span>PRACTICAL WORKSTATIONS</span></div>
-      <h2 class="sec-title">四个实战专题，<span class="accent">四种业务观察视角</span></h2>
+      <h2 class="sec-title">同一个世界。<br><span class="accent">四个实战视角。</span></h2>
       <p class="sec-sub">每个专题都从当前判断开始，再进入变化、地图、关联与资料明细。共同使用公开事实、系统研判和广州关联，也保留报告、提醒与版本更正能力。</p>
     </div>
+    <div class="topic-exhibition" data-topic-exhibit>
+    <div class="topic-controls" role="tablist" aria-label="选择实战专题" hidden>
+      <button type="button" id="topic-tab-foreign-service" data-topic-target="foreign-service"><span>01</span>涉外服务管理<small>连接广州与世界</small></button>
+      <button type="button" id="topic-tab-smuggling" data-topic-target="smuggling"><span>02</span>偷渡态势研判<small>观察路线与边境</small></button>
+      <button type="button" id="topic-tab-overseas-risk" data-topic-target="overseas-risk"><span>03</span>境外风险传导<small>追踪变化与关联</small></button>
+      <button type="button" id="topic-tab-terrorism" data-topic-target="terrorism"><span>04</span>全球暴恐监测<small>关注国际安全态势</small></button>
+    </div>
     <div class="topics-grid">
-      <article class="glass-card topic-card reveal" data-topic="foreign-service">
+      <article class="glass-card topic-card" id="topic-foreign-service" data-topic="foreign-service">
         <div class="topic-number" aria-hidden="true">01</div><div class="topic-kicker">涉外服务</div><h3>涉外服务管理</h3>
         <p class="topic-question">会展活动与涉外资源有什么变化，服务工作应重点了解哪些情况？</p>
         <dl class="topic-facts">
@@ -260,7 +260,7 @@
         </dl>
         <h4>工作台阅读顺序</h4><ol class="topic-flow"><li>服务判断</li><li>会展变化</li><li>服务覆盖</li><li>需求关联</li><li>名录与依据</li><li>类别明细</li></ol>
       </article>
-      <article class="glass-card topic-card reveal" data-topic="smuggling">
+      <article class="glass-card topic-card" id="topic-smuggling" data-topic="smuggling">
         <div class="topic-number" aria-hidden="true">02</div><div class="topic-kicker">边境与迁移路线</div><h3>偷渡态势研判</h3>
         <p class="topic-question">主要迁移路线发生了哪些变化，哪些地区和变化值得继续跟踪？</p>
         <dl class="topic-facts">
@@ -270,7 +270,7 @@
         </dl>
         <h4>工作台阅读顺序</h4><ol class="topic-flow"><li>结论总览</li><li>路线变化</li><li>全球路线</li><li>结构与后果</li><li>来源与口径</li><li>数据明细</li></ol>
       </article>
-      <article class="glass-card topic-card reveal" data-topic="overseas-risk">
+      <article class="glass-card topic-card" id="topic-overseas-risk" data-topic="overseas-risk">
         <div class="topic-number" aria-hidden="true">03</div><div class="topic-kicker">国别与本地关联</div><h3>境外风险传导</h3>
         <p class="topic-question">境外事件有哪些进展，与广州的人员往来和涉外服务存在什么联系？</p>
         <dl class="topic-facts">
@@ -280,7 +280,7 @@
         </dl>
         <h4>工作台阅读顺序</h4><ol class="topic-flow"><li>综合研判</li><li>风险变化</li><li>国家态势</li><li>广州传导</li><li>证据与缺口</li><li>国家明细</li></ol>
       </article>
-      <article class="glass-card topic-card reveal" data-topic="terrorism">
+      <article class="glass-card topic-card" id="topic-terrorism" data-topic="terrorism">
         <div class="topic-number" aria-hidden="true">04</div><div class="topic-kicker">暴恐与安全观察</div><h3>全球暴恐监测</h3>
         <p class="topic-question">公开事件集中在哪里，事件类型、组织与相关证据出现了哪些变化？</p>
         <dl class="topic-facts">
@@ -290,6 +290,7 @@
         </dl>
         <h4>工作台阅读顺序</h4><ol class="topic-flow"><li>综合判断</li><li>事件变化</li><li>地点分布</li><li>组织与归因</li><li>来源对账</li><li>事件明细</li></ol>
       </article>
+    </div>
     </div>
     <div class="theme-strip glass-card reveal">
       <h3>四套显示模式，同一套业务内容</h3>
@@ -302,7 +303,7 @@
 
 <section id="scenarios">
   <div class="container">
-    <div class="sec-head reveal"><div class="sec-eyebrow"><span class="num">05</span><span>WORK SCENARIOS</span></div><h2 class="sec-title">带着业务问题，<span class="accent">看一次完整使用过程</span></h2><p class="sec-sub">从工作准备、事件跟踪到政策研究，看看各项能力怎样配合使用。</p></div>
+    <div class="sec-head reveal"><h2 class="sec-title">带着问题进入。<br><span class="accent">带着依据继续。</span></h2><p class="sec-sub">从工作准备、事件跟踪到政策研究，看看各项能力怎样配合使用。</p></div>
     <div class="scenario-list">
       <article class="scenario-card glass-card reveal"><div class="scenario-title"><span>场景 01</span><h3>会展服务保障</h3><p>重大国际活动前，准备涉外服务背景材料。</p></div><div class="scenario-body"><ol class="scenario-path"><li>查重要时间节点，明确活动与准备窗口。</li><li>进入涉外服务管理，查看会展变化、来源覆盖与机构资料。</li><li>结合相关政策和来源原文，整理需要关注的问题。</li></ol><p class="scenario-result"><strong>形成材料</strong> 会展服务背景、机构与资料索引、重点关注事项，供工作准备和后续核对。</p></div></article>
       <article class="scenario-card glass-card reveal"><div class="scenario-title"><span>场景 02</span><h3>境外事件跟踪</h3><p>一条境外突发消息出现后，继续核对与跟进。</p></div><div class="scenario-body"><ol class="scenario-path"><li>在事件数据中检索报道，阅读摘要与原文，查看相关来源。</li><li>查重点国家资料，并在境外风险传导中查看国家态势与广州关联。</li><li>跟进新的报道与更正，结合专题分析整理阶段材料。</li></ol><p class="scenario-result"><strong>形成材料</strong> 事件进展、国别背景、关联分析与引用依据，可用于情况通报或会商准备。</p></div></article>
@@ -312,7 +313,7 @@
 </section>
 <section id="outputs">
   <div class="container">
-    <div class="sec-head reveal"><div class="sec-eyebrow"><span class="num">06</span><span>DELIVERABLES</span></div><h2 class="sec-title">最终交付的，不只有页面，<span class="accent">还有持续积累的成果</span></h2><p class="sec-sub">根据阅读和研究需要，使用不同层次的材料；已形成的事件、报告和资料可以继续查询与复用。</p></div>
+    <div class="sec-head reveal"><h2 class="sec-title">观察有了下文。<br><span class="accent">成果留在手边。</span></h2><p class="sec-sub">根据阅读和研究需要，使用不同层次的材料；已形成的事件、报告和资料可以继续查询与复用。</p></div>
     <div class="output-grid">
       <article class="output-card glass-card reveal"><span class="dossier-index" aria-hidden="true">01</span><span class="output-type">日常阅览</span><h3>每日简报</h3><p>集中阅读当天重点动态，围绕综合摘要、群体管理与影响、弱信号捕捉组织信息，保留来源入口。</p><div>适合：日常阅览、情况掌握</div></article>
       <article class="output-card glass-card reveal"><span class="dossier-index" aria-hidden="true">02</span><span class="output-type">阶段研究</span><h3>月度研判</h3><p>从持续积累的事件与材料中组织主题、区域和阶段变化，形成可回看的月度分析。</p><div>适合：阶段总结、趋势研究</div></article>
@@ -326,7 +327,7 @@
 </section>
 <section id="foundation">
   <div class="container">
-    <div class="sec-head reveal"><div class="sec-eyebrow"><span class="num">07</span><span>INFORMATION FOUNDATION</span></div><h2 class="sec-title">既看新变化，<span class="accent">也有背景和依据可查</span></h2><p class="sec-sub">即时信息与长期资料共同支撑研判。关注同一问题时，可以把今天的变化放回既有背景中理解。</p></div>
+    <div class="sec-head reveal"><h2 class="sec-title">新变化背后，<br><span class="accent">是持续积累的资料。</span></h2><p class="sec-sub">即时信息与长期资料共同支撑研判。关注同一问题时，可以把今天的变化放回既有背景中理解。</p></div>
     <div class="foundation-grid">
       <article class="glass-card foundation-card reveal"><h3>公开来源</h3><p>接入公开新闻、榜单、RSS 和指定网页，获取移民政策、边境执法及相关国际动态。按已配置任务持续更新。</p></article>
       <article class="glass-card foundation-card reveal"><h3>国家资料</h3><p>汇集国家和地区的人口、经济、政治、地理等背景信息，支持中文阅读，帮助理解一条事件发生的环境。</p></article>
@@ -349,7 +350,6 @@
 <section id="viz">
   <div class="container">
     <div class="sec-head reveal">
-      <div class="sec-eyebrow"><span class="num">08</span><span>DATA VISUALIZATION</span></div>
       <h2 class="sec-title">可视化<span class="accent">预览</span></h2>
       <p class="sec-sub">演示数据 · 预览事件趋势、证据完整度、地区分布与来源构成。</p>
     </div>
@@ -384,7 +384,6 @@
 <section id="arch">
   <div class="container">
     <div class="sec-head reveal">
-      <div class="sec-eyebrow"><span>PROCESSING & ARCHITECTURE</span></div>
       <h2 class="sec-title">支撑业务运行的<span class="accent">六个处理环节</span></h2>
       <p class="sec-sub">从原始文本到结构化情报的完整链路，采集、分析与成果输出在同一平台内衔接。</p>
     </div>
@@ -432,7 +431,7 @@
 <!-- ============ RELIABILITY ============ -->
 <section id="status">
   <div class="container">
-    <div class="sec-head reveal"><div class="sec-eyebrow"><span class="num">09</span><span>OPERATIONS & CONTROL</span></div><h2 class="sec-title">持续运行，也要<span class="accent">能管理、能追溯</span></h2><p class="sec-sub">平台配有任务记录、来源状态、通知记录与备份能力，便于日常维护和问题定位。</p></div>
+    <div class="sec-head reveal"><h2 class="sec-title">持续运行，也要<span class="accent">能管理、能追溯</span></h2><p class="sec-sub">平台配有任务记录、来源状态、通知记录与备份能力，便于日常维护和问题定位。</p></div>
     <div class="foundation-grid">
       <article class="glass-card foundation-card reveal"><h3>任务运行有记录</h3><p>查看采集与专项任务的最近运行、完成情况和错误提示，避免只看到页面结果却不知道更新是否正常。</p></article>
       <article class="glass-card foundation-card reveal"><h3>来源与版本可追溯</h3><p>保留来源入口、事件历史和资料版本，发现更新或更正后可沿记录继续核查。</p></article>
@@ -446,7 +445,6 @@
 <section id="stack">
   <div class="container">
     <div class="sec-head reveal">
-      <div class="sec-eyebrow"><span>TECHNICAL FOUNDATION</span></div>
       <h2 class="sec-title">技术基础与<span class="accent">扩展接入</span></h2>
       <p class="sec-sub">Python 3.10+ / FastAPI / SQLite / Vue 3 / ECharts · Docker & MCP Ready。</p>
     </div>
@@ -496,7 +494,6 @@
 <section id="start">
   <div class="container">
     <div class="sec-head reveal">
-      <div class="sec-eyebrow"><span class="num">10</span><span>DEPLOYMENT</span></div>
       <h2 class="sec-title">灵活选择<span class="accent">部署方式</span></h2>
       <p class="sec-sub">可以在本地电脑或服务器运行，通过浏览器使用；部署和配置完成后，业务人员主要在中文工作界面中操作。</p>
     </div>
@@ -573,7 +570,7 @@ python -m mcp_server.server --transport http --port 3333
 
 <section id="faq">
   <div class="container">
-    <div class="sec-head"><div class="sec-eyebrow"><span class="num">11</span><span>QUESTIONS & ANSWERS</span></div><h2 class="sec-title">进一步了解<span class="accent">项目使用</span></h2><p class="sec-sub">从项目展示走向实际使用前，几个常见问题。</p></div>
+    <div class="sec-head"><h2 class="sec-title">进一步了解<span class="accent">项目使用</span></h2><p class="sec-sub">从项目展示走向实际使用前，几个常见问题。</p></div>
     <div class="faq-list">
       <details><summary>这个网址可以直接使用业务系统吗？</summary><p>这是公开项目介绍页，用于了解功能、业务场景和使用方式。实际业务系统需要在相应电脑或服务器部署，并使用已启用账号登录；公开页面不连接业务数据库。</p></details>
       <details><summary>平台主要关注哪些内容？</summary><p>围绕主流移民国家政策、全球边境执法安全和其他国家移民挑战开展持续监测，并通过涉外服务管理、偷渡态势研判、境外风险传导、全球暴恐监测四个专题组织分析。</p></details>
@@ -645,8 +642,9 @@ python -m mcp_server.server --transport http --port 3333
 <script defer src="./vendor/gsap.min.js?v=3.15.0"></script>
 <script defer src="./vendor/ScrollTrigger.min.js?v=3.15.0"></script>
 <script defer src="./vendor/lenis.min.js?v=1.3.26"></script>
-<script defer src="./js/charts.js?v=20260928.3"></script>
-<script defer src="./js/demo.js?v=20260928.3"></script>
-<script defer src="./js/brand-motion.js?v=20260928.3"></script>
+<script defer src="./js/charts.js?v=20260928.4"></script>
+<script defer src="./js/demo.js?v=20260928.4"></script>
+<script defer src="./js/exhibition.js?v=20260928.4"></script>
+<script defer src="./js/brand-motion.js?v=20260928.4"></script>
 </body>
 </html>
