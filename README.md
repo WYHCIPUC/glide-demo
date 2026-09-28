@@ -1,38 +1,140 @@
-# 境鉴 · 全球移民智能监测平台
+<p align="center">
+  <a href="https://wyhcipuc.github.io/glide-demo/"><img src="./assets/jingjian-ui-satin-poster.webp" width="112" alt="境鉴 G21 正式透明标志：广州塔、木棉与右翼地图"></a>
+</p>
 
-[打开公开项目介绍](https://wyhcipuc.github.io/glide-demo/)
+<h1 align="center">境鉴</h1>
 
-V4.1 · 内容版本：2026-09-28.4。面向领导阅览、业务部门和项目展示，完整介绍项目定位、建设价值、功能全景、四个实战专题、应用场景、成果输出、资料与研判、可视化、运行保障、部署使用和常见问题。
+<p align="center">
+  <strong>立足广州，观察全球。</strong><br>
+  全球移民智能监测平台<br>
+  <sub>Global Migration Intelligent Monitoring Platform · V4.1</sub>
+</p>
 
-四专题逐项说明关注问题、资料内容、六个实际栏目和工作用途；三个场景分别展示会展服务保障、境外事件跟踪和政策变化研判的阅读路径。技术命令默认折叠，章节支持链接直达。
+<p align="center">
+  <a href="https://wyhcipuc.github.io/glide-demo/"><strong>进入项目展厅 ↗</strong></a>　·　
+  <a href="https://wyhcipuc.github.io/glide-demo/#topics">四个实战专题</a>　·　
+  <a href="https://wyhcipuc.github.io/glide-demo/#scenarios">业务场景</a>　·　
+  <a href="https://wyhcipuc.github.io/glide-demo/#outputs">成果展示</a>
+</p>
 
-## 城市观察展厅
+<a href="https://wyhcipuc.github.io/glide-demo/">
+  <img src="./assets/guangzhou-night.webp" width="100%" alt="境鉴城市品牌概念图：珠江夜色与广州塔，点击进入项目展厅">
+</a>
 
-以广州城市意象开场，用大幅品牌排版、独立 G21 动态标志展陈、线索叙事、可展开的能力目录、四专题交互展台和成果书页组织完整介绍。深空黑与品牌蓝青银贯穿全页，正式标志轮廓、透明背景和原有右翼自转保持不变。
+## 从全球动态，到业务判断
 
-四专题支持点击、方向键、Home/End 和专题深链接；无需 JavaScript 时全部展开，增强失败不会遮住正文。已有 11 个章节锚点和主导航入口保留。概念主视觉不作为实景资料或业务数据。
+**境鉴**将公开信息采集、中文阅读、事件跟踪、国别资料和专题研判放在同一个工作台。围绕移民政策、边境安全与相关国际动态，帮助使用者找到值得关注的变化，查阅判断依据，并形成简报、报告和提醒。
 
-首屏入场、章节阅读和专题切换使用本地 GSAP；桌面精细指针环境使用 Lenis，触屏与减少动态环境保留原生滚动。标志可暂停，离屏或后台自动停止，失败回到静态标志。品牌母版、生成图提示词、字体及第三方许可见 [资源来源](ASSET-SOURCES.md)。
+**先看判断，再看变化，最后回到依据。** 领导阅览可以从专题结论与重点成果开始；业务研究可以继续进入趋势、地图、明细和来源。GLIDE 是项目的技术代号。
 
-## 独立访问
+[完整了解项目 ↗](https://wyhcipuc.github.io/glide-demo/#why)
 
-本仓库只发布静态介绍页。无需登录、无需在访问电脑安装 Python 或启动业务后台；不包含数据库、账号、凭据和业务运行数据。所有显示资源、中文字体、动效库、ECharts 与地图数据均随站提供，不请求 Google Fonts 或 jsDelivr。图表示例使用演示数据。
+## 同一个世界，四个实战视角
 
-主项目源码不在本公开仓库内；部署示例供已取得源码的使用者参考。介绍页不能代替实际业务系统。
+### 01　涉外服务管理
 
-## 内容来源与同步
+会展活动与涉外资源有什么变化，服务工作需要提前了解什么？从会展、机构与服务资料进入，支持活动准备、资源梳理和背景查阅。
 
-维护来源为主项目的 `docs/demo/`。`publish-manifest.json` 列出允许同步的文件，发布时只复制清单文件，不同步整个主仓库，也不使用递归删除同步。
+**服务判断 / 会展变化 / 服务覆盖 / 需求关联 / 名录与依据 / 类别明细**
 
-1. 在主项目运行 `node --test tests/frontend/public-demo-portability.test.mjs tests/frontend/public-demo-content.test.mjs tests/frontend/public-demo-brand.test.mjs tests/frontend/public-demo-exhibition.test.mjs`。
-2. 将发布清单中的文件复制到本仓库同名相对路径，保留 `.git` 和其他仓库配置。
-3. 检查 `git diff`，确认没有运行数据和秘密，再提交到 `main`，由 GitHub Pages 发布。
-4. 检查公网 HTML、所有资源、桌面与窄屏显示。资源修改时更新页面查询版本。
+[进入涉外服务专题 ↗](https://wyhcipuc.github.io/glide-demo/#topic-foreign-service)
 
-## 本地预览
+### 02　偷渡态势研判
 
-在本目录执行 `python -m http.server 8080 --bind 127.0.0.1`，访问浏览器的本机 8080 端口。此命令仅用于开发预览；分享请使用上面的公开 HTTPS 地址。
+主要迁移路线出现了哪些变化，哪些地区值得继续跟踪？把历史资料与近期动态放在一起，观察路线、结构和相关后果。
 
-## 许可
+**结论总览 / 路线变化 / 全球路线 / 结构与后果 / 来源与口径 / 数据明细**
 
-介绍页代码遵循随仓库提供的 `LICENSE`；ECharts 许可及声明见 `vendor/`。品牌图形使用境鉴现有正式资产，未重新绘制或修改。
+[进入偷渡态势专题 ↗](https://wyhcipuc.github.io/glide-demo/#topic-smuggling)
+
+### 03　境外风险传导
+
+境外事件怎样发展，与广州的人员往来和涉外服务有什么联系？结合国家态势、事件进展和广州关联资料，形成阶段性研判。
+
+**综合研判 / 风险变化 / 国家态势 / 广州传导 / 证据与缺口 / 国家明细**
+
+[进入境外风险专题 ↗](https://wyhcipuc.github.io/glide-demo/#topic-overseas-risk)
+
+### 04　全球暴恐监测
+
+公开事件集中在哪里，类型、组织与相关证据发生了什么变化？按时间、地点和来源梳理国际安全动态，保留可继续核对的依据。
+
+**综合判断 / 事件变化 / 地点分布 / 组织与归因 / 来源对账 / 事件明细**
+
+[进入全球暴恐专题 ↗](https://wyhcipuc.github.io/glide-demo/#topic-terrorism)
+
+四专题共同具备**公开事实、系统研判、广州关联、报告提醒、版本更正**五项能力。深色、浅色与经典、工作站组合为四套显示模式，内容与业务逻辑保持一致。
+
+## 一个平台怎样支撑日常工作
+
+- **集中阅读**：公开新闻、RSS 与指定网页进入统一入口，提供中文标题、摘要与原文阅读。
+- **持续跟踪**：把相关报道关联到事件，查看后续进展、时间线、来源和版本变化。
+- **补齐背景**：查阅国家资料、重要日期、会展与专题材料，理解一条变化发生的环境。
+- **深入研判**：长期基线回答“原来是什么情况”，实时变化回答“最近发生了什么”，组合研判把两者联系起来。
+- **查询与复用**：事件、报告和参考资料可以再次检索、引用和导出；同一信息通过关联供不同专题使用。
+- **管理运行**：来源状态、任务记录、通知记录、配置与备份帮助维护日常运行。
+
+[浏览完整功能目录 ↗](https://wyhcipuc.github.io/glide-demo/#capabilities)
+
+## 带着问题进入，带着材料继续
+
+**会展服务保障**　查活动日期、会展变化与机构资料，整理服务背景、资源索引和重点关注事项。
+
+**境外事件跟踪**　从一条报道进入事件进展，结合国别背景与广州关联，形成情况通报或会商材料。
+
+**政策变化研判**　跟踪重点国家与指定官网，比较前后版本，持续整理政策变化及阶段趋势。
+
+[查看三个场景的完整路径 ↗](https://wyhcipuc.github.io/glide-demo/#scenarios)
+
+## 观察有了下文，成果留在手边
+
+| 工作需要 | 对应成果 |
+| --- | --- |
+| 日常阅览 | **每日简报**：综合摘要、群体管理与影响、弱信号捕捉 |
+| 阶段研究 | **月度研判**：主题、地区与阶段变化 |
+| 专题会商 | **专题报告**：判断、事实、关联与引用依据 |
+| 持续跟踪 | **变化提醒**：通过已配置渠道接收重要更新 |
+| 核对与复盘 | **事件与资料明细**：文章、原文、时间和历史版本 |
+| 知识整理 | **离线知识包**：DOCX、Markdown、JSONL |
+
+[了解成果与复用方式 ↗](https://wyhcipuc.github.io/glide-demo/#outputs)
+
+## 查看项目与实际使用
+
+**公开展厅**可直接在浏览器打开，无需登录，也不需要安装软件。展厅包含项目全景、四专题交互介绍、场景路径、成果说明和正式品牌动效；图表示例使用演示数据。
+
+**实际业务系统**需要由维护人员在本地电脑、服务器或 Docker 环境部署。业务人员通过浏览器统一登录；公开信息采集、外部 AI 和通知服务按使用需要配置。平台基于 Python、FastAPI、SQLite、Vue 3 与 ECharts，并支持 MCP 接入。
+
+本仓库仅发布项目介绍网站，不包含业务系统源码、账号或运行数据库。已有系统使用者可在展厅查看[部署与接入说明](https://wyhcipuc.github.io/glide-demo/#start)；首次了解项目可从[常见问题](https://wyhcipuc.github.io/glide-demo/#faq)继续阅读。
+
+---
+
+<p align="center">
+  <strong>一座城市的立足点，一个面向全球的视野。</strong><br><br>
+  <a href="https://wyhcipuc.github.io/glide-demo/">打开境鉴项目展厅 ↗</a>
+</p>
+
+<details>
+<summary>网站维护与资源说明</summary>
+
+### 内容与发布
+
+网站内容版本：2026-09-28.4。维护来源为主项目的 `docs/demo/`；`publish-manifest.json` 列出允许发布的文件。只同步清单中的静态文件，保留目标仓库的 `.git` 和配置，不同步业务数据或凭据。
+
+1. 在主项目执行 `node --test tests/frontend/public-demo-*.test.mjs tests/frontend/public-readme.test.mjs`，并检查差异。
+2. 按清单同步发生变化的文件，提交到本仓库 `main`，由 GitHub Pages 发布。
+3. 检查公网正文、图片、章节入口与窄屏显示；修改网站资源时同步更新页面缓存版本。
+
+### 本地预览
+
+```bash
+python -m http.server 8080 --bind 127.0.0.1
+```
+
+在浏览器打开本机 8080 端口。此命令仅预览本仓库的介绍网站；对外分享使用上方的公开 HTTPS 地址。
+
+### 品牌与许可
+
+使用现有境鉴 G21 正式透明标志及广州城市概念图，未重绘标志或地图。README 保持静态，完整品牌动效在展厅中查看。资源来源、概念图说明与第三方许可见 [ASSET-SOURCES.md](ASSET-SOURCES.md)；介绍页代码许可见 [LICENSE](LICENSE)。
+
+</details>
