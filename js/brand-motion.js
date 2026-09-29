@@ -102,14 +102,21 @@
         // 首屏入场只执行一次；深链接直接进入正文时不补播首屏。
         if(!window.location.hash && window.scrollY < 100){
           gsap.timeline({defaults:{ease:'power2.out'}})
-            .from('.hero-eyebrow', {opacity:0, y:10, duration:0.55})
-            .from('.hero-line', {opacity:0, y:24, duration:0.8, stagger:0.12}, 0.12)
-            .from('.hero-scene', {scale:1.035, duration:1.6, ease:'power1.out'}, 0)
-            .from('.hero-tagline, .hero-cta', {opacity:0, y:12, duration:0.6, stagger:0.08}, 0.45);
+            .from('.hero-register, .hero-eyebrow', {opacity:0, y:10, duration:0.55, stagger:0.08, clearProps:'opacity,transform'})
+            .from('.hero-line', {opacity:0, y:24, duration:0.8, stagger:0.12, clearProps:'opacity,transform'}, 0.12)
+            .from('.hero-scene', {scale:1.035, duration:1.6, ease:'power1.out', clearProps:'transform'}, 0)
+            .from('.hero-tagline, .hero-cta', {opacity:0, y:12, duration:0.6, stagger:0.08, clearProps:'opacity,transform'}, 0.45)
+            .from('.hero-topic-index a', {y:12, duration:0.55, stagger:0.06, clearProps:'transform'}, 0.65);
         }
         // 进入视野后才创建动画，不预先隐藏正文；每个章节仅出现一次。
-        context.add('reveal', element => gsap.fromTo(element, {y:18}, {y:0, duration:0.65, ease:'power2.out', clearProps:'transform'}));
-        document.querySelectorAll('.sec-head, .hero-brand, .work-steps li, .scenario-card, .output-card, .brand-signature').forEach(element => {
+        context.add('reveal', element => {
+          const rows = element.querySelectorAll('.title-row');
+          // 分行动效不隐藏正文；读屏名称来自完整标题，动画结束即清理行内变换。
+          return gsap.fromTo(rows.length ? rows : element, {y:rows.length ? 22 : 14}, {
+            y:0, duration:0.7, stagger:rows.length ? 0.09 : 0, ease:'power2.out', clearProps:'transform'
+          });
+        });
+        document.querySelectorAll('.sec-head, .hero-brand, .optic-study, .work-steps li, .scenario-card, .output-card, .brand-signature').forEach(element => {
           ScrollTrigger.create({trigger:element, start:'top 94%', once:true, onEnter:() => {
             context.reveal(element);
           }});

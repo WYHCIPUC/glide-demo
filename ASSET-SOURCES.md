@@ -1,6 +1,16 @@
 # 境鉴展厅资源来源
 
-内容版本：2026-09-28.4。运行资源全部随站发布，无远程字体、脚本或业务接口依赖。
+## 透光玻璃概念图
+
+- `assets/optic-study.webp`：2026-09-29 使用内置 imagegen 生成的原创概念素材，1536 × 1024。三层玻璃用于表达从信息到理解的阅读过程，不是系统截图、业务证据或品牌标志。
+- 原始生成 PNG 保留在生成工具默认目录；以 FFmpeg `libwebp`、quality 86、compression_level 6 转为 43,622 字节 WebP，保留完整画幅。白色摄影棚背景属于概念图，不加入正式 G21 透明标志。
+- 最终提示词：
+
+```text
+Use case: stylized-concept. Asset type: original editorial visual for Jingjian, a Guangzhou-based global migration intelligence platform, used between a city introduction and its evidence-led research chapters. Create a premium architectural still life of exactly three tall, thin rectangular optical-glass panels arranged sequentially in deep perspective, upright on a pale cool-silver matte floor. Each panel transmits the same narrow line of soft ice-blue light; the nearest panel is optically clear, farther panes are delicately frosted. This is a visual metaphor for information being clarified into understanding. Large rectangular panes, not rings, spheres, globes, cards, arrows, brains or interface screens. Physical restraint, tactile milky glass edges, subtle cyan caustics, realistic broad studio daylight, clean shadows. A contemporary design museum catalogue photograph / high-end product photography quality, sober and exquisite rather than shiny metal sci-fi. Palette cool white, mist-silver, barely blue transparent glass, restrained midnight-blue shadows. Wide landscape 3:2 composition: main panes occupy the center-right, generous calm pale negative space to the left; everything completely visible inside frame with margin. No text, no lettering, no logo, no maps, no country silhouettes, no data, no people, no labels, no watermark. Opaque pale studio background. Photorealistic materials, crisp antialiased edges, smooth natural transitions, ultra-clean high resolution.
+```
+
+内容版本：2026-09-29.1。运行资源全部随站发布，无远程字体、脚本或业务接口依赖。
 
 ## 正式品牌资产
 
@@ -38,6 +48,7 @@ lenis-1.3.26.tgz sha512-s/xTCZCxTFvHbAN1OzuhNaN5YPJH2ail0XAkctKW1b+RUAG4nUL5UHLX
 fba60e917c9fab980383c9fd296745db705c0b4268fd23154100831c12a6389a  assets/jingjian-ui-satin-poster.webp
 1757ecb94b180c00253679e14ed93e4ace4d17e09d2e1e6224ed01bb8abb8e9d  assets/fonts/jingjian-sans.woff2
 420d04c629ba6a1c320768b43e868cb16e88f1883b09b73d8ad5a49f931f8c11  assets/guangzhou-night.webp
+4344e9f2d17fb3329dd804bbaac36cb6951ddb4154f551eddd6b2121b6460ee5  assets/optic-study.webp
 92bb9a96476f983d212a2bc4f54c889039c1696dd4461d40a736860938570fbb  vendor/gsap.min.js
 b0b14d67b55b0c43c756ac0b106cfcb09d0879945f6ead64451065b0672916a2  vendor/ScrollTrigger.min.js
 53195c9797e7ce7bf9d7fa9242b08209e57f46de4c9dac126a6494fa780e3346  vendor/lenis.min.js

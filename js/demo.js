@@ -7,7 +7,7 @@
    ========================================================= */
 (function(){
   // 当前章节使用可见性观察；阅读进度由统一动效时钟管理。
-  const navAnchors = Array.from(document.querySelectorAll('.nav-links a[href^="#"]'));
+  const navAnchors = Array.from(document.querySelectorAll('.nav-links a[href^="#"], .reading-rail a[href^="#"]'));
   if('IntersectionObserver' in window && navAnchors.length){
     const navTargets = navAnchors
       .map(link => ({ link, section:document.querySelector(link.getAttribute('href')) }))
@@ -20,13 +20,13 @@
       });
       const current = navTargets.find(item => visibleSections.has(item.section));
       navTargets.forEach(item => {
-        const active = item === current;
+        const active = item.section === current?.section;
         item.link.classList.toggle('active', active);
         if(active) item.link.setAttribute('aria-current', 'location');
         else item.link.removeAttribute('aria-current');
       });
     }, { rootMargin:'-28% 0px -62% 0px', threshold:0 });
-    navTargets.forEach(item => sectionObserver.observe(item.section));
+    new Set(navTargets.map(item => item.section)).forEach(section => sectionObserver.observe(section));
   }
 
   // —— 4. Tabs 切换 ——

@@ -11,7 +11,7 @@
 </p>
 
 <p align="center">
-  <a href="https://wyhcipuc.github.io/glide-demo/"><strong>进入项目展厅 ↗</strong></a>　·　
+  <a href="https://wyhcipuc.github.io/glide-demo/?release=20260929.1"><strong>进入境鉴观察馆 ↗</strong></a>　·　
   <a href="https://wyhcipuc.github.io/glide-demo/#topics">四个实战专题</a>　·　
   <a href="https://wyhcipuc.github.io/glide-demo/#scenarios">业务场景</a>　·　
   <a href="https://wyhcipuc.github.io/glide-demo/#outputs">成果展示</a>
@@ -28,6 +28,12 @@
 **先看判断，再看变化，最后回到依据。** 领导阅览可以从专题结论与重点成果开始；业务研究可以继续进入趋势、地图、明细和来源。GLIDE 是项目的技术代号。
 
 [完整了解项目 ↗](https://wyhcipuc.github.io/glide-demo/#why)
+
+## 进入境鉴观察馆
+
+从广州城市序章进入，沿 11 个章节了解项目。银白资料页承载功能与场景，深色专题档案呈现四个业务视角，六类成果逐一展开；正式 G21 动态标志保留原有右翼地图自转。
+
+[项目定位](https://wyhcipuc.github.io/glide-demo/#project)　/　[功能目录](https://wyhcipuc.github.io/glide-demo/#capabilities)　/　[专题展台](https://wyhcipuc.github.io/glide-demo/#topics)　/　[成果档案](https://wyhcipuc.github.io/glide-demo/#outputs)
 
 ## 同一个世界，四个实战视角
 
@@ -111,7 +117,7 @@
 
 <p align="center">
   <strong>一座城市的立足点，一个面向全球的视野。</strong><br><br>
-  <a href="https://wyhcipuc.github.io/glide-demo/">打开境鉴项目展厅 ↗</a>
+  <a href="https://wyhcipuc.github.io/glide-demo/?release=20260929.1">打开境鉴观察馆 ↗</a>
 </p>
 
 <details>
@@ -119,7 +125,7 @@
 
 ### 内容与发布
 
-网站内容版本：2026-09-28.4。维护来源为主项目的 `docs/demo/`；`publish-manifest.json` 列出允许发布的文件。只同步清单中的静态文件，保留目标仓库的 `.git` 和配置，不同步业务数据或凭据。
+网站内容版本：2026-09-29.1。维护来源为主项目的 `docs/demo/`；`publish-manifest.json` 列出允许发布的文件。只同步清单中的静态文件，保留目标仓库的 `.git` 和配置，不同步业务数据或凭据。
 
 1. 在主项目执行 `node --test tests/frontend/public-demo-*.test.mjs tests/frontend/public-readme.test.mjs`，并检查差异。
 2. 按清单同步发生变化的文件，提交到本仓库 `main`，由 GitHub Pages 发布。
@@ -135,6 +141,6 @@ python -m http.server 8080 --bind 127.0.0.1
 
 ### 品牌与许可
 
-使用现有境鉴 G21 正式透明标志及广州城市概念图，未重绘标志或地图。README 保持静态，完整品牌动效在展厅中查看。资源来源、概念图说明与第三方许可见 [ASSET-SOURCES.md](ASSET-SOURCES.md)；介绍页代码许可见 [LICENSE](LICENSE)。
+使用现有境鉴 G21 正式透明标志及广州城市概念图，未重绘标志或地图；透光玻璃概念图单独用于流程说明，不替代业务数据。README 保持静态，完整品牌动效在观察馆中查看。资源来源、概念图说明与第三方许可见 [ASSET-SOURCES.md](ASSET-SOURCES.md)；介绍页代码许可见 [LICENSE](LICENSE)。
 
 </details>
