@@ -11,7 +11,7 @@
 </p>
 
 <p align="center">
-  <a href="https://wyhcipuc.github.io/glide-demo/?release=20260929.1"><strong>进入境鉴观察馆 ↗</strong></a>　·　
+  <a href="https://wyhcipuc.github.io/glide-demo/?release=20260929.2"><strong>进入境鉴全景数字展馆 ↗</strong></a>　·　
   <a href="https://wyhcipuc.github.io/glide-demo/#topics">四个实战专题</a>　·　
   <a href="https://wyhcipuc.github.io/glide-demo/#scenarios">业务场景</a>　·　
   <a href="https://wyhcipuc.github.io/glide-demo/#outputs">成果展示</a>
@@ -29,11 +29,31 @@
 
 [完整了解项目 ↗](https://wyhcipuc.github.io/glide-demo/#why)
 
-## 进入境鉴观察馆
+## 六座展馆，逐层探索
 
-从广州城市序章进入，沿 11 个章节了解项目。银白资料页承载功能与场景，深色专题档案呈现四个业务视角，六类成果逐一展开；正式 G21 动态标志保留原有右翼地图自转。
+从中央品牌大厅进入，自由选择展区，再下钻到功能、场景、设计原理和技术说明。三维空间用于导览，深层内容以阅读台呈现；手机或三维不可用时仍能阅读全部介绍。正式 G21 动态标志保留原有右翼地图自转。
 
-[项目定位](https://wyhcipuc.github.io/glide-demo/#project)　/　[功能目录](https://wyhcipuc.github.io/glide-demo/#capabilities)　/　[专题展台](https://wyhcipuc.github.io/glide-demo/#topics)　/　[成果档案](https://wyhcipuc.github.io/glide-demo/#outputs)
+[中央大厅](https://wyhcipuc.github.io/glide-demo/#lobby)　/　[完整功能目录](https://wyhcipuc.github.io/glide-demo/#museum-directory)　/　[建设思路](https://wyhcipuc.github.io/glide-demo/#building-idea)
+
+| 展馆 | 内容 |
+| --- | --- |
+| [四专项监测馆](https://wyhcipuc.github.io/glide-demo/#monitoring) | 全球移民动态、重点国家动态、重要时间节点、网页动态监测及专项运行总览 |
+| [四专题实战馆](https://wyhcipuc.github.io/glide-demo/#practical) | 四个业务视角及各自的判断、变化、空间、关联、依据与明细 |
+| [信息与事件馆](https://wyhcipuc.github.io/glide-demo/#intelligence) | 采集筛选、翻译摘要、运行状态、来源阅读与事件治理 |
+| [数据与知识馆](https://wyhcipuc.github.io/glide-demo/#knowledge) | 资产盘点、AI 治理、国情日历、证据与知识复用 |
+| [成果与应用馆](https://wyhcipuc.github.io/glide-demo/#outputs) | 简报、报告、提醒、导出与离线知识包 |
+| [建设与设计馆](https://wyhcipuc.github.io/glide-demo/#engineering) | 需求到能力、技术路径、架构取舍、配置校验与运行维护 |
+
+## 不止阅读，还可以操作
+
+- [一条事实，多个视角](https://wyhcipuc.github.io/glide-demo/#demo-dedup)：切换转载归并与实质更新，查看主记录、版本和专题引用。
+- [网页版本对照](https://wyhcipuc.github.io/glide-demo/#demo-versions)：在两个示例版本间查看新增与修改。
+- [三层研判剖面](https://wyhcipuc.github.io/glide-demo/#demo-layers)：展开长期基线、实时变化与组合研判。
+- [同范围分析](https://wyhcipuc.github.io/glide-demo/#demo-scope)：筛选地区，联动地图、图表、明细和示例 CSV。
+- [知识包拆解](https://wyhcipuc.github.io/glide-demo/#demo-package)：切换基线与增量清单，计算示例文件指纹。
+- [四种显示模式](https://wyhcipuc.github.io/glide-demo/#demo-themes)：用同一组内容比较深浅色和两种版式。
+
+以上为本地交互示意，不连接业务系统。深层内容都可复制地址分享，也可以通过目录搜索直接进入。
 
 ## 同一个世界，四个实战视角
 
@@ -90,7 +110,7 @@
 
 **政策变化研判**　跟踪重点国家与指定官网，比较前后版本，持续整理政策变化及阶段趋势。
 
-[查看三个场景的完整路径 ↗](https://wyhcipuc.github.io/glide-demo/#scenarios)
+[查看全部业务场景与成果 ↗](https://wyhcipuc.github.io/glide-demo/#outputs)
 
 ## 观察有了下文，成果留在手边
 
@@ -107,7 +127,7 @@
 
 ## 查看项目与实际使用
 
-**公开展厅**可直接在浏览器打开，无需登录，也不需要安装软件。展厅包含项目全景、四专题交互介绍、场景路径、成果说明和正式品牌动效；图表示例使用演示数据。
+**公开展厅**可直接在浏览器打开，无需登录，也不需要安装软件。六座展馆包含四专项、四专题、其他功能、业务场景、成果与技术设计；交互展项使用演示数据。
 
 **实际业务系统**需要由维护人员在本地电脑、服务器或 Docker 环境部署。业务人员通过浏览器统一登录；公开信息采集、外部 AI 和通知服务按使用需要配置。平台基于 Python、FastAPI、SQLite、Vue 3 与 ECharts，并支持 MCP 接入。
 
@@ -117,7 +137,7 @@
 
 <p align="center">
   <strong>一座城市的立足点，一个面向全球的视野。</strong><br><br>
-  <a href="https://wyhcipuc.github.io/glide-demo/?release=20260929.1">打开境鉴观察馆 ↗</a>
+  <a href="https://wyhcipuc.github.io/glide-demo/?release=20260929.2">打开境鉴全景数字展馆 ↗</a>
 </p>
 
 <details>
@@ -125,9 +145,9 @@
 
 ### 内容与发布
 
-网站内容版本：2026-09-29.1。维护来源为主项目的 `docs/demo/`；`publish-manifest.json` 列出允许发布的文件。只同步清单中的静态文件，保留目标仓库的 `.git` 和配置，不同步业务数据或凭据。
+网站内容版本：2026-09-29.2。维护来源为主项目的 `docs/demo/`；正文由统一目录生成，`publish-manifest.json` 列出允许发布的文件。只同步清单中的静态文件，保留目标仓库的 `.git` 和配置，不同步业务数据或凭据。
 
-1. 在主项目执行 `node --test tests/frontend/public-demo-*.test.mjs tests/frontend/public-readme.test.mjs`，并检查差异。
+1. 在主项目执行 `node scripts/build_public_museum.mjs`；安装声明的 DOM 测试依赖后，执行 `node --test tests/frontend/public-demo-*.test.mjs tests/frontend/public-readme.test.mjs` 并检查差异。
 2. 按清单同步发生变化的文件，提交到本仓库 `main`，由 GitHub Pages 发布。
 3. 检查公网正文、图片、章节入口与窄屏显示；修改网站资源时同步更新页面缓存版本。
 
@@ -141,6 +161,6 @@ python -m http.server 8080 --bind 127.0.0.1
 
 ### 品牌与许可
 
-使用现有境鉴 G21 正式透明标志及广州城市概念图，未重绘标志或地图；透光玻璃概念图单独用于流程说明，不替代业务数据。README 保持静态，完整品牌动效在观察馆中查看。资源来源、概念图说明与第三方许可见 [ASSET-SOURCES.md](ASSET-SOURCES.md)；介绍页代码许可见 [LICENSE](LICENSE)。
+使用现有境鉴 G21 正式透明标志及广州城市概念图，未重绘标志或地图。Three.js 构建展馆空间，GSAP 负责有限转场，Lenis 仅增强桌面阅读滚动。README 保持静态，完整品牌动效在展馆中查看。资源来源、概念图说明与第三方许可见 [ASSET-SOURCES.md](ASSET-SOURCES.md)；介绍页代码许可见 [LICENSE](LICENSE)。
 
 </details>

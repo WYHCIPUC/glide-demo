@@ -1,6 +1,6 @@
 {
   "url": "https://wyhcipuc.github.io/glide-demo/",
-  "release": "2026-09-29.1",
+  "release": "2026-09-29.2",
   "files": [
     ".nojekyll", ".gitattributes", "README.md", "LICENSE", "publish-manifest.json", "ASSET-SOURCES.md",
     "index.html", "css/demo.css", "css/observatory.css", "js/demo.js", "js/charts.js", "js/radar.js", "js/brand-motion.js", "js/exhibition.js",
@@ -9,6 +9,9 @@
     "assets/fonts/jingjian-sans.woff2", "assets/fonts/OFL.txt", "assets/guangzhou-night.webp", "assets/optic-study.webp",
     "vendor/echarts.min.js", "vendor/LICENSE.txt", "vendor/NOTICE.txt",
     "vendor/gsap.min.js", "vendor/ScrollTrigger.min.js", "vendor/GSAP-README.md",
-    "vendor/lenis.min.js", "vendor/LENIS-LICENSE.txt"
+    "vendor/lenis.min.js", "vendor/LENIS-LICENSE.txt",
+    "css/museum.css", "js/museum-catalog.mjs", "js/museum-core.mjs", "js/museum-render.mjs",
+    "js/museum-runtime.mjs", "js/museum-exhibits.mjs", "js/museum-scene.mjs",
+    "vendor/three.module.min.js", "vendor/three.core.min.js", "vendor/THREE-LICENSE.txt"
   ]
 }
