@@ -11,7 +11,7 @@
 </p>
 
 <p align="center">
-  <a href="https://wyhcipuc.github.io/glide-demo/?release=20260930.3"><strong>进入境鉴全景数字展馆 ↗</strong></a>　·　
+  <a href="https://wyhcipuc.github.io/glide-demo/?release=20260930.4"><strong>进入境鉴全景数字展馆 ↗</strong></a>　·　
   <a href="https://wyhcipuc.github.io/glide-demo/#topics">四个实战专题</a>　·　
   <a href="https://wyhcipuc.github.io/glide-demo/#scenarios">业务场景</a>　·　
   <a href="https://wyhcipuc.github.io/glide-demo/#outputs">成果展示</a>
@@ -141,7 +141,7 @@
 
 <p align="center">
   <strong>一座城市的立足点，一个面向全球的视野。</strong><br><br>
-  <a href="https://wyhcipuc.github.io/glide-demo/?release=20260930.3">打开境鉴全景数字展馆 ↗</a>
+  <a href="https://wyhcipuc.github.io/glide-demo/?release=20260930.4">打开境鉴全景数字展馆 ↗</a>
 </p>
 
 <details>
@@ -149,7 +149,7 @@
 
 ### 内容与发布
 
-网站内容版本：2026-09-30.3。维护来源为主项目的 `docs/demo/`；正文由统一目录生成，`publish-manifest.json` 列出允许发布的文件。只同步清单中的静态文件，保留目标仓库的 `.git` 和配置，不同步业务数据或凭据。
+网站内容版本：2026-09-30.4。维护来源为主项目的 `docs/demo/`；正文由统一目录生成，`publish-manifest.json` 列出允许发布的文件。只同步清单中的静态文件，保留目标仓库的 `.git` 和配置，不同步业务数据或凭据。
 
 1. 在主项目执行 `node scripts/build_public_museum.mjs`；安装声明的 DOM 测试依赖后，执行 `node --test tests/frontend/public-demo-*.test.mjs tests/frontend/public-readme.test.mjs` 并检查差异。
 2. 按清单同步发生变化的文件，提交到本仓库 `main`，由 GitHub Pages 发布。

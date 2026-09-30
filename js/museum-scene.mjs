@@ -1,4 +1,4 @@
-import { mountGlobe } from './museum-globe.mjs?v=20260930.3';
+import { mountGlobe } from './museum-globe.mjs?v=20260930.4';
 export const shouldMoveCamera = ({ animate = true, enabled = true, reduced = false }) => animate && enabled && !reduced;
 
 // 首帧与前景同时就绪后才换掉完整静态图；故障恢复原获选构图。

@@ -23,7 +23,7 @@
 Use case: stylized-concept. Asset type: original editorial visual for Jingjian, a Guangzhou-based global migration intelligence platform, used between a city introduction and its evidence-led research chapters. Create a premium architectural still life of exactly three tall, thin rectangular optical-glass panels arranged sequentially in deep perspective, upright on a pale cool-silver matte floor. Each panel transmits the same narrow line of soft ice-blue light; the nearest panel is optically clear, farther panes are delicately frosted. This is a visual metaphor for information being clarified into understanding. Large rectangular panes, not rings, spheres, globes, cards, arrows, brains or interface screens. Physical restraint, tactile milky glass edges, subtle cyan caustics, realistic broad studio daylight, clean shadows. A contemporary design museum catalogue photograph / high-end product photography quality, sober and exquisite rather than shiny metal sci-fi. Palette cool white, mist-silver, barely blue transparent glass, restrained midnight-blue shadows. Wide landscape 3:2 composition: main panes occupy the center-right, generous calm pale negative space to the left; everything completely visible inside frame with margin. No text, no lettering, no logo, no maps, no country silhouettes, no data, no people, no labels, no watermark. Opaque pale studio background. Photorealistic materials, crisp antialiased edges, smooth natural transitions, ultra-clean high resolution.
 ```
 
-内容版本：2026-09-30.3。运行资源全部随站发布，无远程字体、脚本或业务接口依赖。
+内容版本：2026-09-30.4。运行资源全部随站发布，无远程字体、脚本或业务接口依赖。
 
 - 信号流和能力关系图为本站原生 SVG/HTML/CSS 组件，关系图名称与入口引用同一功能目录。背景球体仅在桌面大厅、前台且可见时自转，可由访客暂停；不加载远程特效包。
 

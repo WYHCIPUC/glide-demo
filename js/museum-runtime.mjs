@@ -1,10 +1,10 @@
-import { nodes, halls, legacyAliases } from './museum-catalog.mjs?v=20260930.3';
+import { nodes, halls, legacyAliases } from './museum-catalog.mjs?v=20260930.4';
 import { resolveRoute, ancestors, searchNodes, canUseScene, canCaptureEntry, escapeHTML as e } from './museum-core.mjs';
-import { nodeLink } from './museum-render.mjs?v=20260930.3';
+import { nodeLink } from './museum-render.mjs?v=20260930.4';
 import { mountExhibit } from './museum-exhibits.mjs';
-import { mountMotion } from './museum-motion.mjs?v=20260930.3';
-import { mountConsole } from './museum-console.mjs?v=20260930.3';
-import { mountGlobeControls } from './museum-globe-controls.mjs?v=20260930.3';
+import { mountMotion } from './museum-motion.mjs?v=20260930.4';
+import { mountConsole } from './museum-console.mjs?v=20260930.4';
+import { mountGlobeControls } from './museum-globe-controls.mjs?v=20260930.4';
 
 let disposePage;
 function mount() {
@@ -74,13 +74,17 @@ function mount() {
     scenePending = true;
     const loading = new AbortController(); sceneLoad = loading;
     try {
-      const { mountScene } = await import('./museum-scene.mjs?v=20260930.3');
+      const { mountScene } = await import('./museum-scene.mjs?v=20260930.4');
       if (disposed || loading.signal.aborted) return;
       const mounted = await mountScene(document.getElementById('museum-canvas'), document.querySelector('.lobby-emblem'), null, {
         signal: loading.signal,
         mode: globeControls.snapshot().mode,
         onReady: () => { if (!disposed && !loading.signal.aborted) globeControls.setReady(true); },
-        onFailure: () => { if (!loading.signal.aborted) { globeControls.setReady(false); sceneFailed = true; } },
+        onFailure: error => {
+          if (loading.signal.aborted) return;
+          if (error?.reason === 'small-screen' || error?.reason === 'reduced-motion') releaseScene();
+          else { globeControls.setReady(false); sceneFailed = true; }
+        },
       });
       if (sceneLoad !== loading) { mounted.dispose(); return; }
       const latestDepth = current?.id === 'museum-directory' ? 2 : ancestors(current?.id, nodes).length - 1;
