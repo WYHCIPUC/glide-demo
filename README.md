@@ -11,7 +11,7 @@
 </p>
 
 <p align="center">
-  <a href="https://wyhcipuc.github.io/glide-demo/?release=20260930.4"><strong>进入境鉴全景数字展馆 ↗</strong></a>　·　
+  <a href="https://wyhcipuc.github.io/glide-demo/?release=20261001.1"><strong>进入境鉴全景数字展馆 ↗</strong></a>　·　
   <a href="https://wyhcipuc.github.io/glide-demo/#topics">四个实战专题</a>　·　
   <a href="https://wyhcipuc.github.io/glide-demo/#scenarios">业务场景</a>　·　
   <a href="https://wyhcipuc.github.io/glide-demo/#outputs">成果展示</a>
@@ -33,7 +33,7 @@
 
 从广州天际线与全球视野展开的品牌首页进入六个展区，继续下钻功能、场景、设计原理和技术说明。首页的来源正文、事件关联、专题研判也各有直接入口；深层内容以阅读台呈现。手机或三维不可用时仍能阅读全部介绍，正式 G21 动态标志保留原有右翼地图自转。
 
-背景地球缓慢自转，可切换实体地球、经纬网格和全球连线；城市与前景独立分层。暂停、离屏或切到后台时停止运行，减少动态、手机及三维不可用时保留原画面。连线只用于品牌构图，不表示实时业务数据。
+背景地球缓慢自转，可切换实体地球、经纬网格和全球连线；广州天际线与文字标记跟随球面广州位置移动，转到背面时隐藏，左下弧面保留原构图。暂停、离屏或切到后台时停止运行，减少动态、手机及三维不可用时保留原画面。连线只用于品牌构图，不表示实时业务数据。
 
 首页全球连线以舒缓信号流呈现，可暂停；能力关系台可切换持续监测、事件关联、专题研判视角。展区与示例状态切换采用有限过渡，阅读进度线跟随当前正文；后台、主视觉离屏及减少动态偏好会停止信号流。
 
@@ -141,7 +141,7 @@
 
 <p align="center">
   <strong>一座城市的立足点，一个面向全球的视野。</strong><br><br>
-  <a href="https://wyhcipuc.github.io/glide-demo/?release=20260930.4">打开境鉴全景数字展馆 ↗</a>
+  <a href="https://wyhcipuc.github.io/glide-demo/?release=20261001.1">打开境鉴全景数字展馆 ↗</a>
 </p>
 
 <details>
@@ -149,7 +149,7 @@
 
 ### 内容与发布
 
-网站内容版本：2026-09-30.4。维护来源为主项目的 `docs/demo/`；正文由统一目录生成，`publish-manifest.json` 列出允许发布的文件。只同步清单中的静态文件，保留目标仓库的 `.git` 和配置，不同步业务数据或凭据。
+网站内容版本：2026-10-01.1。维护来源为主项目的 `docs/demo/`；正文由统一目录生成，`publish-manifest.json` 列出允许发布的文件。只同步清单中的静态文件，保留目标仓库的 `.git` 和配置，不同步业务数据或凭据。
 
 1. 在主项目执行 `node scripts/build_public_museum.mjs`；安装声明的 DOM 测试依赖后，执行 `node --test tests/frontend/public-demo-*.test.mjs tests/frontend/public-readme.test.mjs` 并检查差异。
 2. 按清单同步发生变化的文件，提交到本仓库 `main`，由 GitHub Pages 发布。

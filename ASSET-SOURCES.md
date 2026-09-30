@@ -23,7 +23,7 @@
 Use case: stylized-concept. Asset type: original editorial visual for Jingjian, a Guangzhou-based global migration intelligence platform, used between a city introduction and its evidence-led research chapters. Create a premium architectural still life of exactly three tall, thin rectangular optical-glass panels arranged sequentially in deep perspective, upright on a pale cool-silver matte floor. Each panel transmits the same narrow line of soft ice-blue light; the nearest panel is optically clear, farther panes are delicately frosted. This is a visual metaphor for information being clarified into understanding. Large rectangular panes, not rings, spheres, globes, cards, arrows, brains or interface screens. Physical restraint, tactile milky glass edges, subtle cyan caustics, realistic broad studio daylight, clean shadows. A contemporary design museum catalogue photograph / high-end product photography quality, sober and exquisite rather than shiny metal sci-fi. Palette cool white, mist-silver, barely blue transparent glass, restrained midnight-blue shadows. Wide landscape 3:2 composition: main panes occupy the center-right, generous calm pale negative space to the left; everything completely visible inside frame with margin. No text, no lettering, no logo, no maps, no country silhouettes, no data, no people, no labels, no watermark. Opaque pale studio background. Photorealistic materials, crisp antialiased edges, smooth natural transitions, ultra-clean high resolution.
 ```
 
-内容版本：2026-09-30.4。运行资源全部随站发布，无远程字体、脚本或业务接口依赖。
+内容版本：2026-10-01.1。运行资源全部随站发布，无远程字体、脚本或业务接口依赖。
 
 - 信号流和能力关系图为本站原生 SVG/HTML/CSS 组件，关系图名称与入口引用同一功能目录。背景球体仅在桌面大厅、前台且可见时自转，可由访客暂停；不加载远程特效包。
 
@@ -35,11 +35,11 @@ Use case: stylized-concept. Asset type: original editorial visual for Jingjian, 
 - `assets/observatory-foreground.webp`：在已选 `global-observatory.webp` 上使用内置 imagegen 提取城市与左下前景弧面，移除原主球体、背景和连线，输出真实透明层。保持 1586 × 992，151,084 字节；四角及主球体区域采样 Alpha 为 0，城市与弧面保留可见像素。生成编辑可能改变局部边缘细节，不将其认定为精确建筑或地理实景。
 - 前景编辑约束：保持广州天际线、城市水面和左下弧面的原有画幅位置；只保留这些前景，其他区域透明；不增加文字、品牌、按钮、地球、路径或光点。前景与 NASA 自然地形是分别制作和加载的两个资源。
 - 前景 WebP SHA-256：`ce9c30c7fa8cbcfc8ee067c5853cd1ab948a0499346158a3b512b0d4fdf0f278`；中间透明 PNG SHA-256：`160738fbb674d60c1d3390fef0fabeb20b30e887920a1457bd1e775a19b66490`。
-- 三种形态共用一个自转球体：自然地形、经纬网格、概念连线。概念连线只用于表达全球联系，不表示事件、迁移规模或实时航线。城市和左下弧面固定在前景，正式 G21 文件保持不变。
+- 三种形态共用一个自转球体：自然地形、经纬网格、概念连线。概念连线只用于表达全球联系，不表示事件、迁移规模或实时航线。城市图以 UV 分区读取原透明素材，绑定广州 23.13°N、113.26°E，与球面及广州连线节点共同旋转；临近地平线淡出，背面隐藏。左下弧面保持屏幕前景位置，正式 G21 文件保持不变。
 
 ## 全景数字展馆
 
-- Three.js 使用真实球面与等距纹理，默认 180 秒转一周；三种形态采用 0.65 秒材质过渡。城市和前景为独立透明图层，首帧与前景均成功后才替换原完整静态图；图片加载或 WebGL 失败恢复原画面。
+- Three.js 使用真实球面与等距纹理，默认 180 秒转一周；三种形态采用 0.65 秒材质过渡。城市、弧面和球体首帧全部成功后才替换原完整静态图；图片加载或 WebGL 失败恢复原画面。广州文字取同一地理锚点的屏幕投影，不使用独立平移动画；键盘聚焦入口时暂停自转，移开后尊重原暂停状态。
 - `vendor/three.module.min.js`、`vendor/three.core.min.js`：Three.js 0.185.1，来自项目已安装的 npm `three` 包，原样复制；MIT 许可随 `vendor/THREE-LICENSE.txt` 发布。
 - 页面仅在宽屏且允许动态时按需加载三维模块；DPR 上限 1.5、渲染上限约 30 帧/秒。暂停、后台、离屏、深层阅读停止自转，离页或减少动态释放资源。正文和导航完全由 HTML 承载，资源不可用时仍可阅读。
 - 六个互动展项均为本地编写的公开演示数据。地图使用原有 `data/world.json`；国别示例仅用于解释筛选联动，不代表实际业务情况。
@@ -80,7 +80,7 @@ lenis-1.3.26.tgz sha512-s/xTCZCxTFvHbAN1OzuhNaN5YPJH2ail0XAkctKW1b+RUAG4nUL5UHLX
 ```text
 748bbff7f2f8ca93ff8c785d2bc06d8929d757d6a9e41e71fd17024943a18684  assets/jingjian-ui-satin-loop.webm
 fba60e917c9fab980383c9fd296745db705c0b4268fd23154100831c12a6389a  assets/jingjian-ui-satin-poster.webp
-33b252bf25163a00f4ef41e35ba0885f4d37703f4a30c3407586935e92bcd357  assets/fonts/jingjian-sans.woff2
+3028f35c869cacf9c509041728aa930ada17f0990673649b582898d06cbeeff9  assets/fonts/jingjian-sans.woff2
 420d04c629ba6a1c320768b43e868cb16e88f1883b09b73d8ad5a49f931f8c11  assets/guangzhou-night.webp
 4344e9f2d17fb3329dd804bbaac36cb6951ddb4154f551eddd6b2121b6460ee5  assets/optic-study.webp
 92bb9a96476f983d212a2bc4f54c889039c1696dd4461d40a736860938570fbb  vendor/gsap.min.js

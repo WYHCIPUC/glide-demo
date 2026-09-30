@@ -1,6 +1,6 @@
 {
   "url": "https://wyhcipuc.github.io/glide-demo/",
-  "release": "2026-09-30.4",
+  "release": "2026-10-01.1",
   "files": [
     ".nojekyll", ".gitattributes", "README.md", "LICENSE", "publish-manifest.json", "ASSET-SOURCES.md",
     "css/globe.css", "js/museum-globe.mjs", "js/museum-globe-controls.mjs", "assets/earth-blue-marble.webp", "assets/observatory-foreground.webp",

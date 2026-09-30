@@ -1,10 +1,10 @@
-import { nodes, halls, legacyAliases } from './museum-catalog.mjs?v=20260930.4';
+import { nodes, halls, legacyAliases } from './museum-catalog.mjs?v=20261001.1';
 import { resolveRoute, ancestors, searchNodes, canUseScene, canCaptureEntry, escapeHTML as e } from './museum-core.mjs';
-import { nodeLink } from './museum-render.mjs?v=20260930.4';
+import { nodeLink } from './museum-render.mjs?v=20261001.1';
 import { mountExhibit } from './museum-exhibits.mjs';
-import { mountMotion } from './museum-motion.mjs?v=20260930.4';
-import { mountConsole } from './museum-console.mjs?v=20260930.4';
-import { mountGlobeControls } from './museum-globe-controls.mjs?v=20260930.4';
+import { mountMotion } from './museum-motion.mjs?v=20261001.1';
+import { mountConsole } from './museum-console.mjs?v=20261001.1';
+import { mountGlobeControls } from './museum-globe-controls.mjs?v=20261001.1';
 
 let disposePage;
 function mount() {
@@ -74,7 +74,7 @@ function mount() {
     scenePending = true;
     const loading = new AbortController(); sceneLoad = loading;
     try {
-      const { mountScene } = await import('./museum-scene.mjs?v=20260930.4');
+      const { mountScene } = await import('./museum-scene.mjs?v=20261001.1');
       if (disposed || loading.signal.aborted) return;
       const mounted = await mountScene(document.getElementById('museum-canvas'), document.querySelector('.lobby-emblem'), null, {
         signal: loading.signal,

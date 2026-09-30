@@ -1,6 +1,9 @@
 // NASA 自然地形与概念连线只作公开站点背景，不表示事件、风险或实时航线。
 const TAU = Math.PI * 2, DEGREE = Math.PI / 180;
 const DEFAULT_LAYOUT = Object.freeze({ width: 1586, height: 992, x: 1190, y: 640, radius: 744 });
+const GUANGZHOU = Object.freeze({ latitude: 23.13, longitude: 113.26, radius: 1.015 });
+const CITY_RECT = Object.freeze({ x: 1020, y: 300, width: 340, height: 190 });
+const ARC_TOP = 560;
 const MODE_STATES = Object.freeze({
   earth: Object.freeze({ terrain: 1, grid: .05, network: 0 }),
   grid: Object.freeze({ terrain: 0, grid: .46, network: 0 }),
@@ -52,7 +55,7 @@ function createGrid(THREE) {
 
 function createNetwork(THREE) {
   // 固定构图锚点，均绑定同一球体；不从业务数据生成，也不附带状态或数值。
-  const anchors = [[23.13, 113.26], [41.3, 69.2], [25.2, 55.3], [1.3, 103.8], [35.7, 139.7], [48.9, 2.3], [-6.2, 106.8], [-33.9, 151.2]];
+  const anchors = [[GUANGZHOU.latitude, GUANGZHOU.longitude], [41.3, 69.2], [25.2, 55.3], [1.3, 103.8], [35.7, 139.7], [48.9, 2.3], [-6.2, 106.8], [-33.9, 151.2]];
   const points = anchors.map(([latitude, longitude]) => new THREE.Vector3(...Object.values(geoToCartesian(latitude, longitude, 1.01))));
   const positions = [];
   for (const end of points.slice(1)) {
@@ -86,11 +89,11 @@ function readColors(THREE, host, view, colors) {
 
 /**
  * host 需覆盖原图画框；布局坐标沿用 1586×992 原图并采用居中 cover。
- * onReady 后由调用方隐藏完整 poster、展示透明前景；onFailure 恢复 poster。
+ * 地形、城市和弧面同帧就绪后才隐藏完整 poster；onFailure 恢复 poster。
  * loadThree、view、page 可替换加载器与浏览器环境，默认使用本站依赖。
  */
 export async function mountGlobe(host, {
-  mode = 'earth', onReady, onFailure, layout = DEFAULT_LAYOUT, colors = {},
+  mode = 'earth', onReady, onFailure, onCityProject, layout = DEFAULT_LAYOUT, colors = {},
   periodSeconds = 180, initialLongitude = 106, initialLatitude = 20,
   signal,
   page = host?.ownerDocument || globalThis.document,
@@ -103,6 +106,7 @@ export async function mountGlobe(host, {
   let disposed = false, ready = false, requested = true, inView = !view.IntersectionObserver;
   let frame = 0, previousTime = null, dirty = true, transition = null;
   let renderer, scene, camera, anchor, body, terrain, grid, network, nodes, keyLight, shaderError;
+  let city, foregroundArc, cityWorld, cityScreen;
   const cleanup = [];
   const track = resource => { if (disposed) resource.dispose(); else cleanup.push(() => resource.dispose()); return resource; };
   const listen = (target, event, callback) => {
@@ -168,10 +172,19 @@ export async function mountGlobe(host, {
       if (progress === 1) transition = null;
     }
     try {
+      // 地图、城市、连线共用 body 的矩阵，不另建城市动画时钟。
+      scene.updateMatrixWorld(true); camera.updateMatrixWorld(true);
+      city.getWorldPosition(cityWorld);
+      const facing = (cityWorld.z - anchor.position.z) / (anchor.scale.x * GUANGZHOU.radius);
+      const fade = Math.max(0, Math.min(1, (facing - .06) / .22));
+      city.material.opacity = fade * fade * (3 - 2 * fade);
+      city.visible = city.material.opacity > .001;
+      cityScreen.copy(cityWorld).project(camera);
       renderer.render(scene, camera);
       if (shaderError) { fail(shaderError); return; }
       if (disposed) return;
       dirty = false;
+      onCityProject?.({ x: (cityScreen.x + 1) * host.clientWidth / 2, y: (1 - cityScreen.y) * host.clientHeight / 2, visible: city.visible, opacity: city.material.opacity });
       if (!ready) { ready = true; onReady?.(); }
     } catch (error) { fail(error); return; }
     if (running && !disposed) schedule();
@@ -183,6 +196,9 @@ export async function mountGlobe(host, {
     if (!width || !height) { cancel(); return; }
     const pose = coverGlobeLayout(width, height, layout);
     anchor.position.set(pose.x, height - pose.y, 0); anchor.scale.setScalar(pose.radius);
+    const arcHeight = DEFAULT_LAYOUT.height - ARC_TOP;
+    foregroundArc.scale.set(DEFAULT_LAYOUT.width * pose.scale, arcHeight * pose.scale, 1);
+    foregroundArc.position.set(width / 2, height / 2 - ARC_TOP * pose.scale / 2, pose.radius * 1.5);
     camera.left = 0; camera.right = width; camera.top = height; camera.bottom = 0;
     camera.near = pose.radius * .1; camera.far = pose.radius * 8; camera.position.z = pose.radius * 4;
     camera.updateProjectionMatrix();
@@ -202,6 +218,9 @@ export async function mountGlobe(host, {
     if (disposed || !host.isConnected || media?.matches || view.innerWidth <= 768) { dispose(); return IDLE; }
     texture.colorSpace = THREE.SRGBColorSpace;
     texture.anisotropy = Math.min(4, renderer.capabilities?.getMaxAnisotropy?.() || 1);
+    const foreground = track(await new THREE.TextureLoader().loadAsync(new URL('../assets/observatory-foreground.webp', import.meta.url).href));
+    if (disposed || !host.isConnected || media?.matches || view.innerWidth <= 768) { dispose(); return IDLE; }
+    foreground.colorSpace = THREE.SRGBColorSpace;
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.domElement.setAttribute('aria-hidden', 'true');
     const palette = readColors(THREE, host, view, colors);
@@ -229,6 +248,19 @@ export async function mountGlobe(host, {
       fragmentShader: 'uniform vec3 glowColor; varying vec3 surfaceNormal; varying vec3 viewPosition; void main(){float rim=pow(1.0-abs(dot(normalize(surfaceNormal),normalize(-viewPosition))),2.4);gl_FragColor=vec4(glowColor,rim*0.42);}',
     })));
     atmosphere.name = 'globe-atmosphere'; atmosphere.scale.setScalar(1.025); atmosphere.renderOrder = 4; body.add(atmosphere);
+    // 同一透明素材通过 UV 分区复用，不改原文件，也不把固定弧面带进城市图。
+    const cityMap = track(foreground.clone());
+    cityMap.repeat.set(CITY_RECT.width / DEFAULT_LAYOUT.width, CITY_RECT.height / DEFAULT_LAYOUT.height);
+    cityMap.offset.set(CITY_RECT.x / DEFAULT_LAYOUT.width, 1 - (CITY_RECT.y + CITY_RECT.height) / DEFAULT_LAYOUT.height);
+    city = new THREE.Sprite(track(new THREE.SpriteMaterial({ map: cityMap, transparent: true, depthWrite: false, toneMapped: false })));
+    city.name = 'globe-guangzhou'; city.renderOrder = 5;
+    city.position.set(...Object.values(geoToCartesian(GUANGZHOU.latitude, GUANGZHOU.longitude, GUANGZHOU.radius)));
+    city.center.set(.5, .3); city.scale.set(CITY_RECT.width / DEFAULT_LAYOUT.radius, CITY_RECT.height / DEFAULT_LAYOUT.radius, 1);
+    body.add(city); cityWorld = new THREE.Vector3(); cityScreen = new THREE.Vector3();
+    const arcMap = track(foreground.clone());
+    arcMap.repeat.set(1, (DEFAULT_LAYOUT.height - ARC_TOP) / DEFAULT_LAYOUT.height);
+    foregroundArc = new THREE.Mesh(track(new THREE.PlaneGeometry(1, 1)), track(new THREE.MeshBasicMaterial({ map: arcMap, transparent: true, depthTest: false, depthWrite: false, toneMapped: false })));
+    foregroundArc.name = 'globe-foreground-arc'; foregroundArc.renderOrder = 6; scene.add(foregroundArc);
     scene.add(new THREE.AmbientLight(palette.light, 1.05));
     keyLight = new THREE.DirectionalLight(palette.light, 2.2); scene.add(keyLight, keyLight.target);
     applyMode(globeModeState(mode));

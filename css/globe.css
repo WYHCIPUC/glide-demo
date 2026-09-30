@@ -1,6 +1,6 @@
 /* 球体、城市与前景独立分层，原完整图仅用于故障和静态回退。 */
 :root { --globe-ocean: #071a29; --globe-atmosphere: #79d5ef; --globe-line: #86d8e9; --globe-light: #b7cbd8; }
-.scene-foreground { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; pointer-events: none; z-index: 3; }
+.guangzhou-anchor[data-tracked=true] { left: 0; top: 0; right: auto; transform: translate3d(var(--guangzhou-x), var(--guangzhou-y), 0) translate(-50%, 18px); opacity: var(--guangzhou-opacity, 1); }
 .museum-stage::after { z-index: 4; pointer-events: none; }
 #museum-canvas { z-index: 1; visibility: hidden; }
 .museum-stage[data-globe-ready=true] #museum-canvas { visibility: visible; }
@@ -11,5 +11,5 @@
 .globe-controls > div { display: flex; gap: 5px; }
 .globe-controls button { min-height: 44px; padding: 9px 14px; font-size: 12px; background: color-mix(in srgb, var(--bg-carbon) 82%, transparent); border-color: var(--border-charcoal); }
 .globe-controls button[aria-pressed=true] { color: var(--accent-emerald); border-color: var(--accent-emerald); }
-@media (max-width: 768px) { .globe-controls, .scene-foreground { display: none !important; } }
-@media print { .globe-controls, .scene-foreground { display: none !important; } }
+@media (max-width: 768px) { .globe-controls { display: none !important; } }
+@media print { .globe-controls { display: none !important; } }

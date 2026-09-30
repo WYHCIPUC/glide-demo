@@ -1,34 +1,54 @@
-import { mountGlobe } from './museum-globe.mjs?v=20260930.4';
+import { mountGlobe } from './museum-globe.mjs?v=20261001.1';
 export const shouldMoveCamera = ({ animate = true, enabled = true, reduced = false }) => animate && enabled && !reduced;
 
-// 首帧与前景同时就绪后才换掉完整静态图；故障恢复原获选构图。
+// 球体内含城市及弧面，成功首帧后才换掉完整静态图；故障恢复原构图。
 export async function mountScene(host, _emblem, _initialHall = null, {
   mode = 'earth', onReady = () => {}, onFailure = () => {}, signal,
   page = host?.ownerDocument, view = page?.defaultView, createGlobe = mountGlobe,
 } = {}) {
   const idle = { select() {}, setMode() {}, setRunning() {}, dispose() {} };
   if (!host?.isConnected || !view || view.innerWidth <= 768 || view.matchMedia('(prefers-reduced-motion: reduce)').matches || signal?.aborted) return idle;
-  const stage = host.closest('.museum-stage'), foreground = stage?.querySelector('.scene-foreground');
-  let globe, disposed = false, failed = false, globeReady = false, foregroundReady = false;
-  function reset() { stage?.removeAttribute('data-globe-ready'); if (foreground) foreground.hidden = true; }
+  const stage = host.closest('.museum-stage'), label = page.querySelector('.guangzhou-anchor');
+  let globe, disposed = false, failed = false, globeReady = false, projection;
+  let requested = page.documentElement.dataset.motionRunning === 'true';
+  function reset() {
+    stage?.removeAttribute('data-globe-ready');
+    if (!label) return;
+    label.hidden = false; label.removeAttribute('data-tracked');
+    for (const property of ['--guangzhou-x', '--guangzhou-y', '--guangzhou-opacity']) label.style.removeProperty(property);
+  }
+  function projectCity(point = projection) {
+    if (disposed || failed || !point) return;
+    projection = point;
+    if (!globeReady || !label) return;
+    const frame = host.getBoundingClientRect(), parent = (label.offsetParent || label.parentElement).getBoundingClientRect();
+    label.dataset.tracked = 'true';
+    label.style.setProperty('--guangzhou-x', `${frame.left - parent.left + point.x}px`);
+    label.style.setProperty('--guangzhou-y', `${frame.top - parent.top + point.y}px`);
+    label.style.setProperty('--guangzhou-opacity', String(point.opacity));
+    label.hidden = !point.visible || point.opacity < .2 || point.x < 70 || point.x > frame.width - 70 || point.y < 40 || point.y > frame.height - 80;
+  }
+  function syncRunning() { if (!disposed) globe?.setRunning(requested && page.activeElement !== label); }
   function ready() {
-    if (!disposed && !failed && globeReady && foregroundReady && stage?.isConnected) {
-      stage.dataset.globeReady = 'true'; foreground.hidden = false; onReady();
+    if (!disposed && !failed && stage?.isConnected) {
+      globeReady = true; stage.dataset.globeReady = 'true'; projectCity(); onReady();
     }
   }
-  function dispose() { if (disposed) return; disposed = true; globe?.dispose(); reset(); signal?.removeEventListener('abort', dispose); }
+  function dispose() {
+    if (disposed) return;
+    disposed = true; globe?.dispose(); reset(); signal?.removeEventListener('abort', dispose);
+    label?.removeEventListener('focus', syncRunning); label?.removeEventListener('blur', syncRunning);
+  }
   function failure(error) { if (disposed || failed) return; failed = true; dispose(); onFailure(error); }
   signal?.addEventListener('abort', dispose, { once: true });
-  if (!foreground) { failure(new Error('缺少地球前景层。')); return idle; }
-  // 前景解码独立完成，不能阻塞路由/页面离开时取得清理句柄。
-  Promise.resolve().then(() => foreground.decode()).then(() => { foregroundReady = true; ready(); }, failure);
-  globe = await createGlobe(host, { mode, signal, page, view, onReady: () => { globeReady = true; ready(); }, onFailure: failure });
+  label?.addEventListener('focus', syncRunning); label?.addEventListener('blur', syncRunning);
+  globe = await createGlobe(host, { mode, signal, page, view, onReady: ready, onCityProject: projectCity, onFailure: failure });
   if (disposed) { globe.dispose(); return idle; }
-  globe.setRunning(page.documentElement.dataset.motionRunning === 'true');
+  syncRunning();
   return {
-    select() { globe.setRunning(page.documentElement.dataset.motionRunning === 'true'); },
+    select() { requested = page.documentElement.dataset.motionRunning === 'true'; syncRunning(); },
     setMode(next, options) { globe.setMode(next, options); },
-    setRunning(value) { globe.setRunning(value); },
+    setRunning(value) { requested = !!value; syncRunning(); },
     dispose,
   };
 }
