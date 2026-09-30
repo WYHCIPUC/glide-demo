@@ -12,6 +12,7 @@ export function mountMotion({ page = document, view = window, media = view.match
   function sync() {
     if (disposed) return;
     root.dataset.motionEnabled = String(enabled()); root.dataset.motionRunning = String(shouldAnimate(state));
+    page.dispatchEvent(new view.Event('museum-motion-change'));
     if (!enabled()) cancel();
     if (button) {
       button.hidden = false; button.disabled = state.reduced;

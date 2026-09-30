@@ -1,8 +1,9 @@
 {
   "url": "https://wyhcipuc.github.io/glide-demo/",
-  "release": "2026-09-30.2",
+  "release": "2026-09-30.3",
   "files": [
     ".nojekyll", ".gitattributes", "README.md", "LICENSE", "publish-manifest.json", "ASSET-SOURCES.md",
+    "css/globe.css", "js/museum-globe.mjs", "js/museum-globe-controls.mjs", "assets/earth-blue-marble.webp", "assets/observatory-foreground.webp",
     "index.html", "css/demo.css", "css/observatory.css", "js/demo.js", "js/charts.js", "js/radar.js", "js/brand-motion.js", "js/exhibition.js",
     "data/world.json", "assets/jingjian-symbol.png", "assets/logo.svg", "assets/favicon.svg", "assets/og.png",
     "assets/jingjian-icon.png", "assets/jingjian-ui-satin-poster.webp", "assets/jingjian-ui-satin-loop.webm",

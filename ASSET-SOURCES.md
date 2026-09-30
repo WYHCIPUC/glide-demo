@@ -23,15 +23,25 @@
 Use case: stylized-concept. Asset type: original editorial visual for Jingjian, a Guangzhou-based global migration intelligence platform, used between a city introduction and its evidence-led research chapters. Create a premium architectural still life of exactly three tall, thin rectangular optical-glass panels arranged sequentially in deep perspective, upright on a pale cool-silver matte floor. Each panel transmits the same narrow line of soft ice-blue light; the nearest panel is optically clear, farther panes are delicately frosted. This is a visual metaphor for information being clarified into understanding. Large rectangular panes, not rings, spheres, globes, cards, arrows, brains or interface screens. Physical restraint, tactile milky glass edges, subtle cyan caustics, realistic broad studio daylight, clean shadows. A contemporary design museum catalogue photograph / high-end product photography quality, sober and exquisite rather than shiny metal sci-fi. Palette cool white, mist-silver, barely blue transparent glass, restrained midnight-blue shadows. Wide landscape 3:2 composition: main panes occupy the center-right, generous calm pale negative space to the left; everything completely visible inside frame with margin. No text, no lettering, no logo, no maps, no country silhouettes, no data, no people, no labels, no watermark. Opaque pale studio background. Photorealistic materials, crisp antialiased edges, smooth natural transitions, ultra-clean high resolution.
 ```
 
-内容版本：2026-09-30.2。运行资源全部随站发布，无远程字体、脚本或业务接口依赖。
+内容版本：2026-09-30.3。运行资源全部随站发布，无远程字体、脚本或业务接口依赖。
 
-- 本轮信号流和能力关系图为本站原生 SVG/HTML/CSS 组件，不代表实时采集、迁移路线或运行统计；关系图名称与入口均引用同一功能目录。新增动效可暂停，服从减少动态、后台及主视觉离屏状态，不另增 React、远程特效包或持续 WebGL 渲染循环。
+- 信号流和能力关系图为本站原生 SVG/HTML/CSS 组件，关系图名称与入口引用同一功能目录。背景球体仅在桌面大厅、前台且可见时自转，可由访客暂停；不加载远程特效包。
+
+## 自转地球与透明前景
+
+- `assets/earth-blue-marble.webp`：来源为 NASA Earth Observatory 的 [Blue Marble: Next Generation 地形与海底地形底图](https://science.nasa.gov/earth/earth-observatory/blue-marble-next-generation/base-topography-bathymetry/)，使用 January 2004 月度合成底图。原始 [5400 × 2700 JPEG](https://assets.science.nasa.gov/content/dam/science/esd/eo/images/bmng/bmng-topography-bathymetry/january/world.topo.bathy.200401.3x5400x2700.jpg) 经 FFmpeg Lanczos 缩小到 4096 × 2048，再以 `libwebp` quality 78 编码，609,078 字节。底图未交给生成模型重绘；球体光照与冰蓝颜色由浏览器材质叠加。
+- 图片来源署名：NASA Earth Observatory / Blue Marble Next Generation。使用遵循 [NASA Images and Media Usage Guidelines](https://www.nasa.gov/nasa-brand-center/images-and-media/)，用于本项目公开信息展示；NASA 不为本项目或生成的城市概念画面背书。未使用 NASA 标识。
+- 原始 JPEG SHA-256：`1684c4f8f51970dcb4a7451302bf3be17bed657aed9fece6f80d7b191e8afa3d`；最终 WebP SHA-256：`1f1959475acd95bc92dc909e1ff68c3d09e68e20ec3f25e6479c1c6f1a377c2d`。
+- `assets/observatory-foreground.webp`：在已选 `global-observatory.webp` 上使用内置 imagegen 提取城市与左下前景弧面，移除原主球体、背景和连线，输出真实透明层。保持 1586 × 992，151,084 字节；四角及主球体区域采样 Alpha 为 0，城市与弧面保留可见像素。生成编辑可能改变局部边缘细节，不将其认定为精确建筑或地理实景。
+- 前景编辑约束：保持广州天际线、城市水面和左下弧面的原有画幅位置；只保留这些前景，其他区域透明；不增加文字、品牌、按钮、地球、路径或光点。前景与 NASA 自然地形是分别制作和加载的两个资源。
+- 前景 WebP SHA-256：`ce9c30c7fa8cbcfc8ee067c5853cd1ab948a0499346158a3b512b0d4fdf0f278`；中间透明 PNG SHA-256：`160738fbb674d60c1d3390fef0fabeb20b30e887920a1457bd1e775a19b66490`。
+- 三种形态共用一个自转球体：自然地形、经纬网格、概念连线。概念连线只用于表达全球联系，不表示事件、迁移规模或实时航线。城市和左下弧面固定在前景，正式 G21 文件保持不变。
 
 ## 全景数字展馆
 
-- Three.js 以主视觉作为纹理平面，展区切换仅做有限的画面转场；不再构造空房间、圆台或展柜。文字与导览完全由 HTML 承载，图片加载或 WebGL 失败不会移除正文。
+- Three.js 使用真实球面与等距纹理，默认 180 秒转一周；三种形态采用 0.65 秒材质过渡。城市和前景为独立透明图层，首帧与前景均成功后才替换原完整静态图；图片加载或 WebGL 失败恢复原画面。
 - `vendor/three.module.min.js`、`vendor/three.core.min.js`：Three.js 0.185.1，来自项目已安装的 npm `three` 包，原样复制；MIT 许可随 `vendor/THREE-LICENSE.txt` 发布。
-- 页面仅在宽屏且允许动态时按需加载三维模块。镜头在展区切换时有限移动，不监听鼠标跟随；资源不可用时仍保留全部 HTML 正文。
+- 页面仅在宽屏且允许动态时按需加载三维模块；DPR 上限 1.5、渲染上限约 30 帧/秒。暂停、后台、离屏、深层阅读停止自转，离页或减少动态释放资源。正文和导航完全由 HTML 承载，资源不可用时仍可阅读。
 - 六个互动展项均为本地编写的公开演示数据。地图使用原有 `data/world.json`；国别示例仅用于解释筛选联动，不代表实际业务情况。
 - 动效沿用 GSAP，阅读滚动只使用一套 Lenis。新页面不加载旧 ScrollTrigger 章节动效、雷达脚本或旧图表示例；旧资源仅为原链接兼容保留。
 - 正式 G21 图形与循环视频字节不变，不重画轮廓、不增加地球、不改变内部配色。旧城市概念图为兼容既有链接保留。
@@ -70,7 +80,7 @@ lenis-1.3.26.tgz sha512-s/xTCZCxTFvHbAN1OzuhNaN5YPJH2ail0XAkctKW1b+RUAG4nUL5UHLX
 ```text
 748bbff7f2f8ca93ff8c785d2bc06d8929d757d6a9e41e71fd17024943a18684  assets/jingjian-ui-satin-loop.webm
 fba60e917c9fab980383c9fd296745db705c0b4268fd23154100831c12a6389a  assets/jingjian-ui-satin-poster.webp
-f94e3b96eead60e14cfe7f798cc50003ab131d262ed2811c7afa5487719cee95  assets/fonts/jingjian-sans.woff2
+33b252bf25163a00f4ef41e35ba0885f4d37703f4a30c3407586935e92bcd357  assets/fonts/jingjian-sans.woff2
 420d04c629ba6a1c320768b43e868cb16e88f1883b09b73d8ad5a49f931f8c11  assets/guangzhou-night.webp
 4344e9f2d17fb3329dd804bbaac36cb6951ddb4154f551eddd6b2121b6460ee5  assets/optic-study.webp
 92bb9a96476f983d212a2bc4f54c889039c1696dd4461d40a736860938570fbb  vendor/gsap.min.js

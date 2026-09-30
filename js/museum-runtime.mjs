@@ -1,9 +1,10 @@
-import { nodes, halls, legacyAliases } from './museum-catalog.mjs?v=20260930.2';
+import { nodes, halls, legacyAliases } from './museum-catalog.mjs?v=20260930.3';
 import { resolveRoute, ancestors, searchNodes, canUseScene, canCaptureEntry, escapeHTML as e } from './museum-core.mjs';
-import { nodeLink } from './museum-render.mjs?v=20260930.2';
+import { nodeLink } from './museum-render.mjs?v=20260930.3';
 import { mountExhibit } from './museum-exhibits.mjs';
-import { mountMotion } from './museum-motion.mjs?v=20260930.2';
-import { mountConsole } from './museum-console.mjs?v=20260930.2';
+import { mountMotion } from './museum-motion.mjs?v=20260930.3';
+import { mountConsole } from './museum-console.mjs?v=20260930.3';
+import { mountGlobeControls } from './museum-globe-controls.mjs?v=20260930.3';
 
 let disposePage;
 function mount() {
@@ -26,10 +27,12 @@ function mount() {
   const records = new Map(), demoStates = {};
   const capabilityConsole = mountConsole(document.querySelector('[data-capability-console]'), { document, window, onState: () => capture() });
   let current = null, exhibit = null, scene = null, scenePending = false, sceneFailed = false, disposed = false;
+  let sceneLoad = null;
   let serial = 0, saveTimer, toastTimer, navigationFrame = 0, sceneAnimate = true;
   let animation = null, lenis = null, ticker = null;
   const removers = [];
   const oldRestoration = history.scrollRestoration;
+  const globeControls = mountGlobeControls(document.getElementById('globe-controls'), { onChange: (mode, options) => { scene?.setMode(mode, options); capture(); } });
   history.scrollRestoration = 'manual';
   const listen = (target, type, handler, options) => { target.addEventListener(type, handler, options); removers.push(() => target.removeEventListener(type, handler, options)); };
   // 静态控件键不随路由切换变化，用于恢复返回位置。
@@ -44,7 +47,7 @@ function mount() {
     if (!canCaptureEntry(current.hash, location.hash)) return records.get(current.key);
     if (exhibit) demoStates[current.id] = exhibit.snapshot();
     const value = { key: current.key, hash: current.hash, route: routeKey(current), scrollY: window.scrollY, focus: focusDescriptor(), query: input.value,
-      demos: { ...demoStates }, capability: capabilityConsole.snapshot(), open: [...tree.querySelectorAll('details')].map(el => el.open) };
+      demos: { ...demoStates }, capability: capabilityConsole.snapshot(), globe: globeControls.snapshot(), open: [...tree.querySelectorAll('details')].map(el => el.open) };
     records.set(current.key, value);
     if (write) history.replaceState({ ...history.state, museum: value }, '', location.href);
     return value;
@@ -69,14 +72,27 @@ function mount() {
     const depth = current?.id === 'museum-directory' ? 2 : ancestors(current?.id, nodes).length - 1;
     if (scene || scenePending || sceneFailed || !canUseScene(innerWidth, motion.matches, depth)) return;
     scenePending = true;
+    const loading = new AbortController(); sceneLoad = loading;
     try {
-      const { mountScene } = await import('./museum-scene.mjs?v=20260930.2');
-      if (disposed) return;
-      const mounted = await mountScene(document.getElementById('museum-canvas'), document.querySelector('.lobby-emblem'), null);
+      const { mountScene } = await import('./museum-scene.mjs?v=20260930.3');
+      if (disposed || loading.signal.aborted) return;
+      const mounted = await mountScene(document.getElementById('museum-canvas'), document.querySelector('.lobby-emblem'), null, {
+        signal: loading.signal,
+        mode: globeControls.snapshot().mode,
+        onReady: () => { if (!disposed && !loading.signal.aborted) globeControls.setReady(true); },
+        onFailure: () => { if (!loading.signal.aborted) { globeControls.setReady(false); sceneFailed = true; } },
+      });
+      if (sceneLoad !== loading) { mounted.dispose(); return; }
       const latestDepth = current?.id === 'museum-directory' ? 2 : ancestors(current?.id, nodes).length - 1;
-      if (disposed || !canUseScene(innerWidth, motion.matches, latestDepth)) mounted.dispose();
-      else { scene = mounted; scene.select(ancestors(current.id, nodes)[1]?.id || null, { animate: sceneAnimate }); }
-    } catch { sceneFailed = true; } finally { scenePending = false; }
+      if (disposed || loading.signal.aborted || !canUseScene(innerWidth, motion.matches, latestDepth)) { mounted.dispose(); globeControls.setReady(false); }
+      else { scene = mounted; scene.setMode(globeControls.snapshot().mode, { animate: false }); scene.select(ancestors(current.id, nodes)[1]?.id || null, { animate: sceneAnimate }); }
+    } catch { if (!loading.signal.aborted) sceneFailed = true; } finally {
+      if (sceneLoad === loading) { scenePending = false; sceneLoad = null; }
+    }
+  }
+  function releaseScene() {
+    sceneLoad?.abort(); sceneLoad = null; scenePending = false;
+    scene?.dispose(); scene = null; globeControls.setReady(false);
   }
   function animatePanel(panel, useMotion) {
     animation?.kill();
@@ -92,12 +108,14 @@ function mount() {
     if (saved?.demos) Object.assign(demoStates, saved.demos);
     current = { ...route, key, hash: location.hash };
     if (saved?.capability?.view) capabilityConsole.select(saved.capability.view, { animate: false });
+    if (saved?.globe?.mode) { globeControls.select(saved.globe.mode); scene?.setMode(saved.globe.mode, { animate: false }); }
     const panel = sections.find(section => section.id === route.id);
     if (!panel) return;
     sections.forEach(section => { section.hidden = section !== panel; });
     const path = ancestors(route.id, routedNodes), depth = route.id === 'museum-directory' ? 2 : path.length - 1;
     document.body.dataset.depth = depth > 2 ? 'deep' : String(depth);
     document.body.dataset.view = route.id === 'museum-directory' ? 'directory' : route.id;
+    if (depth > 1 && scenePending) releaseScene();
     breadcrumbs.innerHTML = path.map((node, i) => `${i ? '<span aria-hidden="true">/</span>' : ''}<a href="#${e(node.id)}" data-nav${i === path.length - 1 ? ' aria-current="page"' : ''}>${e(node.id === 'lobby' ? '中央大厅' : node.title)}</a>`).join('');
     const parent = path.at(-2)?.id || 'lobby';
     const up = document.getElementById('museum-up'); up.href = `#${parent}`; up.hidden = route.id === 'lobby';
@@ -148,6 +166,7 @@ function mount() {
       scene?.select(ancestors(current.id, nodes)[1]?.id || null, { animate: false });
     }
   });
+  listen(document, 'museum-motion-change', () => scene?.setRunning(document.documentElement.dataset.motionRunning === 'true'));
   let lastHistoryKey = '';
   function onHistory() {
     const key = `${location.hash}|${history.state?.museum?.key || ''}`;
@@ -172,17 +191,17 @@ function mount() {
   }
   const visibility = () => { if (document.hidden) lenis?.stop(); else lenis?.start(); };
   listen(document, 'visibilitychange', visibility);
-  listen(motion, 'change', () => { animation?.kill(); setupScroll(); if (!motion.matches) { scene?.dispose(); scene = null; ensureScene(ancestors(current.id, nodes)[1]?.id || null); } });
+  listen(motion, 'change', () => { animation?.kill(); setupScroll(); releaseScene(); sceneFailed = false; if (!motion.matches) ensureScene(ancestors(current.id, nodes)[1]?.id || null); });
   listen(window, 'resize', () => {
     lenis?.resize();
-    if (innerWidth <= 768) { scene?.dispose(); scene = null; }
+    if (innerWidth <= 768) releaseScene();
     else if (current) ensureScene(ancestors(current.id, nodes)[1]?.id || null);
   });
   document.documentElement.classList.add('museum-enhanced');
   setupScroll(); activate({ restore: true, focus: !!location.hash });
   disposePage = () => {
     capture(); disposed = true; clearTimeout(saveTimer); clearTimeout(toastTimer); cancelAnimationFrame(navigationFrame);
-    animation?.kill(); exhibit?.dispose(); scene?.dispose(); sceneMotion.dispose(); capabilityConsole.dispose();
+    animation?.kill(); exhibit?.dispose(); releaseScene(); sceneMotion.dispose(); capabilityConsole.dispose(); globeControls.dispose();
     if (ticker) window.gsap?.ticker.remove(ticker); lenis?.destroy();
     removers.forEach(remove => remove()); history.scrollRestoration = oldRestoration; disposePage = null;
   };

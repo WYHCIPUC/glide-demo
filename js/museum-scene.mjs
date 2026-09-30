@@ -1,92 +1,34 @@
-// 同一获选画面的有限镜头转场；静态图始终保底，不构造替代性的展柜或地图。
+import { mountGlobe } from './museum-globe.mjs?v=20260930.3';
 export const shouldMoveCamera = ({ animate = true, enabled = true, reduced = false }) => animate && enabled && !reduced;
-export async function mountScene(host, _emblem, initialHall = null) {
-  const idle = { select() {}, dispose() {} };
-  const motion = matchMedia('(prefers-reduced-motion: reduce)');
-  if (motion.matches || innerWidth <= 768 || !host) return idle;
-  const THREE = await import('../vendor/three.module.min.js');
-  if (motion.matches || innerWidth <= 768 || !host.isConnected) return idle;
-  let renderer, texture;
-  try {
-    renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true, powerPreference: 'low-power' });
-    texture = await new THREE.TextureLoader().loadAsync(new URL('../assets/global-observatory.webp', import.meta.url).href);
-  } catch {
-    renderer?.dispose();
-    return idle;
+
+// 首帧与前景同时就绪后才换掉完整静态图；故障恢复原获选构图。
+export async function mountScene(host, _emblem, _initialHall = null, {
+  mode = 'earth', onReady = () => {}, onFailure = () => {}, signal,
+  page = host?.ownerDocument, view = page?.defaultView, createGlobe = mountGlobe,
+} = {}) {
+  const idle = { select() {}, setMode() {}, setRunning() {}, dispose() {} };
+  if (!host?.isConnected || !view || view.innerWidth <= 768 || view.matchMedia('(prefers-reduced-motion: reduce)').matches || signal?.aborted) return idle;
+  const stage = host.closest('.museum-stage'), foreground = stage?.querySelector('.scene-foreground');
+  let globe, disposed = false, failed = false, globeReady = false, foregroundReady = false;
+  function reset() { stage?.removeAttribute('data-globe-ready'); if (foreground) foreground.hidden = true; }
+  function ready() {
+    if (!disposed && !failed && globeReady && foregroundReady && stage?.isConnected) {
+      stage.dataset.globeReady = 'true'; foreground.hidden = false; onReady();
+    }
   }
-  if (motion.matches || innerWidth <= 768 || !host.isConnected) {
-    texture.dispose(); renderer.dispose(); return idle;
-  }
-  let disposed = false, inView = true, frame = 0, tween = null;
-  const scene = new THREE.Scene();
-  const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, .1, 10);
-  camera.position.z = 2;
-  texture.colorSpace = THREE.SRGBColorSpace;
-  const imageAspect = texture.image.width / texture.image.height;
-  const geometry = new THREE.PlaneGeometry(imageAspect * 2, 2);
-  const material = new THREE.MeshBasicMaterial({ map: texture, toneMapped: false });
-  const plate = new THREE.Mesh(geometry, material);
-  scene.add(plate);
-  const pose = { zoom: 1 };
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
-  renderer.outputColorSpace = THREE.SRGBColorSpace;
-  renderer.domElement.setAttribute('aria-hidden', 'true');
-  host.append(renderer.domElement);
-  const draw = () => {
-    frame = 0;
-    if (disposed || !inView || document.hidden) return;
-    camera.zoom = pose.zoom; camera.updateProjectionMatrix();
-    renderer.render(scene, camera);
-    host.dataset.ready = 'true';
+  function dispose() { if (disposed) return; disposed = true; globe?.dispose(); reset(); signal?.removeEventListener('abort', dispose); }
+  function failure(error) { if (disposed || failed) return; failed = true; dispose(); onFailure(error); }
+  signal?.addEventListener('abort', dispose, { once: true });
+  if (!foreground) { failure(new Error('缺少地球前景层。')); return idle; }
+  // 前景解码独立完成，不能阻塞路由/页面离开时取得清理句柄。
+  Promise.resolve().then(() => foreground.decode()).then(() => { foregroundReady = true; ready(); }, failure);
+  globe = await createGlobe(host, { mode, signal, page, view, onReady: () => { globeReady = true; ready(); }, onFailure: failure });
+  if (disposed) { globe.dispose(); return idle; }
+  globe.setRunning(page.documentElement.dataset.motionRunning === 'true');
+  return {
+    select() { globe.setRunning(page.documentElement.dataset.motionRunning === 'true'); },
+    setMode(next, options) { globe.setMode(next, options); },
+    setRunning(value) { globe.setRunning(value); },
+    dispose,
   };
-  const request = () => {
-    if (!frame && !disposed && inView && !document.hidden) frame = requestAnimationFrame(draw);
-  };
-  const resize = () => {
-    if (disposed) return;
-    const width = host.clientWidth, height = host.clientHeight;
-    if (!width || !height) return;
-    const aspect = width / height;
-    renderer.setSize(width, height, false);
-    camera.left = -aspect; camera.right = aspect;
-    plate.scale.setScalar(Math.max(1, aspect / imageAspect));
-    camera.updateProjectionMatrix(); request();
-  };
-  const resizeObserver = new ResizeObserver(resize);
-  resizeObserver.observe(host);
-  const observer = new IntersectionObserver(entries => {
-    inView = entries.some(entry => entry.isIntersecting);
-    if (!inView) { tween?.pause(); cancelAnimationFrame(frame); frame = 0; }
-    else if (!document.hidden) { tween?.resume(); resize(); }
-  });
-  observer.observe(host);
-  const visibility = () => {
-    if (document.hidden) { tween?.pause(); cancelAnimationFrame(frame); frame = 0; }
-    else if (inView) { tween?.resume(); request(); }
-  };
-  const lost = event => { event.preventDefault(); dispose(); };
-  const changeMotion = () => { if (motion.matches) dispose(); };
-  document.addEventListener('visibilitychange', visibility);
-  renderer.domElement.addEventListener('webglcontextlost', lost);
-  motion.addEventListener('change', changeMotion);
-  function dispose() {
-    if (disposed) return;
-    disposed = true; tween?.kill(); cancelAnimationFrame(frame);
-    resizeObserver.disconnect(); observer.disconnect();
-    document.removeEventListener('visibilitychange', visibility);
-    motion.removeEventListener('change', changeMotion);
-    renderer.domElement.removeEventListener('webglcontextlost', lost);
-    texture.dispose(); geometry.dispose(); material.dispose(); renderer.dispose();
-    renderer.domElement.remove(); host.removeAttribute('data-ready');
-  }
-  function select(hall, { animate = true } = {}) {
-    if (disposed) return;
-    tween?.kill();
-    const zoom = hall ? 1.025 : 1;
-    if (window.gsap && shouldMoveCamera({ animate, enabled: document.documentElement.dataset.motionEnabled !== 'false', reduced: motion.matches })) {
-      tween = window.gsap.to(pose, { zoom, duration: .7, ease: 'power2.inOut', onUpdate: request, paused: document.hidden || !inView });
-    } else { pose.zoom = zoom; request(); }
-  }
-  resize(); if (initialHall) select(initialHall);
-  return { select, dispose };
 }
