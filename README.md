@@ -11,14 +11,14 @@
 </p>
 
 <p align="center">
-  <a href="https://wyhcipuc.github.io/glide-demo/?release=20260929.2"><strong>进入境鉴全景数字展馆 ↗</strong></a>　·　
+  <a href="https://wyhcipuc.github.io/glide-demo/?release=20260930.1"><strong>进入境鉴全景数字展馆 ↗</strong></a>　·　
   <a href="https://wyhcipuc.github.io/glide-demo/#topics">四个实战专题</a>　·　
   <a href="https://wyhcipuc.github.io/glide-demo/#scenarios">业务场景</a>　·　
   <a href="https://wyhcipuc.github.io/glide-demo/#outputs">成果展示</a>
 </p>
 
 <a href="https://wyhcipuc.github.io/glide-demo/">
-  <img src="./assets/guangzhou-night.webp" width="100%" alt="境鉴城市品牌概念图：珠江夜色与广州塔，点击进入项目展厅">
+  <img src="./assets/global-observatory.webp" width="100%" alt="境鉴全球观察空间：广州天际线与全球视野，点击进入项目展厅">
 </a>
 
 ## 从全球动态，到业务判断
@@ -31,7 +31,7 @@
 
 ## 六座展馆，逐层探索
 
-从中央品牌大厅进入，自由选择展区，再下钻到功能、场景、设计原理和技术说明。三维空间用于导览，深层内容以阅读台呈现；手机或三维不可用时仍能阅读全部介绍。正式 G21 动态标志保留原有右翼地图自转。
+从广州天际线与全球视野展开的品牌首页进入六个展区，继续下钻功能、场景、设计原理和技术说明。首页的来源正文、事件关联、专题研判也各有直接入口；深层内容以阅读台呈现。手机或三维不可用时仍能阅读全部介绍，正式 G21 动态标志保留原有右翼地图自转。
 
 [中央大厅](https://wyhcipuc.github.io/glide-demo/#lobby)　/　[完整功能目录](https://wyhcipuc.github.io/glide-demo/#museum-directory)　/　[建设思路](https://wyhcipuc.github.io/glide-demo/#building-idea)
 
@@ -137,7 +137,7 @@
 
 <p align="center">
   <strong>一座城市的立足点，一个面向全球的视野。</strong><br><br>
-  <a href="https://wyhcipuc.github.io/glide-demo/?release=20260929.2">打开境鉴全景数字展馆 ↗</a>
+  <a href="https://wyhcipuc.github.io/glide-demo/?release=20260930.1">打开境鉴全景数字展馆 ↗</a>
 </p>
 
 <details>
@@ -145,7 +145,7 @@
 
 ### 内容与发布
 
-网站内容版本：2026-09-29.2。维护来源为主项目的 `docs/demo/`；正文由统一目录生成，`publish-manifest.json` 列出允许发布的文件。只同步清单中的静态文件，保留目标仓库的 `.git` 和配置，不同步业务数据或凭据。
+网站内容版本：2026-09-30.1。维护来源为主项目的 `docs/demo/`；正文由统一目录生成，`publish-manifest.json` 列出允许发布的文件。只同步清单中的静态文件，保留目标仓库的 `.git` 和配置，不同步业务数据或凭据。
 
 1. 在主项目执行 `node scripts/build_public_museum.mjs`；安装声明的 DOM 测试依赖后，执行 `node --test tests/frontend/public-demo-*.test.mjs tests/frontend/public-readme.test.mjs` 并检查差异。
 2. 按清单同步发生变化的文件，提交到本仓库 `main`，由 GitHub Pages 发布。
@@ -161,6 +161,6 @@ python -m http.server 8080 --bind 127.0.0.1
 
 ### 品牌与许可
 
-使用现有境鉴 G21 正式透明标志及广州城市概念图，未重绘标志或地图。Three.js 构建展馆空间，GSAP 负责有限转场，Lenis 仅增强桌面阅读滚动。README 保持静态，完整品牌动效在展馆中查看。资源来源、概念图说明与第三方许可见 [ASSET-SOURCES.md](ASSET-SOURCES.md)；介绍页代码许可见 [LICENSE](LICENSE)。
+沿用现有境鉴 G21 正式透明标志，未重绘品牌。首页采用独立的全球观察空间概念图，文字和入口由 HTML 呈现；画面不是业务地图或实时数据。Three.js 与 GSAP 只负责有限的画面转场，Lenis 仅增强桌面阅读滚动，图标使用 Lucide。README 保持静态，完整品牌动效在展馆中查看。资源来源、概念图说明与第三方许可见 [ASSET-SOURCES.md](ASSET-SOURCES.md)；介绍页代码许可见 [LICENSE](LICENSE)。
 
 </details>

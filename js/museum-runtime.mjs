@@ -1,6 +1,6 @@
-import { nodes, halls, legacyAliases } from './museum-catalog.mjs';
+import { nodes, halls, legacyAliases } from './museum-catalog.mjs?v=20260930.1';
 import { resolveRoute, ancestors, searchNodes, canUseScene, canCaptureEntry, escapeHTML as e } from './museum-core.mjs';
-import { nodeLink } from './museum-render.mjs';
+import { nodeLink } from './museum-render.mjs?v=20260930.1';
 import { mountExhibit } from './museum-exhibits.mjs';
 
 let disposePage;
@@ -65,7 +65,7 @@ function mount() {
     if (scene || scenePending || sceneFailed || !canUseScene(innerWidth, motion.matches, depth)) return;
     scenePending = true;
     try {
-      const { mountScene } = await import('./museum-scene.mjs');
+      const { mountScene } = await import('./museum-scene.mjs?v=20260930.1');
       if (disposed) return;
       const mounted = await mountScene(document.getElementById('museum-canvas'), document.querySelector('.lobby-emblem'), hall);
       const latestDepth = current?.id === 'museum-directory' ? 2 : ancestors(current?.id, nodes).length - 1;
@@ -95,7 +95,7 @@ function mount() {
     breadcrumbs.innerHTML = path.map((node, i) => `${i ? '<span aria-hidden="true">/</span>' : ''}<a href="#${e(node.id)}" data-nav${i === path.length - 1 ? ' aria-current="page"' : ''}>${e(node.id === 'lobby' ? '中央大厅' : node.title)}</a>`).join('');
     const parent = path.at(-2)?.id || 'lobby';
     const up = document.getElementById('museum-up'); up.href = `#${parent}`; up.hidden = route.id === 'lobby';
-    document.querySelectorAll('.header-halls a').forEach(link => { if (link.hash === `#${path[1]?.id}`) link.setAttribute('aria-current', 'location'); else link.removeAttribute('aria-current'); });
+    document.querySelectorAll('.header-halls a').forEach(link => { if ((link.dataset.sections || '').split(' ').includes(path[1]?.id || route.id)) link.setAttribute('aria-current', 'location'); else link.removeAttribute('aria-current'); });
     document.title = route.id === 'lobby' ? '境鉴｜全球移民智能监测平台 · 全景数字展馆' : `${path.at(-1)?.title || '全馆目录'} · 境鉴数字展馆`;
     if (route.id === 'museum-directory') {
       showSearch(route.query || saved?.query || '');

@@ -1,5 +1,18 @@
 # 境鉴展厅资源来源
 
+## 全球观察空间主视觉
+
+- `assets/global-observatory.webp`：2026-09-30 根据用户选定的第一张概念方案，使用内置 imagegen 移除文字、图标和导航后得到的独立画面。保留亚太地球、广州天际线、联结光线和左下角前景弧面；不采用后续去掉弧面的备选图。
+- 图像为 1586 × 992，FFmpeg `libwebp` quality 92 编码，378,570 字节，未放大像素。SHA-256：`264117c0344f4c3979d382eccff56569f03375dfd3bfaeaf7423c80e8bf7625e`。
+- 此图仅为品牌概念画面，不是标准地图、事件分布或实时监测结果。可操作的文字、六馆导航、广州关联与来源入口由 HTML 独立实现。正式品牌透明文件未改动。
+- 素材编辑要求：保持第一方案原有构图、地球与广州天际线，去掉所有文字、品牌标志、按钮、图标、导航及界面面板；不要改变地球轮廓，不增加新地球，保留左下角前景地球弧面。透明标志不烘焙进本图。
+
+## 界面图标
+
+- 六种线性图标取自官方 [Lucide Static](https://lucide.dev/guide/static) `0.574.0` 的原始 SVG，文件名为 `arrow-up-right`、`arrow-right`、`search`、`file-text`、`network`、`chart-no-axes-column`。
+- 从 npm 官方 registry 以 `npm pack --ignore-scripts` 获取，未运行安装脚本。保留完整 `vendor/lucide/LICENSE`，含 ISC 与上游 Feather 许可；不改写 SVG 路径。
+- npm 包 SHA-512：`UiT40+ciW+w3VSpujK+PoHGjbvWD+EqqiVRzPFFj/Uta61j30wug/sPB/mtdVTCicAm3ASklK0CzEZ+7IZ4Vvw==`。
+
 ## 透光玻璃概念图
 
 - `assets/optic-study.webp`：2026-09-29 使用内置 imagegen 生成的原创概念素材，1536 × 1024。三层玻璃用于表达从信息到理解的阅读过程，不是系统截图、业务证据或品牌标志。
@@ -10,16 +23,16 @@
 Use case: stylized-concept. Asset type: original editorial visual for Jingjian, a Guangzhou-based global migration intelligence platform, used between a city introduction and its evidence-led research chapters. Create a premium architectural still life of exactly three tall, thin rectangular optical-glass panels arranged sequentially in deep perspective, upright on a pale cool-silver matte floor. Each panel transmits the same narrow line of soft ice-blue light; the nearest panel is optically clear, farther panes are delicately frosted. This is a visual metaphor for information being clarified into understanding. Large rectangular panes, not rings, spheres, globes, cards, arrows, brains or interface screens. Physical restraint, tactile milky glass edges, subtle cyan caustics, realistic broad studio daylight, clean shadows. A contemporary design museum catalogue photograph / high-end product photography quality, sober and exquisite rather than shiny metal sci-fi. Palette cool white, mist-silver, barely blue transparent glass, restrained midnight-blue shadows. Wide landscape 3:2 composition: main panes occupy the center-right, generous calm pale negative space to the left; everything completely visible inside frame with margin. No text, no lettering, no logo, no maps, no country silhouettes, no data, no people, no labels, no watermark. Opaque pale studio background. Photorealistic materials, crisp antialiased edges, smooth natural transitions, ultra-clean high resolution.
 ```
 
-内容版本：2026-09-29.2。运行资源全部随站发布，无远程字体、脚本或业务接口依赖。
+内容版本：2026-09-30.1。运行资源全部随站发布，无远程字体、脚本或业务接口依赖。
 
 ## 全景数字展馆
 
-- 三维建筑由 Three.js 几何体、粗糙石材、银白展台和局部透明材质构成，表达六馆空间定位；不是实景建筑、业务监控现场或地图。
+- Three.js 以主视觉作为纹理平面，展区切换仅做有限的画面转场；不再构造空房间、圆台或展柜。文字与导览完全由 HTML 承载，图片加载或 WebGL 失败不会移除正文。
 - `vendor/three.module.min.js`、`vendor/three.core.min.js`：Three.js 0.185.1，来自项目已安装的 npm `three` 包，原样复制；MIT 许可随 `vendor/THREE-LICENSE.txt` 发布。
 - 页面仅在宽屏且允许动态时按需加载三维模块。镜头在展区切换时有限移动，不监听鼠标跟随；资源不可用时仍保留全部 HTML 正文。
 - 六个互动展项均为本地编写的公开演示数据。地图使用原有 `data/world.json`；国别示例仅用于解释筛选联动，不代表实际业务情况。
 - 动效沿用 GSAP，阅读滚动只使用一套 Lenis。新页面不加载旧 ScrollTrigger 章节动效、雷达脚本或旧图表示例；旧资源仅为原链接兼容保留。
-- 正式 G21 图形与循环视频字节不变，不重画轮廓、不增加地球、不改变内部配色。城市概念图仍仅作为静态空间背景。
+- 正式 G21 图形与循环视频字节不变，不重画轮廓、不增加地球、不改变内部配色。旧城市概念图为兼容既有链接保留。
 
 ## 正式品牌资产
 
@@ -55,7 +68,7 @@ lenis-1.3.26.tgz sha512-s/xTCZCxTFvHbAN1OzuhNaN5YPJH2ail0XAkctKW1b+RUAG4nUL5UHLX
 ```text
 748bbff7f2f8ca93ff8c785d2bc06d8929d757d6a9e41e71fd17024943a18684  assets/jingjian-ui-satin-loop.webm
 fba60e917c9fab980383c9fd296745db705c0b4268fd23154100831c12a6389a  assets/jingjian-ui-satin-poster.webp
-3e728c6b9a9d34db912f762151d4319ba8bbc3a05654708a87be39718197d190  assets/fonts/jingjian-sans.woff2
+99d0715c49746e0f28b806f06cd007c79d37b16ee5b91928b256690f698c1e8d  assets/fonts/jingjian-sans.woff2
 420d04c629ba6a1c320768b43e868cb16e88f1883b09b73d8ad5a49f931f8c11  assets/guangzhou-night.webp
 4344e9f2d17fb3329dd804bbaac36cb6951ddb4154f551eddd6b2121b6460ee5  assets/optic-study.webp
 92bb9a96476f983d212a2bc4f54c889039c1696dd4461d40a736860938570fbb  vendor/gsap.min.js

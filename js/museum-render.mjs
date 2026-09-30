@@ -26,7 +26,7 @@ export function renderNode(node, nodes, halls, aliases) {
   const paragraphs = node.paragraphs || [], bullets = node.bullets || [], steps = node.steps || [];
   const aliasHTML = Object.entries(aliases).filter(([key, target]) => target === node.id && key !== node.id && !nodes.some(n => n.id === key)).map(([key]) => `<span id="${e(key)}" class="legacy-anchor" aria-hidden="true"></span>`).join('');
   return `<section id="${e(node.id)}" class="museum-node ${isHall ? 'hall-node' : 'detail-node'}" data-node data-hall="${e(hall?.id || '')}" data-depth="${path.length - 1}" aria-labelledby="title-${e(node.id)}">
-  ${aliasHTML}<header class="node-heading"><div class="node-register"><span>${e(hall?.index || 'JJ')} / ${isHall ? '主题展馆' : `深度 ${path.length - 1}`}</span><span>${e(isHall ? hall?.kicker : hall?.title)}</span></div>
+  ${aliasHTML}<header class="node-heading"><div class="node-register"><span>${e(hall?.index || 'JJ')} / ${isHall ? '全景探索' : node.demo ? '交互展项' : '功能档案'}</span><span>${e(isHall ? hall?.kicker : hall?.title)}</span></div>
   <h1 id="title-${e(node.id)}" tabindex="-1">${e(node.title)}</h1><p class="node-summary">${e(node.summary)}</p>${isHall ? `<span class="hall-numeral" aria-hidden="true">${e(hall?.index)}</span>` : ''}</header>
   ${renderTopicDisplay(node.id)}
   <div class="reading-layout"><div class="reading-main">${paragraphs.map(p => `<p>${e(p)}</p>`).join('')}

@@ -1,6 +1,6 @@
 {
   "url": "https://wyhcipuc.github.io/glide-demo/",
-  "release": "2026-09-29.2",
+  "release": "2026-09-30.1",
   "files": [
     ".nojekyll", ".gitattributes", "README.md", "LICENSE", "publish-manifest.json", "ASSET-SOURCES.md",
     "index.html", "css/demo.css", "css/observatory.css", "js/demo.js", "js/charts.js", "js/radar.js", "js/brand-motion.js", "js/exhibition.js",
@@ -10,7 +10,10 @@
     "vendor/echarts.min.js", "vendor/LICENSE.txt", "vendor/NOTICE.txt",
     "vendor/gsap.min.js", "vendor/ScrollTrigger.min.js", "vendor/GSAP-README.md",
     "vendor/lenis.min.js", "vendor/LENIS-LICENSE.txt",
-    "css/museum.css", "js/museum-catalog.mjs", "js/museum-core.mjs", "js/museum-render.mjs",
+    "css/museum.css", "css/atlas.css", "assets/global-observatory.webp",
+    "vendor/lucide/arrow-up-right.svg", "vendor/lucide/arrow-right.svg", "vendor/lucide/search.svg",
+    "vendor/lucide/file-text.svg", "vendor/lucide/network.svg", "vendor/lucide/chart-no-axes-column.svg", "vendor/lucide/LICENSE",
+    "js/museum-catalog.mjs", "js/museum-core.mjs", "js/museum-render.mjs",
     "js/museum-runtime.mjs", "js/museum-exhibits.mjs", "js/museum-scene.mjs",
     "vendor/three.module.min.js", "vendor/three.core.min.js", "vendor/THREE-LICENSE.txt"
   ]

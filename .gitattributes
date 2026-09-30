@@ -7,7 +7,9 @@ vendor/LENIS-LICENSE.txt -text -whitespace
 vendor/three.module.min.js -text -whitespace
 vendor/three.core.min.js -text -whitespace
 vendor/THREE-LICENSE.txt -text -whitespace
+vendor/lucide/* -text -whitespace
 assets/fonts/OFL.txt -text -whitespace
 index.html text eol=lf
 js/museum-*.mjs text eol=lf
 css/museum.css text eol=lf
+css/atlas.css text eol=lf
