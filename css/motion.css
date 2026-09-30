@@ -1,0 +1,34 @@
+/* 同原图坐标的信号流；不模拟真实采集或迁移规模。 */
+:root { --motion-ease: cubic-bezier(.22, 1, .36, 1); --motion-short: 200ms; }
+.signal-field { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 2; opacity: .68; }
+.signal-route { fill: none; stroke: var(--accent-emerald); stroke-width: 2; stroke-linecap: round; stroke-dasharray: 14 986; animation: signal-travel 11s linear infinite; animation-play-state: paused; }
+.signal-route:nth-child(2n) { animation-duration: 13s; animation-delay: -4s; }
+.signal-route:nth-child(3n) { animation-delay: -7s; }
+.signal-node { fill: var(--ink); stroke: var(--accent-emerald); stroke-width: 2; }
+.signal-halo { fill: none; stroke: var(--accent-emerald); stroke-width: 1; transform-box: fill-box; transform-origin: center; animation: signal-arrival 7s ease-in-out infinite; animation-play-state: paused; }
+.signal-halo:nth-of-type(2n) { animation-delay: -3s; }
+html[data-motion-running="true"] .signal-route, html[data-motion-running="true"] .signal-halo { animation-play-state: running; }
+.scene-motion-toggle { position: absolute; top: 26px; right: 4vw; min-height: 40px; padding: 8px 14px; background: color-mix(in srgb, var(--bg-carbon) 65%, transparent); border: 1px solid var(--border-charcoal); border-radius: 3px; color: var(--muted); font-size: 11px; letter-spacing: .08em; cursor: pointer; backdrop-filter: blur(6px); }
+.scene-motion-toggle::before { content: ''; display: inline-block; width: 5px; height: 5px; margin-right: 9px; background: var(--accent-emerald); border-radius: 50%; }
+.scene-motion-toggle[aria-pressed="true"]::before { background: var(--faint); }
+.scene-motion-toggle:disabled { cursor: default; }
+.reading-progress { position: absolute; inset: auto 0 -1px; height: 2px; background: var(--accent-emerald); transform: scaleX(var(--reading-progress, 0)); transform-origin: left; pointer-events: none; }
+body[data-view="lobby"] .reading-progress { visibility: hidden; }
+.hall-rail a, .node-link, .lobby-introduction nav a { transition: background-color var(--motion-short), border-color var(--motion-short); }
+.hall-rail a .ui-icon, .node-arrow { transition: transform var(--motion-short) var(--motion-ease); }
+.hall-rail a:hover .ui-icon, .node-link:hover .node-arrow { transform: translate(2px, -2px); }
+.evidence-path a:hover .evidence-icon, .evidence-path a:focus-visible .evidence-icon { border-color: var(--accent-emerald); background: color-mix(in srgb, var(--accent-emerald) 12%, transparent); }
+html[data-motion-enabled="false"] .hall-rail a .ui-icon, html[data-motion-enabled="false"] .node-arrow { transition: none; transform: none; }
+@keyframes signal-travel { from { stroke-dashoffset: 1000; } to { stroke-dashoffset: 0; } }
+@keyframes signal-arrival { 0%, 100% { transform: scale(.86); opacity: .25; } 50% { transform: scale(1.2); opacity: .7; } }
+@media (max-width: 768px) {
+  .signal-field { top: 330px; height: 438px; width: 700.3px; left: calc(70% - 490.21px); mask-image: linear-gradient(to bottom, transparent, var(--mask-opaque) 23%); }
+  .scene-motion-toggle { top: 380px; left: var(--edge); right: auto; font-size: 10px; padding-inline: 10px; }
+  .signal-route:nth-child(n+5) { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .signal-route, .signal-halo { animation: none !important; }
+  .signal-route { stroke-dasharray: none; opacity: .12; }
+  .hall-rail a .ui-icon, .node-arrow { transition: none; transform: none !important; }
+}
+@media print { .signal-field, .scene-motion-toggle, .reading-progress { display: none; } }

@@ -1,4 +1,5 @@
 // 同一获选画面的有限镜头转场；静态图始终保底，不构造替代性的展柜或地图。
+export const shouldMoveCamera = ({ animate = true, enabled = true, reduced = false }) => animate && enabled && !reduced;
 export async function mountScene(host, _emblem, initialHall = null) {
   const idle = { select() {}, dispose() {} };
   const motion = matchMedia('(prefers-reduced-motion: reduce)');
@@ -78,11 +79,11 @@ export async function mountScene(host, _emblem, initialHall = null) {
     texture.dispose(); geometry.dispose(); material.dispose(); renderer.dispose();
     renderer.domElement.remove(); host.removeAttribute('data-ready');
   }
-  function select(hall) {
+  function select(hall, { animate = true } = {}) {
     if (disposed) return;
     tween?.kill();
     const zoom = hall ? 1.025 : 1;
-    if (window.gsap && !motion.matches) {
+    if (window.gsap && shouldMoveCamera({ animate, enabled: document.documentElement.dataset.motionEnabled !== 'false', reduced: motion.matches })) {
       tween = window.gsap.to(pose, { zoom, duration: .7, ease: 'power2.inOut', onUpdate: request, paused: document.hidden || !inView });
     } else { pose.zoom = zoom; request(); }
   }

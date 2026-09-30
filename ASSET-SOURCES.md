@@ -23,7 +23,9 @@
 Use case: stylized-concept. Asset type: original editorial visual for Jingjian, a Guangzhou-based global migration intelligence platform, used between a city introduction and its evidence-led research chapters. Create a premium architectural still life of exactly three tall, thin rectangular optical-glass panels arranged sequentially in deep perspective, upright on a pale cool-silver matte floor. Each panel transmits the same narrow line of soft ice-blue light; the nearest panel is optically clear, farther panes are delicately frosted. This is a visual metaphor for information being clarified into understanding. Large rectangular panes, not rings, spheres, globes, cards, arrows, brains or interface screens. Physical restraint, tactile milky glass edges, subtle cyan caustics, realistic broad studio daylight, clean shadows. A contemporary design museum catalogue photograph / high-end product photography quality, sober and exquisite rather than shiny metal sci-fi. Palette cool white, mist-silver, barely blue transparent glass, restrained midnight-blue shadows. Wide landscape 3:2 composition: main panes occupy the center-right, generous calm pale negative space to the left; everything completely visible inside frame with margin. No text, no lettering, no logo, no maps, no country silhouettes, no data, no people, no labels, no watermark. Opaque pale studio background. Photorealistic materials, crisp antialiased edges, smooth natural transitions, ultra-clean high resolution.
 ```
 
-内容版本：2026-09-30.1。运行资源全部随站发布，无远程字体、脚本或业务接口依赖。
+内容版本：2026-09-30.2。运行资源全部随站发布，无远程字体、脚本或业务接口依赖。
+
+- 本轮信号流和能力关系图为本站原生 SVG/HTML/CSS 组件，不代表实时采集、迁移路线或运行统计；关系图名称与入口均引用同一功能目录。新增动效可暂停，服从减少动态、后台及主视觉离屏状态，不另增 React、远程特效包或持续 WebGL 渲染循环。
 
 ## 全景数字展馆
 
@@ -68,7 +70,7 @@ lenis-1.3.26.tgz sha512-s/xTCZCxTFvHbAN1OzuhNaN5YPJH2ail0XAkctKW1b+RUAG4nUL5UHLX
 ```text
 748bbff7f2f8ca93ff8c785d2bc06d8929d757d6a9e41e71fd17024943a18684  assets/jingjian-ui-satin-loop.webm
 fba60e917c9fab980383c9fd296745db705c0b4268fd23154100831c12a6389a  assets/jingjian-ui-satin-poster.webp
-99d0715c49746e0f28b806f06cd007c79d37b16ee5b91928b256690f698c1e8d  assets/fonts/jingjian-sans.woff2
+f94e3b96eead60e14cfe7f798cc50003ab131d262ed2811c7afa5487719cee95  assets/fonts/jingjian-sans.woff2
 420d04c629ba6a1c320768b43e868cb16e88f1883b09b73d8ad5a49f931f8c11  assets/guangzhou-night.webp
 4344e9f2d17fb3329dd804bbaac36cb6951ddb4154f551eddd6b2121b6460ee5  assets/optic-study.webp
 92bb9a96476f983d212a2bc4f54c889039c1696dd4461d40a736860938570fbb  vendor/gsap.min.js

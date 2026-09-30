@@ -1,7 +1,9 @@
-import { nodes, halls, legacyAliases } from './museum-catalog.mjs?v=20260930.1';
+import { nodes, halls, legacyAliases } from './museum-catalog.mjs?v=20260930.2';
 import { resolveRoute, ancestors, searchNodes, canUseScene, canCaptureEntry, escapeHTML as e } from './museum-core.mjs';
-import { nodeLink } from './museum-render.mjs?v=20260930.1';
+import { nodeLink } from './museum-render.mjs?v=20260930.2';
 import { mountExhibit } from './museum-exhibits.mjs';
+import { mountMotion } from './museum-motion.mjs?v=20260930.2';
+import { mountConsole } from './museum-console.mjs?v=20260930.2';
 
 let disposePage;
 function mount() {
@@ -20,9 +22,11 @@ function mount() {
   const breadcrumbs = document.getElementById('museum-breadcrumbs');
   const share = document.getElementById('museum-share');
   const motion = matchMedia('(prefers-reduced-motion: reduce)');
+  const sceneMotion = mountMotion({ page: document, view: window, media: motion });
   const records = new Map(), demoStates = {};
+  const capabilityConsole = mountConsole(document.querySelector('[data-capability-console]'), { document, window, onState: () => capture() });
   let current = null, exhibit = null, scene = null, scenePending = false, sceneFailed = false, disposed = false;
-  let serial = 0, saveTimer, toastTimer, navigationFrame = 0;
+  let serial = 0, saveTimer, toastTimer, navigationFrame = 0, sceneAnimate = true;
   let animation = null, lenis = null, ticker = null;
   const removers = [];
   const oldRestoration = history.scrollRestoration;
@@ -40,7 +44,7 @@ function mount() {
     if (!canCaptureEntry(current.hash, location.hash)) return records.get(current.key);
     if (exhibit) demoStates[current.id] = exhibit.snapshot();
     const value = { key: current.key, hash: current.hash, route: routeKey(current), scrollY: window.scrollY, focus: focusDescriptor(), query: input.value,
-      demos: { ...demoStates }, open: [...tree.querySelectorAll('details')].map(el => el.open) };
+      demos: { ...demoStates }, capability: capabilityConsole.snapshot(), open: [...tree.querySelectorAll('details')].map(el => el.open) };
     records.set(current.key, value);
     if (write) history.replaceState({ ...history.state, museum: value }, '', location.href);
     return value;
@@ -59,25 +63,26 @@ function mount() {
     results.querySelectorAll('a').forEach((el, i) => { el.dataset.focusKey = `search-${i}`; });
     status.textContent = `找到 ${found.length} 个入口`;
   }
-  async function ensureScene(hall) {
-    scene?.select(hall);
+  async function ensureScene(hall, animate = true) {
+    sceneAnimate = animate;
+    scene?.select(hall, { animate });
     const depth = current?.id === 'museum-directory' ? 2 : ancestors(current?.id, nodes).length - 1;
     if (scene || scenePending || sceneFailed || !canUseScene(innerWidth, motion.matches, depth)) return;
     scenePending = true;
     try {
-      const { mountScene } = await import('./museum-scene.mjs?v=20260930.1');
+      const { mountScene } = await import('./museum-scene.mjs?v=20260930.2');
       if (disposed) return;
-      const mounted = await mountScene(document.getElementById('museum-canvas'), document.querySelector('.lobby-emblem'), hall);
+      const mounted = await mountScene(document.getElementById('museum-canvas'), document.querySelector('.lobby-emblem'), null);
       const latestDepth = current?.id === 'museum-directory' ? 2 : ancestors(current?.id, nodes).length - 1;
       if (disposed || !canUseScene(innerWidth, motion.matches, latestDepth)) mounted.dispose();
-      else { scene = mounted; scene.select(ancestors(current.id, nodes)[1]?.id || null); }
+      else { scene = mounted; scene.select(ancestors(current.id, nodes)[1]?.id || null, { animate: sceneAnimate }); }
     } catch { sceneFailed = true; } finally { scenePending = false; }
   }
   function animatePanel(panel, useMotion) {
     animation?.kill();
-    if (useMotion && !motion.matches && window.gsap) animation = window.gsap.fromTo(panel.querySelector('.node-heading') || panel.querySelector('.lobby-copy') || panel, { y: 12 }, { y: 0, duration: 0.5, ease: 'power2.out', clearProps: 'transform' });
+    if (useMotion && !motion.matches && document.documentElement.dataset.motionEnabled !== 'false' && window.gsap) animation = window.gsap.fromTo(panel.querySelector('.node-heading') || panel.querySelector('.lobby-copy') || panel, { y: 6 }, { y: 0, duration: 0.22, ease: 'power2.out', clearProps: 'transform' });
   }
-  function activate({ restore = false, focus = false } = {}) {
+  function activate({ restore = false, focus = false, keyboard = false } = {}) {
     const route = resolveRoute(location.hash, routedNodes, legacyAliases);
     const stored = history.state?.museum;
     const validStored = stored?.route === routeKey(route) && stored?.hash === location.hash ? stored : null;
@@ -86,6 +91,7 @@ function mount() {
     exhibit?.dispose(); exhibit = null;
     if (saved?.demos) Object.assign(demoStates, saved.demos);
     current = { ...route, key, hash: location.hash };
+    if (saved?.capability?.view) capabilityConsole.select(saved.capability.view, { animate: false });
     const panel = sections.find(section => section.id === route.id);
     if (!panel) return;
     sections.forEach(section => { section.hidden = section !== panel; });
@@ -103,8 +109,9 @@ function mount() {
     }
     const demo = panel.querySelector('[data-demo]');
     if (demo) exhibit = mountExhibit(demo.querySelector('[data-demo-host]'), demo.dataset.demo, demoStates[route.id], value => { demoStates[route.id] = value; capture(); });
-    if (depth <= 1) ensureScene(path[1]?.id || null);
-    animation?.kill(); animatePanel(panel, !restore);
+    sceneMotion.select(panel, { restore: restore && !!saved, keyboard });
+    if (depth <= 1) ensureScene(path[1]?.id || null, !restore && !keyboard);
+    animation?.kill(); animatePanel(panel, !restore && !keyboard);
     cancelAnimationFrame(navigationFrame);
     navigationFrame = requestAnimationFrame(() => {
       if (disposed) return;
@@ -121,20 +128,26 @@ function mount() {
     history.replaceState({ ...history.state, museum: { ...(saved || {}), key, hash: location.hash, route: routeKey(route) } }, '', location.href);
     if (route.unknown) toast('这个入口已调整，已返回中央大厅。可在全馆目录继续查找。');
   }
-  function go(hash) {
+  function go(hash, { keyboard = false } = {}) {
     capture();
     if (location.hash === hash) { activate({ restore: true, focus: true }); return; }
     history.pushState({ museum: { key: `jj-${Date.now()}-${serial++}`, hash, route: routeKey(resolveRoute(hash, routedNodes, legacyAliases)) } }, '', hash);
-    activate({ focus: true });
+    activate({ focus: true, keyboard });
   }
   listen(document, 'click', event => {
     const link = event.target.closest('a[href^="#"]');
     if (!link || event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
     event.preventDefault();
     if (link.hash === '#main-content') { main.focus(); return; }
-    go(link.hash);
+    go(link.hash, { keyboard: event.detail === 0 });
   });
-  listen(search, 'submit', event => { event.preventDefault(); go(`#museum-directory${input.value.trim() ? '?q=' + encodeURIComponent(input.value.trim()) : ''}`); });
+  listen(search, 'submit', event => { event.preventDefault(); go(`#museum-directory${input.value.trim() ? '?q=' + encodeURIComponent(input.value.trim()) : ''}`, { keyboard: true }); });
+  listen(document.getElementById('scene-motion-toggle'), 'click', () => {
+    if (document.documentElement.dataset.motionEnabled === 'false') {
+      animation?.progress(1); animation?.kill();
+      scene?.select(ancestors(current.id, nodes)[1]?.id || null, { animate: false });
+    }
+  });
   let lastHistoryKey = '';
   function onHistory() {
     const key = `${location.hash}|${history.state?.museum?.key || ''}`;
@@ -169,7 +182,7 @@ function mount() {
   setupScroll(); activate({ restore: true, focus: !!location.hash });
   disposePage = () => {
     capture(); disposed = true; clearTimeout(saveTimer); clearTimeout(toastTimer); cancelAnimationFrame(navigationFrame);
-    animation?.kill(); exhibit?.dispose(); scene?.dispose();
+    animation?.kill(); exhibit?.dispose(); scene?.dispose(); sceneMotion.dispose(); capabilityConsole.dispose();
     if (ticker) window.gsap?.ticker.remove(ticker); lenis?.destroy();
     removers.forEach(remove => remove()); history.scrollRestoration = oldRestoration; disposePage = null;
   };
